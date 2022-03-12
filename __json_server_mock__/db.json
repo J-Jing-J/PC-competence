@@ -1,0 +1,51 @@
+{
+  "questionnaireTypes": [
+    {
+      "id": 0,
+      "name": "1类型"
+    },
+    {
+      "id": 1,
+      "name": "2类型"
+    },
+    {
+      "id": 2,
+      "name": "3类型"
+    }
+  ],
+  "questionnaires": [
+    {
+      "id": 0,
+      "title": "问卷1",
+      "discription": "问卷说明",
+      "typeId": 0,
+      "fullScore": 150,
+      "rank": "名次--暂无",
+      "creater": "创建人",
+      "createTime": "创建时间",
+      "logo": "logo"
+    },
+    {
+      "id": 1,
+      "title": "问卷2",
+      "discription": "说明",
+      "typeId": 1,
+      "fullScore": 150,
+      "rank": "名次--暂无",
+      "creater": "创建人",
+      "createTime": "创建时间",
+      "logo": "logo"
+    },
+    {
+      "id": 2,
+      "title": "问卷3",
+      "discription": "说明",
+      "typeId": 2,
+      "fullScore": 150,
+      "rank": "名次--暂无",
+      "creater": "创建人",
+      "createTime": "创建时间",
+      "logo": "logo"
+    }
+  ]
+}
