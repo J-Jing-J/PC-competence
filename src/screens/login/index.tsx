@@ -1,23 +1,12 @@
 import Reacts, { FormEvent } from 'react';
-
+import { useAuth } from '../../context/auth-context';
 
 const apiUrl = process.env.REACT_APP_API_URL
 
 export const LoginScreen = () => {
 
-
-  const login = (param: { username: string, password: string }) => {
-    fetch(`${apiUrl}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(param)
-    }).then(async response => {
-      if (response.ok) {
-      }
-    })
-  }
+  // 不管在哪，只要调用了useAuth，都可以拿到user信息
+  const { login, user } = useAuth();
 
   // 点击提交按钮
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -30,6 +19,9 @@ export const LoginScreen = () => {
   }
 
   return <form onSubmit={handleSubmit}>
+    {
+      user ? <div>登陆成功，用户名：{user?.name}</div> : null
+    }
     <div>
       <label htmlFor='username'>用户名</label>
       <input type="text" id={'username'} />
@@ -38,6 +30,6 @@ export const LoginScreen = () => {
       <label htmlFor='password'>密码</label>
       <input type="password" id={'password'} />
     </div>
-    <button type={"submit"}>登录</button>
+    <button type={"submit"}>注册</button>
   </form>
 }
