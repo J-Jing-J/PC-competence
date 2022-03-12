@@ -2,7 +2,7 @@ import { List } from "./list"
 import { SearchPanel } from "./search-panel"
 import React, { useState, useEffect } from 'react'
 import { cleanObject, useDebounce, useMount } from "../../utils"
-import * as qs from 'qs'
+import * as qs from "qs"
 
 const apiUrl = process.env.REACT_APP_API_URL
 
@@ -21,7 +21,7 @@ export const QuestionnaireListScreen = () => {
   const [questionnaireTypes, setQuestionnaireTypes] = useState([]);
 
   // 输入框内容停留2s，才发送请求
-  const debouncedInputContent = useDebounce(inputContent, 1000);
+  const debouncedInputContent = useDebounce(inputContent, 200);
 
 
   // questionnaire变化时请求接口

@@ -1,7 +1,21 @@
 import React from 'react'
 import { useEffect, useState } from "react"
 
-export const SearchPanel = ({ questionnaireTypes, inputContent, setInputContent }) => {
+export interface questionnaireType {
+  id: string;
+  name: string
+}
+
+interface SearchPanelProps {
+  questionnaireTypes: questionnaireType[],
+  inputContent: {
+    title: string;
+    id: string;
+  },
+  setInputContent: (inputContent: SearchPanelProps['inputContent']) => void;
+}
+
+export const SearchPanel = ({ questionnaireTypes, inputContent, setInputContent }: SearchPanelProps) => {
 
 
 
