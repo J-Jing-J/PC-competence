@@ -33,7 +33,7 @@ export const useMount = (callback: () => void) => {
 // 连续输入或点击后，经过一定时间才发送请求
 // value变化时，过delay时间后，使debouncedValue变化，界面可监听debouncedValue发送请求
 // 需要用useState检测value的改变，所以自定义hook
-export const useDebounce = (value: unknown, delay?: number): any => {
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
     // 每次value变化时，设置一个定时器
