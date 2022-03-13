@@ -10,6 +10,7 @@ export interface User {
   updateAt: string;
   email: string;
   avatar_url: string;
+  identity: number;
   token: string;
 }
 

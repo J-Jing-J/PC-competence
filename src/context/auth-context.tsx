@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
+  // 每个 Context 对象都会返回一个 Provider React 组件，它允许消费组件订阅 context 的变化。
   // 当前context值由上层组件中距离当前组件最近的 <MyContext.Provider> 的 value prop 决定。
   return <AuthContext.Provider children={children} value={{ user, login, register, logout }} />
 }
@@ -34,7 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 // 不管在哪，只要调用了useAuth，都可以拿到user信息(传入的{ user, login, register, logout })
 export const useAuth = () => {
-  // React.useContext返回一个context对象，并返回context的当前值
+  // React.useContext接受一个context对象本身，并返回context的当前值
   // 当组件上层最近的<MyContext.Provider>更新时，该Hook会触发重渲染
   // 并使用最新传递给 MyContext provider 的 context value 值。
   const context = React.useContext(AuthContext);

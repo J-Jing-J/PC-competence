@@ -1,14 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { QuestionnaireListScreen } from './screens/questionnaire-list';
-import { LoginScreen } from './screens/login';
+import { AuthenticatedApp } from './authenticated-app';
+import { useAuth } from './context/auth-context';
+import { UnauthenticatedApp } from './unauthenticated-app';
 
 function App() {
+  const { user } = useAuth()
   return (
     <div className="App">
       {/* <QuestionnaireListScreen /> */}
-      <LoginScreen />
+      {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
     </div>
   );
 }
