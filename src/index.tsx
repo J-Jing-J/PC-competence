@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import 'antd/dist/antd.less'  //自定义antd的主题
+// creat react app configuration override
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AppProviders } from './context';

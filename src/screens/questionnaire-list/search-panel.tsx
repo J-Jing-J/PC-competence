@@ -1,3 +1,4 @@
+import { Input, Select } from 'antd';
 import React from 'react'
 import { useEffect, useState } from "react"
 
@@ -24,21 +25,23 @@ export const SearchPanel = ({ questionnaireTypes, inputContent, setInputContent 
 
   return <form>
     <div>
-      <input type="text" value={inputContent.title} onChange={evt => {
+      <Input type="text" value={inputContent.title} onChange={evt => {
         setInputContent({
           ...inputContent,
           title: evt.target.value
         })
       }} />
-      <select value={inputContent.id} onChange={evt => setInputContent({
-        ...inputContent,
-        id: evt.target.value
-      })} >
-        <option value={''}>问卷类型</option>
+      <Select
+        value={inputContent.id}
+        onChange={value => setInputContent({
+          ...inputContent,
+          id: value
+        })} >
+        <Select.Option value={''}>问卷类型</Select.Option>
         {
-          questionnaireTypes.map(item => <option key={item.id} value={item.id}>{item.name}</option>)
+          questionnaireTypes.map(item => <Select.Option key={item.id} value={item.id}>{item.name}</Select.Option>)
         }
-      </select>
+      </Select>
     </div>
   </form>
 }

@@ -47,5 +47,12 @@
       "createTime": "创建时间",
       "logo": "logo"
     }
-  ]
+  ],
+  "me": {
+    "token": "123",
+    "name": "JJ",
+    "identity": 0,
+    "email": "xx@qq.com",
+    "avatar_url": ""
+  }
 }

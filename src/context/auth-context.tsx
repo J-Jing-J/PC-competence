@@ -1,10 +1,29 @@
 import React, { ReactNode, useContext, useState } from 'react'
 import * as auth from '../auth-provider'
 import { User } from '../auth-provider'
+import { useMount } from '../utils';
+import { http } from '../utils/http';
 
 interface AuthForm {
   username: string;
   password: string;
+}
+
+// 每次刷新页面都要判断token是否过期
+// bootstrap：启动初始化
+const bootstrapUser = async () => {
+  let user = null;
+  // 从localstorage里读token
+  const token = auth.getToken();
+  if (token) {
+    // 如果有token，就携带在请求头里
+    // 要判断token是否有效，所以不用useHttp，用http
+    const data = await http('me', { token });
+
+    // user = data.user;
+    user = data;
+  }
+  return user;
 }
 
 // React.createContext返回一个context对象
@@ -16,9 +35,10 @@ export const AuthContext = React.createContext<{
 } | undefined>(undefined)
 AuthContext.displayName = 'AuthContext'
 
+
 // React.ReactNode是组件的render函数的返回值
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  // useState使用泛型，和initialState类型相同
+  // useState使用泛型：initialState类型--默认值的类型
   // 如果不手动设置泛型，就不能把其他值setUser
   const [user, setUser] = useState<User | null>(null);
 
@@ -27,6 +47,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
+
+  // 页面加载时，就会执行AuthProvider，就会执行这个方法重置user
+  useMount(() => {
+    bootstrapUser().then(setUser)
+  })
   // 每个 Context 对象都会返回一个 Provider React 组件，它允许消费组件订阅 context 的变化。
   // 当前context值由上层组件中距离当前组件最近的 <MyContext.Provider> 的 value prop 决定。
   return <AuthContext.Provider children={children} value={{ user, login, register, logout }} />
