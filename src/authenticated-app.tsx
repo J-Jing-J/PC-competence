@@ -2,6 +2,9 @@ import { useAuth } from "./context/auth-context"
 import styled from '@emotion/styled'
 import { QuestionnaireListScreen } from "./screens/questionnaire-list"
 import { Row } from "./components/lib"
+// 用svg的方式，而不是img的方式渲染图片
+import { ReactComponent as LoginLogo } from './assets/login-logo.svg'
+import { Dropdown, Menu } from "antd"
 
 export const AuthenticatedApp = () => {
   const { user, logout } = useAuth()
@@ -11,15 +14,27 @@ export const AuthenticatedApp = () => {
     } */}
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <h3>Logo</h3>
+        {/* 用svg的方式，而不是img的方式渲染图片 */}
+        <LoginLogo width={'5rem'} color={'rgb(38, 132, 255)'} />
+        {/* <img src={LoginLogo} /> */}
+        <h3 style={{ fontWeight: 'bold' }}>胜任力系统</h3>
         <h3>首页</h3>
         <h3>数据中心</h3>
         <h3>问卷中心</h3>
         <h3>测试与训练中心</h3>
         <h3>激光枪</h3>
       </HeaderLeft>
-      <HeaderRight> 
-        <button onClick={logout}>登出</button>
+      <HeaderRight>
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key={'logout'}>
+                <a onClick={logout}>登出</a>
+              </Menu.Item>
+            </Menu>}
+        >
+          <a onClick={e => e.preventDefault()}>Hi,{user?.name}</a>
+        </Dropdown>
       </HeaderRight>
     </Header>
     <Main>
@@ -52,6 +67,9 @@ const Container = styled.div`
 
 export const Header = styled(Row)`
   grid-area: header;  //别名
+  padding: 3.2rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 `
 const HeaderItem = styled.h3` 
   margin-right: 3rem;
@@ -64,4 +82,7 @@ export const HeaderRight = styled.div`
 `
 const Main = styled.main`grid-area: main;`
 const Aside = styled.aside`grid-area: aside;`
-const Footer = styled.footer`grid-area: footer;`
+const Footer = styled.footer`
+grid-area: footer;
+padding: 3.2rem;
+`

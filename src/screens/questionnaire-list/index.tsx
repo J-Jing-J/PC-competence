@@ -1,6 +1,7 @@
 import { List } from "./list"
 import { SearchPanel } from "./search-panel"
 import React, { useState, useEffect } from 'react'
+import styled from '@emotion/styled'
 import { cleanObject, useDebounce, useMount } from "../../utils"
 import * as qs from "qs"
 import { useHttp } from "../../utils/http"
@@ -51,8 +52,13 @@ export const QuestionnaireListScreen = () => {
     // })
   })
 
-  return <div>
+  return <Container>
+    <h1>问卷列表</h1>
     <SearchPanel questionnaireTypes={questionnaireTypes} inputContent={inputContent} setInputContent={setInputContent} />
     <List questionnaireTypes={questionnaireTypes} displayedList={displayedList} />
-  </div>
+  </Container>
 }
+
+const Container = styled.div`
+  padding: 3.2rem;
+`
