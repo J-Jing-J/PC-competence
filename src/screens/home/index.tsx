@@ -1,7 +1,6 @@
-import { useAuth } from "./context/auth-context"
+import { useAuth } from "../../context/auth-context"
 import styled from '@emotion/styled'
-import { QuestionnaireListScreen } from "./screens/questionnaire-list"
-import { Row } from "./components/lib"
+import { QuestionnaireListScreen } from "../../screens/questionnaire-list"
 
 export const AuthenticatedApp = () => {
   const { user, logout } = useAuth()
@@ -9,8 +8,8 @@ export const AuthenticatedApp = () => {
     {/* {
       user?.identity === 1 ? '我是管理员' : '我是普通用户'
     } */}
-    <Header between={true}>
-      <HeaderLeft gap={true}>
+    <Header>
+      <HeaderLeft>
         <h3>Logo</h3>
         <h3>首页</h3>
         <h3>数据中心</h3>
@@ -18,10 +17,11 @@ export const AuthenticatedApp = () => {
         <h3>测试与训练中心</h3>
         <h3>激光枪</h3>
       </HeaderLeft>
-      <HeaderRight> 
+      <HeaderRight>
         <button onClick={logout}>登出</button>
       </HeaderRight>
     </Header>
+    <Nav>nav</Nav>
     <Main>
       <QuestionnaireListScreen />
     </Main>
@@ -37,7 +37,7 @@ const Container = styled.div`
   grid-template-columns: 20rem 1fr 20rem;  //从左到右的大小 1fr表示自动
   grid-template-areas: 
   "header header header"  
-  "main main aside"
+  "nav main aside"
   "footer footer footer";
   height: 100vh;
   grid-gap: 1rem;  //每一块的间距
@@ -50,18 +50,21 @@ const Container = styled.div`
 //   height: calc(100vh - 6rem);  //整个视口-PageHeader
 // `
 
-export const Header = styled(Row)`
+export const Header = styled.header`
   grid-area: header;  //别名
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `
-const HeaderItem = styled.h3` 
-  margin-right: 3rem;
+export const HeaderLeft = styled.div`
+  display: flex;
+  align-items: center;
 `
-
-export const HeaderLeft = styled(Row)``;
-
 export const HeaderRight = styled.div`
   
 `
 const Main = styled.main`grid-area: main;`
+const Nav = styled.nav`grid-area: nav;`
 const Aside = styled.aside`grid-area: aside;`
 const Footer = styled.footer`grid-area: footer;`
