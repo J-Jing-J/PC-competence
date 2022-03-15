@@ -57,5 +57,24 @@ export const useDebounce = <V>(value: V, delay?: number) => {
   return debouncedValue
 }
 
+// 更换页面title
+// keepOnUnmount页面卸载时，true：title保留，false：title清除
+export const useDocumentTitle = (title: string, keepLastTitlt: boolean = true) => {
+  const oldTitle = document.title  //默认标题reactApp
+
+  useEffect(() => {
+    document.title = title
+  }, [title])
+  // 若没传入title，keepOnUnmount就为true，将页面title设置为初始title
+  // 否则会和之前页面title一样
+  useEffect(() => {
+    // 卸载页面时，如果keepOnUnmount传入false，就把title设为默认title
+    return () => {
+      if (!keepLastTitlt) {
+        document.title = oldTitle;
+      }
+    }
+  })
+}
 
 

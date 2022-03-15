@@ -2,13 +2,14 @@ import { displayedListType, List } from "./list"
 import { SearchPanel } from "./search-panel"
 import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
-import { cleanObject, useDebounce, useMount } from "../../utils"
+import { cleanObject, useDebounce, useDocumentTitle, useMount } from "../../utils"
 import * as qs from "qs"
 import { useHttp } from "../../utils/http"
 import { Typography } from "antd"
 import { useAsync } from "../../utils/use-async"
 import { useQuestionnaires } from "../../utils/questionnaire"
 import { useQuestionnaireTypes } from "../../utils/questionnaire-types"
+import { Helmet } from 'react-helmet'
 
 const apiUrl = process.env.REACT_APP_API_URL
 
@@ -65,12 +66,17 @@ export const QuestionnaireListScreen = () => {
   // })
   const { data: questionnaireTypes } = useQuestionnaireTypes()
 
-  return <Container>
-    <h1>问卷列表</h1>
-    <SearchPanel questionnaireTypes={questionnaireTypes || []} inputContent={inputContent} setInputContent={setInputContent} />
-    {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
-    <List loading={isLoading} questionnaireTypes={questionnaireTypes || []} dataSource={displayedList || []} />
-  </Container>
+  // 设置网页的document.title
+  useDocumentTitle('问卷中心', false)
+
+  return (
+    <Container>
+      {/* <Helmet><title>问卷中心</title></Helmet> */}
+      <h1>问卷中心</h1>
+      <SearchPanel questionnaireTypes={questionnaireTypes || []} inputContent={inputContent} setInputContent={setInputContent} />
+      {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
+      <List loading={isLoading} questionnaireTypes={questionnaireTypes || []} dataSource={displayedList || []} />
+    </Container>)
 }
 
 const Container = styled.div`

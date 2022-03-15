@@ -1,12 +1,14 @@
 import { Button, Card, Divider, Typography } from "antd"
 import { useState } from "react"
 import styled from '@emotion/styled'
+import { Helmet } from 'react-helmet'
 
 import { LoginScreen } from "./login"
 import { RegisterScreen } from "./register"
 import leftBackground from '../assets/left-background.svg'
 import rightBackground from '../assets/right-background.svg'
 import loginLogo from '../assets/login-logo.svg'
+import { useDocumentTitle } from "../utils"
 
 
 
@@ -14,15 +16,12 @@ export const UnauthenticatedApp = () => {
   // 是否是注册页面，默认是登陆页面，用于切换页面
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null)
+  useDocumentTitle('请登录或注册以继续', false)
 
   return <Container style={{ display: 'flex', justifyContent: 'center' }}>
+    {/* <Helmet><title>请登录或注册以继续</title></Helmet> */}
     <Header />
     <Background />
-    <Button
-      onClick={() => {
-        throw new Error('异常。。。。。')
-      }}
-    >抛出异常</Button>
     <ShadowCard>
       <Title>胜任力系统</Title>
       {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
