@@ -1,8 +1,10 @@
 import React, { ReactNode, useContext, useState } from 'react'
 import * as auth from '../auth-provider'
 import { User } from '../auth-provider'
+import { FullPageErrorFallBack, FullPageLoading } from '../components/lib';
 import { useMount } from '../utils';
 import { http } from '../utils/http';
+import { useAsync } from '../utils/use-async';
 
 interface AuthForm {
   username: string;
@@ -40,7 +42,8 @@ AuthContext.displayName = 'AuthContext'
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // useState使用泛型：initialState类型--默认值的类型
   // 如果不手动设置泛型，就不能把其他值setUser
-  const [user, setUser] = useState<User | null>(null);
+  // const [user, setUser] = useState<User | null>(null);
+  const { data: user, error, isLoading, isIdle, isError, run, setData: setUser } = useAsync<User | null>()
 
   // point free
   // (user) => setUser(user) 可以写成 setUser
@@ -50,8 +53,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // 页面加载时，就会执行AuthProvider，就会执行这个方法重置user
   useMount(() => {
-    bootstrapUser().then(setUser)
+    run(bootstrapUser())
   })
+
+  if (isIdle || isLoading) {
+    return <FullPageLoading />
+  }
+  if (isError) {
+    return <FullPageErrorFallBack error={error} />
+  }
   // 每个 Context 对象都会返回一个 Provider React 组件，它允许消费组件订阅 context 的变化。
   // 当前context值由上层组件中距离当前组件最近的 <MyContext.Provider> 的 value prop 决定。
   return <AuthContext.Provider children={children} value={{ user, login, register, logout }} />

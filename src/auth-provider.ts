@@ -39,7 +39,7 @@ export const login = (data: { username: string, password: string }) => {
     } else {
       // 报错
       // Promise.reject()效果类似于throw new Errow
-      return Promise.reject(data)
+      return Promise.reject(await response.json())
     }
   })
 }
@@ -57,7 +57,7 @@ export const register = (data: { username: string, password: string }) => {
     } else {
       // 报错
       // Promise.reject()效果类似于throw new Errow
-      return Promise.reject(data)
+      return Promise.reject(await response.json())
     }
   })
 }

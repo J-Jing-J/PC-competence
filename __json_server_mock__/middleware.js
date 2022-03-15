@@ -1,20 +1,20 @@
 module.exports = (req, res, next) => {
   if (req.method === 'POST' && req.path === '/login') {
-    if (req.body.username === '蒋静' && req.body.password === '123123') {
+    if (req.body.username === 'jj' && req.body.password === '123123') {
       return res.status(200).json({
         user: {
           token: '123',
-          name: 'JJ',
+          name: '蒋静',
           identity: 0,  //普通用户
           email: 'xx@qq.com',
           avatar_url: 'string'
         }
       })
-    } else if (req.body.username === '张文瀚' && req.body.password === '123123') {
+    } else if (req.body.username === 'zwh' && req.body.password === '123123') {
       return res.status(200).json({
         user: {
           token: '123',
-          name: 'zwh',
+          name: '张文瀚',
           identity: 1,  // 管理员
           email: 'xx@qq.com',
           avatar_url: 'string'

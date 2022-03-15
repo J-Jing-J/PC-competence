@@ -5,7 +5,9 @@ import { AuthProvider } from "./auth-context";
 // children:双节点中间的内容，相当于单节点上的children属性
 // React.ReactNode是组件的render函数的返回值
 export const AppProviders = ({ children }: { children: ReactNode }) => {
-  return <AuthProvider>
-    {children}
-  </AuthProvider>
+  return (
+    <AuthProvider>
+      {children}
+    </AuthProvider>
+  )
 }

@@ -1,10 +1,10 @@
 import { Table } from 'antd';
-import React from 'react'
 import dayjs from 'dayjs'
+import { TableProps } from 'antd/es/table'
 import { questionnaireType } from './search-panel';
 
 // 展示出来的问卷列表
-interface displayedListType {
+export interface displayedListType {
   id: string;
   title: string;
   discription: string;
@@ -17,13 +17,19 @@ interface displayedListType {
   logo: string;
 }
 
-interface ListProps {
-  displayedList: displayedListType[];
+// 直接把父组件传的参数，透传到这里，直接在父组件里传dataSource属性
+// TableProps代表Table组件的所有参数集合的类型
+// ListProps包含TableProps<displayedListType> 和 questionnaireTypes
+interface ListProps extends TableProps<displayedListType> {
+  // displayedList: displayedListType[];
   questionnaireTypes: questionnaireType[]
 }
 
-export const List = ({ questionnaireTypes, displayedList }: ListProps) => {
+// { questionnaireTypes, ...props }取出questionnaireTypes，剩下的键值全放在props里
+export const List = ({ questionnaireTypes, ...props }: ListProps) => {
   return <Table
+    rowKey={"id"}
+    loading
     pagination={false}
     columns={[
       {
@@ -57,6 +63,8 @@ export const List = ({ questionnaireTypes, displayedList }: ListProps) => {
           </span>
         }
       },]}
-    dataSource={displayedList}>
+    // dataSource={displayedList}
+    {...props}
+  >
   </Table>
 }

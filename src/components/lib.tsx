@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Spin, Typography } from "antd";
 
 export const Row = styled.div<{
   gap?: number | boolean;
@@ -18,4 +19,22 @@ export const Row = styled.div<{
     margin-right: ${props => typeof props.gap === 'number' ? props.gap + 'rem' : props.gap ? '2rem' : undefined
   };
   }
-` 
+`
+
+const FullPage = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+`
+
+// loading状态展示的组件
+export const FullPageLoading = () => <FullPage>
+  <Spin size={"large"} />
+</FullPage>
+
+// 提示系统维护显示错误信息
+export const FullPageErrorFallBack = ({ error }: { error: Error | null }) => <FullPage>
+  <Typography.Text type={"danger"}>请稍后再试：{error?.message}</Typography.Text>
+</FullPage>

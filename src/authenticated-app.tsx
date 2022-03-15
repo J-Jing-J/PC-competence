@@ -4,7 +4,7 @@ import { QuestionnaireListScreen } from "./screens/questionnaire-list"
 import { Row } from "./components/lib"
 // 用svg的方式，而不是img的方式渲染图片
 import { ReactComponent as LoginLogo } from './assets/login-logo.svg'
-import { Dropdown, Menu } from "antd"
+import { Button, Dropdown, Menu } from "antd"
 
 export const AuthenticatedApp = () => {
   const { user, logout } = useAuth()
@@ -29,11 +29,11 @@ export const AuthenticatedApp = () => {
           overlay={
             <Menu>
               <Menu.Item key={'logout'}>
-                <a onClick={logout}>登出</a>
+                {/* <a onClick={logout}>登出</a> 用a标签建议跳转时才使用：href */}
+                <Button type={"link"} onClick={logout}>登出</Button>
               </Menu.Item>
-            </Menu>}
-        >
-          <a onClick={e => e.preventDefault()}>Hi,{user?.name}</a>
+            </Menu>}>
+          <Button type={"link"} onClick={e => e.preventDefault()}>Hi,{user?.name}</Button>
         </Dropdown>
       </HeaderRight>
     </Header>

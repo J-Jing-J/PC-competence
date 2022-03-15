@@ -2,19 +2,20 @@ import { FormEvent } from 'react';
 import { Button, Form, Input } from 'antd'
 import { useAuth } from '../context/auth-context';
 import { LongButton } from '.';
+import { useAsync } from '../utils/use-async';
 
 
 const apiUrl = process.env.REACT_APP_API_URL
 
-export const LoginScreen = () => {
+export const LoginScreen = ({ onError }: { onError: (error: Error) => void }) => {
 
   // 不管在哪，只要调用了useAuth，都可以拿到user信息
   const { login, user } = useAuth();
+  const { run, isLoading } = useAsync(undefined, { throwOnError: true })
 
   // 点击提交按钮
   const handleSubmit = (
     // event: FormEvent<HTMLFormElement>
-
     // 类型antd根据Form.Item的name推断
     values: { username: string, password: string }
   ) => {
@@ -24,7 +25,7 @@ export const LoginScreen = () => {
     // const username = (event.currentTarget.elements[0] as HTMLInputElement).value
     // const password = (event.currentTarget.elements[1] as HTMLInputElement).value;
     // login({ username, password })
-    login(values)
+    run(login(values).catch((error) => onError(error)))
   }
 
   // return <form onSubmit={handleSubmit}>
@@ -47,7 +48,7 @@ export const LoginScreen = () => {
       <Input placeholder={'密码'} type="password" id={'password'} />
     </Form.Item>
     <Form.Item>
-      <LongButton htmlType={'submit'} type={"primary"}>登录</LongButton>
+      <LongButton loading={isLoading} htmlType={'submit'} type={"primary"}>登录</LongButton>
     </Form.Item>
   </Form>
 }
