@@ -2,6 +2,8 @@ import { Table } from 'antd';
 import dayjs from 'dayjs'
 import { TableProps } from 'antd/es/table'
 import { questionnaireType } from './search-panel';
+import { render } from '@testing-library/react';
+import { Link } from 'react-router-dom'
 
 // 展示出来的问卷列表
 export interface displayedListType {
@@ -34,8 +36,12 @@ export const List = ({ questionnaireTypes, ...props }: ListProps) => {
     columns={[
       {
         title: '问卷名称',
-        dataIndex: 'title', //在对应的questionnair上读name属性
-        sorter: (a, b) => a.title.localeCompare(b.title)  //localeCompare可以排序中文
+        // dataIndex: 'title', //在对应的questionnair上读name属性
+        sorter: (a, b) => a.title.localeCompare(b.title),  //localeCompare可以排序中文
+        render(value, questionnaire) {
+          // react-router-dom中的Link，to属性代表渲染路由的子路由
+          return <Link to={String(questionnaire.id)}>{questionnaire.title}</Link>
+        }
       },
       {
         title: '说明',

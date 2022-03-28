@@ -10,15 +10,20 @@ import { useAsync } from "../../utils/use-async"
 import { useQuestionnaires } from "../../utils/questionnaire"
 import { useQuestionnaireTypes } from "../../utils/questionnaire-types"
 import { Helmet } from 'react-helmet'
+import { useUrlQueryParam } from "../../utils/url"
 
 const apiUrl = process.env.REACT_APP_API_URL
 
 export const QuestionnaireListScreen = () => {
   // input搜索框里的数据
-  const [inputContent, setInputContent] = useState({
-    title: '',  //input里的
-    id: ''     //select里的,代表type的id
-  })
+  // const [, setInputContent] = useState({
+  //   title: '',  //input里的
+  //   id: ''     //select里的,代表type的id
+  // })
+  const [inputContent, setInputContent] = useUrlQueryParam(['title', 'id']);
+  // setInputContent({ title: '123' })
+
+  // const [inputContent] = useUrlQueryParam(['title', 'id'])
 
   // 问卷类型
   // const [questionnaireTypes, setQuestionnaireTypes] = useState([]);
@@ -67,17 +72,20 @@ export const QuestionnaireListScreen = () => {
   const { data: questionnaireTypes } = useQuestionnaireTypes()
 
   // 设置网页的document.title
-  useDocumentTitle('问卷中心', false)
+  useDocumentTitle('心理量表', false)
+
 
   return (
     <Container>
       {/* <Helmet><title>问卷中心</title></Helmet> */}
-      <h1>问卷中心</h1>
+      <h1>心理量表</h1>
       <SearchPanel questionnaireTypes={questionnaireTypes || []} inputContent={inputContent} setInputContent={setInputContent} />
       {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
       <List loading={isLoading} questionnaireTypes={questionnaireTypes || []} dataSource={displayedList || []} />
     </Container>)
 }
+
+QuestionnaireListScreen.whyDidYouRender = true;
 
 const Container = styled.div`
   padding: 3.2rem;

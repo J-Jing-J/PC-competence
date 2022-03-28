@@ -12,8 +12,8 @@ export const AuthenticatedApp = () => {
       <HeaderLeft>
         <h3>Logo</h3>
         <h3>首页</h3>
+        <h3>心理量表</h3>
         <h3>数据中心</h3>
-        <h3>问卷中心</h3>
         <h3>测试与训练中心</h3>
         <h3>激光枪</h3>
       </HeaderLeft>

@@ -83,3 +83,6 @@ export const useDocumentTitle = (title: string, keepLastTitlt: boolean = true) =
 }
 
 
+// 重置路由
+export const resetRoute = () => window.location.href = window.location.origin
+

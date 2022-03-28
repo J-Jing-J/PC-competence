@@ -1,50 +1,73 @@
 import { useAuth } from "./context/auth-context"
 import styled from '@emotion/styled'
+import { Button, Dropdown, Menu } from "antd"
+import { Navigate, Route, Routes } from 'react-router'
+import { BrowserRouter as Router } from 'react-router-dom'
+
 import { QuestionnaireListScreen } from "./screens/questionnaire-list"
 import { Row } from "./components/lib"
 // 用svg的方式，而不是img的方式渲染图片
 import { ReactComponent as LoginLogo } from './assets/login-logo.svg'
-import { Button, Dropdown, Menu } from "antd"
+import { QuestionaireScreen } from "./screens/questionnaire"
+import { resetRoute } from "./utils"
 
 export const AuthenticatedApp = () => {
-  const { user, logout } = useAuth()
   // const value: any = undefined
   return <Container>
     {/* {value.exist} */}
-    {/* {
-      user?.identity === 1 ? '我是管理员' : '我是普通用户'
-    } */}
-    <Header between={true}>
-      <HeaderLeft gap={true}>
-        {/* 用svg的方式，而不是img的方式渲染图片 */}
-        <LoginLogo width={'5rem'} color={'rgb(38, 132, 255)'} />
-        {/* <img src={LoginLogo} /> */}
-        <h3 style={{ fontWeight: 'bold' }}>胜任力系统</h3>
-        <h3>首页</h3>
-        <h3>数据中心</h3>
-        <h3>问卷中心</h3>
-        <h3>测试与训练中心</h3>
-        <h3>激光枪</h3>
-      </HeaderLeft>
-      <HeaderRight>
-        <Dropdown
-          overlay={
-            <Menu>
-              <Menu.Item key={'logout'}>
-                {/* <a onClick={logout}>登出</a> 用a标签建议跳转时才使用：href */}
-                <Button type={"link"} onClick={logout}>登出</Button>
-              </Menu.Item>
-            </Menu>}>
-          <Button type={"link"} onClick={e => e.preventDefault()}>Hi,{user?.name}</Button>
-        </Dropdown>
-      </HeaderRight>
-    </Header>
+
+    <PageHeader />
     <Main>
-      <QuestionnaireListScreen />
+      {/* <QuestionnaireListScreen /> */}
+      {/* BrowserRouter用于组件间共享信息，可以用reacthook获取 */}
+      <Router>
+        {/* react-router6里，所有的router都要被包裹在Routes里面 */}
+        <Routes>
+          {/* /questionnaires */}
+          <Route path={'/questionnaires'} element={<QuestionnaireListScreen />}></Route>
+          <Route path={'/questionnaires/:questionnaireId/*'} element={<QuestionaireScreen />}></Route>
+          <Route path="*" element={<Navigate to="/questionnaires" replace={true} />} />
+        </Routes>
+      </Router>
     </Main>
     <Aside>aside</Aside>
     <Footer>footer</Footer>
   </Container>
+}
+
+const PageHeader = () => {
+  const { user, logout } = useAuth()
+
+  return <Header between={true}>
+    <HeaderLeft gap={true}>
+      <Button type={'link'} onClick={resetRoute}>
+        {/* 用svg的方式，而不是img的方式渲染图片 */}
+        <LoginLogo style={{ margin: -10, }} height={'5rem'} width={'5rem'} color={'rgb(38, 132, 255)'} />
+        {/* <img src={LoginLogo} /> */}
+      </Button>
+      <h3 style={{ fontWeight: 'bold' }}>胜任力系统</h3>
+      <h3>首页</h3>
+      <h3>心理量表</h3>
+      <h3>数据中心</h3>
+      <h3>激光枪</h3>
+      <h3>测试与训练中心</h3>
+    </HeaderLeft>
+    <HeaderRight>
+      {
+        user?.identity === 1 ? '管理员' : '我是普通用户'
+      }
+      <Dropdown
+        overlay={
+          <Menu>
+            <Menu.Item key={'logout'}>
+              {/* <a onClick={logout}>登出</a> 用a标签建议跳转时才使用：href */}
+              <Button type={"link"} onClick={logout}>登出</Button>
+            </Menu.Item>
+          </Menu>}>
+        <Button type={"link"} onClick={e => e.preventDefault()}>Hi,{user?.name}</Button>
+      </Dropdown>
+    </HeaderRight>
+  </Header>
 }
 
 // 整个容器
