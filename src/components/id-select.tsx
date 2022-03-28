@@ -10,14 +10,14 @@ interface IdSelectProps extends Omit<SelectProps, 'value' | 'onChange' | 'option
   value: Raw | null | undefined,
   onChange: (value?: number) => void,
   defaultOptionName?: string,
-  options?: { title: string, id: number }[]
+  options?: { name: string, id: number }[]
 }
 
 // 使select传入的id不管是什么类型，都转换为number
 export const IdSelect = (props: IdSelectProps) => {
   const { value, onChange, defaultOptionName, options, ...restProps } = props
   return <Select
-    value={toNumber(value)}
+    value={options?.length ? toNumber(value) : 0}
     // toNumber如果是0，那就传入undefined
     onChange={value => onChange(toNumber(value) || undefined)}
     {...restProps}
@@ -27,7 +27,7 @@ export const IdSelect = (props: IdSelectProps) => {
       defaultOptionName ? <Select.Option value={0}>{defaultOptionName}</Select.Option> : null
     }
     {
-      options?.map(option => <Select.Option key={option.id} value={option.id}>{option.title}</Select.Option>)
+      options?.map(option => <Select.Option key={option.id} value={option.id}>{option.name}</Select.Option>)
     }
   </Select>
 }

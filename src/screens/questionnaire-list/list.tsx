@@ -7,10 +7,10 @@ import { Link } from 'react-router-dom'
 
 // 展示出来的问卷列表
 export interface displayedListType {
-  id: string;
+  id: number;
   title: string;
   discription: string;
-  typeId: string;
+  typeId: number;
   fullScore: string;
   pin: boolean;
   rank: string;

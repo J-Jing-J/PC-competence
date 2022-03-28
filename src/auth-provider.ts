@@ -4,7 +4,7 @@ const apiUrl = process.env.REACT_APP_API_URL
 
 
 export interface User {
-  id: string;
+  id: number;
   name: string;
   createAt: string;
   updateAt: string;

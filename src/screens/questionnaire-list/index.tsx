@@ -11,28 +11,20 @@ import { useQuestionnaires } from "../../utils/questionnaire"
 import { useQuestionnaireTypes } from "../../utils/questionnaire-types"
 import { Helmet } from 'react-helmet'
 import { useUrlQueryParam } from "../../utils/url"
+import { useQuestionnairesSearchParams } from "./util"
 
 const apiUrl = process.env.REACT_APP_API_URL
 
 export const QuestionnaireListScreen = () => {
-  // input搜索框里的数据
-  // const [, setInputContent] = useState({
-  //   title: '',  //input里的
-  //   id: ''     //select里的,代表type的id
-  // })
-  const [inputContent, setInputContent] = useUrlQueryParam(['title', 'id']);
-  // setInputContent({ title: '123' })
-
+  useDocumentTitle('心理量表', false)
+  const [inputContent, setInputContent] = useQuestionnairesSearchParams()
   // const [inputContent] = useUrlQueryParam(['title', 'id'])
 
   // 问卷类型
   // const [questionnaireTypes, setQuestionnaireTypes] = useState([]);
 
-
-
-
   // 输入框内容停留2s，才发送请求
-  const debouncedInputContent = useDebounce(inputContent, 200);
+  // const debouncedInputContent = useDebounce(inputContentNum, 200);
 
   // const client = useHttp();
 
@@ -41,7 +33,7 @@ export const QuestionnaireListScreen = () => {
   // 查找之后展示的数据
   // const [displayedList, setDisplayedList] = useState([])
   // const { run, isLoading, error, data: displayedList } = useAsync<displayedListType[]>()
-  const { isLoading, error, data: displayedList } = useQuestionnaires(debouncedInputContent)
+  const { isLoading, error, data: displayedList } = useQuestionnaires(useDebounce(inputContent, 200));
   // questionnaire变化时请求接口
   // useEffect(() => {
   // client返回一个promise，而run需要接收一个promise
@@ -72,7 +64,6 @@ export const QuestionnaireListScreen = () => {
   const { data: questionnaireTypes } = useQuestionnaireTypes()
 
   // 设置网页的document.title
-  useDocumentTitle('心理量表', false)
 
 
   return (

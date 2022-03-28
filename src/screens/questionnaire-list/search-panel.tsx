@@ -2,18 +2,21 @@ import { Form, Input, Select } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
 import React from 'react'
 import { useEffect, useState } from "react"
+import { TypeSelect } from '../../components/type-select';
+import { displayedListType } from './list';
 
 export interface questionnaireType {
-  id: string;
+  id: number;
   name: string
 }
 
 interface SearchPanelProps {
   questionnaireTypes: questionnaireType[],
-  inputContent: {
-    title: string;
-    id: string;
-  },
+  inputContent: Partial<Pick<displayedListType, 'title' | 'typeId'>>
+  // inputContent: {
+  //   title: string;
+  //   id: string;
+  // },
   setInputContent: (inputContent: SearchPanelProps['inputContent']) => void;
 }
 
@@ -39,17 +42,23 @@ export const SearchPanel = ({ questionnaireTypes, inputContent, setInputContent 
         }} />
     </Form.Item>
     <Form.Item>
-      <Select
-        value={inputContent.id}
+      <TypeSelect
+        defaultOptionName={'问卷类型'}
+        value={inputContent.typeId}
         onChange={value => setInputContent({
           ...inputContent,
-          id: value
-        })} >
+          typeId: value
+        })}
+      >
+      </TypeSelect>
+      {/* <Select
+        value={inputContent.typeId}
+      >
         <Select.Option value={''}>问卷类型</Select.Option>
         {
           questionnaireTypes.map(item => <Select.Option key={item.id} value={item.id}>{item.name}</Select.Option>)
         }
-      </Select>
+      </Select> */}
     </Form.Item>
   </Form>
 }
