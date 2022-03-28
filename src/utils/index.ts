@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 // 值为0也应该是有效值
 export const isFalsy = (value: unknown) => value === 0 ? false : !value
@@ -58,10 +58,15 @@ export const useDebounce = <V>(value: V, delay?: number) => {
 }
 
 // 更换页面title
-// keepOnUnmount页面卸载时，true：title保留，false：title清除
+// keepOnUnmount页面卸载时，
+//true：title保留现在的
+//false：title清除，还原成一开始的标题
 export const useDocumentTitle = (title: string, keepLastTitlt: boolean = true) => {
-  const oldTitle = document.title  //默认标题reactApp
-
+  // useRef: .current属性为传入的参数，返回的ref对象在组件的整个生命周期中不变
+  // oldTitle是上一个页面的title
+  const oldTitle = useRef(document.title).current  //默认标题reactApp
+  // 页面加载时：旧title
+  // 页面加载后：新title
   useEffect(() => {
     document.title = title
   }, [title])
@@ -74,7 +79,7 @@ export const useDocumentTitle = (title: string, keepLastTitlt: boolean = true) =
         document.title = oldTitle;
       }
     }
-  })
+  }, [keepLastTitlt, oldTitle])
 }
 
 
