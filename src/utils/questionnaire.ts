@@ -1,5 +1,5 @@
 // 合并use-async
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { displayedListType } from '../screens/questionnaire-list/list'
 import { cleanObject } from "../utils"
 import { useAsync } from "../utils/use-async"
@@ -13,12 +13,11 @@ export const useQuestionnaires = (inputContent?: Partial<displayedListType>) => 
 
   const { run, ...result } = useAsync<displayedListType[]>()
 
-  const fetchQuestionnaire = () => client('questionnaires', { data: cleanObject(inputContent || {}) })
+  const fetchQuestionnaire = useCallback(() => client('questionnaires', { data: cleanObject(inputContent || {}) }), [client, inputContent])
   useEffect(() => {
     // client返回一个promise，而run需要接收一个promise
     run(fetchQuestionnaire(), { retry: fetchQuestionnaire })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputContent])
+  }, [inputContent, run, fetchQuestionnaire]);
   return result
 }
 

@@ -1,4 +1,5 @@
 import qs from 'qs'
+import { useCallback } from 'react';
 
 import * as auth from '../auth-provider'
 import { useAuth } from '../context/auth-context';
@@ -65,7 +66,7 @@ export const useHttp = () => {
   // Parameters是ts中的utility Types之一
   // typeof http静态检查时提取出http的类型（function）
   // Parameters传入函数类型，读出函数的参数类型
-  return (...[endPoint, config]: Parameters<typeof http>) => {
+  return useCallback((...[endPoint, config]: Parameters<typeof http>) => {
     return http(endPoint, { ...config, token: user?.token })
-  }
+  }, [user?.token])
 }

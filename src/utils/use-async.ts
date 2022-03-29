@@ -1,6 +1,6 @@
 // 控制数据请求过程中的四种状态
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useMountedRef } from ".";
 
 interface State<D> {
@@ -31,18 +31,18 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
   const config = { ...defaultConfig, initialConfig };
 
   // 请求成功了,调用setData
-  const setData = (data: D) => setState({
+  const setData = useCallback((data: D) => setState({
     data,
     stat: 'success',
     error: null
-  })
+  }), [])
 
   // 请求失败了,调用setError
-  const setError = (error: Error) => setState({
+  const setError = useCallback((error: Error) => setState({
     error,
     stat: 'error',
     data: null
-  })
+  }), [])
 
   const mountedRef = useMountedRef();
 
@@ -51,7 +51,8 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
 
   // run用来触发异步请求
   // promise是一个容器，包含D类型数据
-  const run = (promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
+  // useCallback与useMemo一样，只有依赖项变化，才会被重新定义
+  const run = useCallback((promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
     // 如果使用者传入的不是promise或没传入
     if (!promise || !promise.then) {
       throw new Error('请传入Promise数据')
@@ -62,7 +63,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
       }
     })
     // 当请求中。。
-    setState({ ...state, stat: 'loading' })
+    setState(prevState => ({ ...prevState, stat: 'loading' }))
     // 当异步请求返回结果
     return promise
       .then(data => {
@@ -76,8 +77,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
         if (config.throwOnError) return Promise.reject(error);
         return error
       })
-  }
-
+  }, [config.throwOnError, mountedRef, setData, setError])
   return {
     // 给每一个状态返回一个标记
     isIdle: state.stat === 'idle',
