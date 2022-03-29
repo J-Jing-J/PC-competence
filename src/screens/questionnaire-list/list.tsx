@@ -4,6 +4,8 @@ import { TableProps } from 'antd/es/table'
 import { questionnaireType } from './search-panel';
 import { render } from '@testing-library/react';
 import { Link } from 'react-router-dom'
+import { Pin } from '../../components/pin';
+import { useEditQuestionnaires } from '../../utils/questionnaire';
 
 // 展示出来的问卷列表
 export interface displayedListType {
@@ -24,16 +26,26 @@ export interface displayedListType {
 // ListProps包含TableProps<displayedListType> 和 questionnaireTypes
 interface ListProps extends TableProps<displayedListType> {
   // displayedList: displayedListType[];
-  questionnaireTypes: questionnaireType[]
+  questionnaireTypes: questionnaireType[],
+  refresh?: () => void
 }
 
 // { questionnaireTypes, ...props }取出questionnaireTypes，剩下的键值全放在props里
 export const List = ({ questionnaireTypes, ...props }: ListProps) => {
+  const { mutate } = useEditQuestionnaires()
+  const pinQuestionnaire = (id: number) => (pin: boolean) => mutate({ id, pin }).then(props.refresh)
   return <Table
     rowKey={"id"}
     loading
     pagination={false}
     columns={[
+      {
+        title: <Pin checked={true} disabled={true} />,
+        render(value, questionnaire) {
+          // 先得到questionnaire.id,当函数传入pin时，才得到pin  ----  函数柯里化
+          return <Pin checked={questionnaire.pin} onCheckedChange={pinQuestionnaire(questionnaire.id)} />
+        }
+      },
       {
         title: '问卷名称',
         // dataIndex: 'title', //在对应的questionnair上读name属性

@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import { cleanObject, useDebounce, useDocumentTitle, useMount } from "../../utils"
 import * as qs from "qs"
 import { useHttp } from "../../utils/http"
-import { Typography } from "antd"
+import { Button, Typography } from "antd"
 import { useAsync } from "../../utils/use-async"
 import { useQuestionnaires } from "../../utils/questionnaire"
 import { useQuestionnaireTypes } from "../../utils/questionnaire-types"
@@ -33,7 +33,7 @@ export const QuestionnaireListScreen = () => {
   // 查找之后展示的数据
   // const [displayedList, setDisplayedList] = useState([])
   // const { run, isLoading, error, data: displayedList } = useAsync<displayedListType[]>()
-  const { isLoading, error, data: displayedList } = useQuestionnaires(useDebounce(inputContent, 200));
+  const { isLoading, error, data: displayedList, retry } = useQuestionnaires(useDebounce(inputContent, 200));
   // questionnaire变化时请求接口
   // useEffect(() => {
   // client返回一个promise，而run需要接收一个promise
@@ -72,7 +72,7 @@ export const QuestionnaireListScreen = () => {
       <h1>心理量表</h1>
       <SearchPanel questionnaireTypes={questionnaireTypes || []} inputContent={inputContent} setInputContent={setInputContent} />
       {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
-      <List loading={isLoading} questionnaireTypes={questionnaireTypes || []} dataSource={displayedList || []} />
+      <List refresh={retry} loading={isLoading} questionnaireTypes={questionnaireTypes || []} dataSource={displayedList || []} />
     </Container>)
 }
 

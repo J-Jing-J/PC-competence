@@ -43,13 +43,21 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     data: null
   })
 
+  // 想要retry是函数类型，要多包一层，因为useState传函数是惰性加载的意思
+  const [retry, setRetry] = useState(() => () => { })
+
   // run用来触发异步请求
   // promise是一个容器，包含D类型数据
-  const run = (promise: Promise<D>) => {
+  const run = (promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
     // 如果使用者传入的不是promise或没传入
     if (!promise || !promise.then) {
       throw new Error('请传入Promise数据')
     }
+    setRetry(() => () => {
+      if (runConfig?.retry) {
+        run(runConfig?.retry(), runConfig)
+      }
+    })
     // 当请求中。。
     setState({ ...state, stat: 'loading' })
     // 当异步请求返回结果
@@ -75,6 +83,8 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     run,
     setData,
     setError,
+    // 刷新state
+    retry,
     ...state
   }
 }
