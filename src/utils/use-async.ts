@@ -1,6 +1,7 @@
 // 控制数据请求过程中的四种状态
 
 import { useState } from "react";
+import { useMountedRef } from ".";
 
 interface State<D> {
   error: Error | null;
@@ -43,6 +44,8 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     data: null
   })
 
+  const mountedRef = useMountedRef();
+
   // 想要retry是函数类型，要多包一层，因为useState传函数是惰性加载的意思
   const [retry, setRetry] = useState(() => () => { })
 
@@ -63,7 +66,8 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     // 当异步请求返回结果
     return promise
       .then(data => {
-        setData(data)
+        // 防止在卸载组件时赋值
+        if (mountedRef.current) setData(data)
         return data
       })
       .catch(error => {

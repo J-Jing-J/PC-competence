@@ -18,7 +18,7 @@
       "id": 0,
       "title": "问卷1",
       "discription": "问卷说明",
-      "typeId": 0,
+      "typeId": 1,
       "fullScore": 150,
       "rank": "名次--暂无",
       "creater": "创建人",
