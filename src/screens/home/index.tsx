@@ -23,7 +23,7 @@ export const AuthenticatedApp = () => {
     </Header>
     <Nav>nav</Nav>
     <Main>
-      <QuestionnaireListScreen />
+      {/* <QuestionnaireListScreen /> */}
     </Main>
     <Aside>aside</Aside>
     <Footer>footer</Footer>

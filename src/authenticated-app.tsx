@@ -5,18 +5,22 @@ import { Navigate, Route, Routes } from 'react-router'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import { QuestionnaireListScreen } from "./screens/questionnaire-list"
-import { Row } from "./components/lib"
+import { ButtonNoPadding, Row } from "./components/lib"
 // 用svg的方式，而不是img的方式渲染图片
 import { ReactComponent as LoginLogo } from './assets/login-logo.svg'
 import { QuestionaireScreen } from "./screens/questionnaire"
 import { resetRoute } from "./utils"
+import { useState } from "react"
+import { QuestionnaireModal } from "./screens/questionnaire-list/questionnaire-modal"
+import { QuestionnairePopover } from "./components/questionnaire-popover"
 
 export const AuthenticatedApp = () => {
+  const [questionnaireModalOpen, setQuestionnaireModalOpen] = useState(false)
   // const value: any = undefined
   return <Container>
     {/* {value.exist} */}
 
-    <PageHeader />
+    <PageHeader setQuestionnaireModalOpen={setQuestionnaireModalOpen} />
     <Main>
       {/* <QuestionnaireListScreen /> */}
       {/* BrowserRouter用于组件间共享信息，可以用reacthook获取 */}
@@ -24,7 +28,7 @@ export const AuthenticatedApp = () => {
         {/* react-router6里，所有的router都要被包裹在Routes里面 */}
         <Routes>
           {/* /questionnaires */}
-          <Route path={'/questionnaires'} element={<QuestionnaireListScreen />}></Route>
+          <Route path={'/questionnaires'} element={<QuestionnaireListScreen setQuestionnaireModalOpen={setQuestionnaireModalOpen} />}></Route>
           <Route path={'/questionnaires/:questionnaireId/*'} element={<QuestionaireScreen />}></Route>
           <Route path="*" element={<Navigate to="/questionnaires" replace={true} />} />
         </Routes>
@@ -32,42 +36,47 @@ export const AuthenticatedApp = () => {
     </Main>
     <Aside>aside</Aside>
     <Footer>footer</Footer>
+    <QuestionnaireModal questionnaireModalOpen={questionnaireModalOpen} onClose={() => setQuestionnaireModalOpen(false)} />
   </Container>
 }
 
-const PageHeader = () => {
-  const { user, logout } = useAuth()
-
+const PageHeader = (props: { setQuestionnaireModalOpen: (isOpen: boolean) => void }) => {
   return <Header between={true}>
     <HeaderLeft gap={true}>
-      <Button type={'link'} onClick={resetRoute}>
+      <ButtonNoPadding type={'link'} onClick={resetRoute}>
         {/* 用svg的方式，而不是img的方式渲染图片 */}
         <LoginLogo style={{ margin: -10, }} height={'5rem'} width={'5rem'} color={'rgb(38, 132, 255)'} />
         {/* <img src={LoginLogo} /> */}
-      </Button>
+      </ButtonNoPadding>
       <h3 style={{ fontWeight: 'bold' }}>胜任力系统</h3>
-      <h3>首页</h3>
-      <h3>心理量表</h3>
-      <h3>数据中心</h3>
-      <h3>激光枪</h3>
-      <h3>测试与训练中心</h3>
+      <span>首页</span>
+      {/* <h3>心理量表</h3>*/}
+      <QuestionnairePopover setQuestionnaireModalOpen={props.setQuestionnaireModalOpen} />
+      <span>数据中心</span>
+      <span>激光枪</span>
+      <span>测试与训练中心</span>
     </HeaderLeft>
     <HeaderRight>
-      {
-        user?.identity === 1 ? '管理员' : '我是普通用户'
-      }
-      <Dropdown
-        overlay={
-          <Menu>
-            <Menu.Item key={'logout'}>
-              {/* <a onClick={logout}>登出</a> 用a标签建议跳转时才使用：href */}
-              <Button type={"link"} onClick={logout}>登出</Button>
-            </Menu.Item>
-          </Menu>}>
-        <Button type={"link"} onClick={e => e.preventDefault()}>Hi,{user?.name}</Button>
-      </Dropdown>
+      <User />
     </HeaderRight>
   </Header>
+}
+
+const User = () => {
+  const { user, logout } = useAuth()
+  return <Dropdown
+    overlay={
+      <Menu>
+        {
+          user?.identity === 1 ? '管理员' : '普通用户'
+        }
+        <Menu.Item key={'logout'}>
+          {/* <a onClick={logout}>登出</a> 用a标签建议跳转时才使用：href */}
+          <Button type={"link"} onClick={logout}>登出</Button>
+        </Menu.Item>
+      </Menu>}>
+    <Button type={"link"} onClick={e => e.preventDefault()}>Hi,{user?.name}</Button>
+  </Dropdown>
 }
 
 // 整个容器

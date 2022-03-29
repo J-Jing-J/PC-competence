@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Spin, Typography } from "antd";
+import { Button, Spin, Typography } from "antd";
 
 export const Row = styled.div<{
   gap?: number | boolean;
@@ -38,3 +38,9 @@ export const FullPageLoading = () => <FullPage>
 export const FullPageErrorFallBack = ({ error }: { error: Error | null }) => <FullPage>
   <Typography.Text type={"danger"}>请稍后再试：{error?.message}</Typography.Text>
 </FullPage>
+
+
+// 没有padding的按钮需要多次使用
+export const ButtonNoPadding = styled(Button)`
+  padding: 0;
+`

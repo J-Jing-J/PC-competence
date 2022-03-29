@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { Dropdown, Menu, Table } from 'antd';
 import dayjs from 'dayjs'
 import { TableProps } from 'antd/es/table'
 import { questionnaireType } from './search-panel';
@@ -6,6 +6,7 @@ import { render } from '@testing-library/react';
 import { Link } from 'react-router-dom'
 import { Pin } from '../../components/pin';
 import { useEditQuestionnaires } from '../../utils/questionnaire';
+import { ButtonNoPadding } from '../../components/lib';
 
 // 展示出来的问卷列表
 export interface displayedListType {
@@ -27,7 +28,8 @@ export interface displayedListType {
 interface ListProps extends TableProps<displayedListType> {
   // displayedList: displayedListType[];
   questionnaireTypes: questionnaireType[],
-  refresh?: () => void
+  refresh?: () => void,
+  setQuestionnaireModalOpen: (isOpen: boolean) => void
 }
 
 // { questionnaireTypes, ...props }取出questionnaireTypes，剩下的键值全放在props里
@@ -80,7 +82,22 @@ export const List = ({ questionnaireTypes, ...props }: ListProps) => {
             }
           </span>
         }
-      },]}
+      },
+      {
+        render(value, questionnaire) {
+          return <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key={'edit'}>
+                  <ButtonNoPadding type={'link'} onClick={() => { props.setQuestionnaireModalOpen(true) }}>编辑</ButtonNoPadding>
+                </Menu.Item>
+              </Menu>
+            }>
+            <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
+          </Dropdown>
+        }
+      }
+    ]}
     // dataSource={displayedList}
     {...props}
   >

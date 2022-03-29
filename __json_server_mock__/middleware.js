@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
         user: {
           token: '123',
           name: '蒋静',
-          identity: 0,  //普通用户
+          identity: 1,  // 管理员
           email: 'xx@qq.com',
           avatar_url: 'string'
         }
@@ -13,9 +13,9 @@ module.exports = (req, res, next) => {
     } else if (req.body.username === 'zwh' && req.body.password === '123123') {
       return res.status(200).json({
         user: {
-          token: '123',
+          token: '456',
           name: '张文瀚',
-          identity: 1,  // 管理员
+          identity: 0,  //普通用户
           email: 'xx@qq.com',
           avatar_url: 'string'
         }

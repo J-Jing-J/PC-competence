@@ -12,10 +12,13 @@ import { useQuestionnaireTypes } from "../../utils/questionnaire-types"
 import { Helmet } from 'react-helmet'
 import { useUrlQueryParam } from "../../utils/url"
 import { useQuestionnairesSearchParams } from "./util"
+import { ButtonNoPadding, Row } from "../../components/lib"
+import { useAuth } from "../../context/auth-context"
 
 const apiUrl = process.env.REACT_APP_API_URL
 
-export const QuestionnaireListScreen = () => {
+export const QuestionnaireListScreen = (props: { setQuestionnaireModalOpen: (isOpen: boolean) => void }) => {
+  const { user } = useAuth()
   useDocumentTitle('心理量表', false)
   const [inputContent, setInputContent] = useQuestionnairesSearchParams()
   // const [inputContent] = useUrlQueryParam(['title', 'id'])
@@ -69,10 +72,21 @@ export const QuestionnaireListScreen = () => {
   return (
     <Container>
       {/* <Helmet><title>问卷中心</title></Helmet> */}
-      <h1>心理量表</h1>
+      <Row between={true}>
+        <h1>心理量表</h1>
+        {
+          user?.identity === 1 ? <Button onClick={() => props.setQuestionnaireModalOpen(true)}>创建量表</Button> : null
+        }
+      </Row>
       <SearchPanel questionnaireTypes={questionnaireTypes || []} inputContent={inputContent} setInputContent={setInputContent} />
       {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
-      <List refresh={retry} loading={isLoading} questionnaireTypes={questionnaireTypes || []} dataSource={displayedList || []} />
+      <List
+        refresh={retry}
+        loading={isLoading}
+        questionnaireTypes={questionnaireTypes || []}
+        dataSource={displayedList || []}
+        setQuestionnaireModalOpen={props.setQuestionnaireModalOpen}
+      />
     </Container>)
 }
 

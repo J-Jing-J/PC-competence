@@ -36,7 +36,7 @@
       "creater": "创建人",
       "createTime": "1374832498500",
       "logo": "logo",
-      "pin": false
+      "pin": true
     },
     {
       "id": 2,
@@ -53,7 +53,7 @@
   "me": {
     "token": "123",
     "name": "蒋静",
-    "identity": 0,
+    "identity": 1,
     "email": "xx@qq.com",
     "avatar_url": ""
   }
