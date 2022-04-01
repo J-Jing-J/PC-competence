@@ -3,7 +3,8 @@ import FormItem from 'antd/lib/form/FormItem';
 import React from 'react'
 import { useEffect, useState } from "react"
 import { QuestionnaireTypeSelect } from '../../components/type-select';
-import { displayedListType } from './list';
+import { displayedListType } from '../../types/questionnaire'
+
 
 export interface questionnaireType {
   id: number;

@@ -2,7 +2,7 @@
 import Item from 'antd/lib/list/Item';
 import { useState, useEffect, useCallback } from 'react'
 import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
-import { displayedListType } from '../screens/questionnaire-list/list'
+import { displayedListType } from '../types/questionnaire'
 import { useQuestionnairesSearchParams } from '../screens/questionnaire-list/util';
 import { cleanObject } from "../utils"
 import { useAsync } from "../utils/use-async"

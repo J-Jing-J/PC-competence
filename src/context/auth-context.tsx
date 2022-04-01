@@ -1,6 +1,7 @@
 import React, { ReactNode, useContext, useState } from 'react'
+import { useQueryClient } from 'react-query';
 import * as auth from '../auth-provider'
-import { User } from '../auth-provider'
+import { User } from '../types/user'
 import { FullPageErrorFallBack, FullPageLoading } from '../components/lib';
 import { useMount } from '../utils';
 import { http } from '../utils/http';
@@ -44,12 +45,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // 如果不手动设置泛型，就不能把其他值setUser
   // const [user, setUser] = useState<User | null>(null);
   const { data: user, error, isLoading, isIdle, isError, run, setData: setUser } = useAsync<User | null>()
-
+  // 拿到缓存
+  const queryClient = useQueryClient()
   // point free
   // (user) => setUser(user) 可以写成 setUser
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
-  const logout = () => auth.logout().then(() => setUser(null));
+  const logout = () => auth.logout().then(() => {
+    setUser(null);
+    // 登出时要清除缓存
+    queryClient.clear()
+  });
 
   // 页面加载时，就会执行AuthProvider，就会执行这个方法重置user
   useMount(() => {

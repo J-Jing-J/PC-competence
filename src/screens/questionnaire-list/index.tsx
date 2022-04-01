@@ -1,4 +1,5 @@
-import { displayedListType, List } from "./list"
+import { List } from "./list"
+import { displayedListType } from '../../types/questionnaire'
 import { SearchPanel } from "./search-panel"
 import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'

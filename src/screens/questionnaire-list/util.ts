@@ -1,6 +1,7 @@
 import { useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useQuestionnaire } from "../../utils/questionnaire";
-import { useUrlQueryParam } from "../../utils/url";
+import { useSetUrlSearchParam, useUrlQueryParam } from "../../utils/url";
 
 // 搜索问卷
 export const useQuestionnairesSearchParams = () => {
@@ -32,18 +33,23 @@ export const useQuestionnaireModal = () => {
     'editingQuestionnaireId'
   ])
 
+  const setUrlParams = useSetUrlSearchParam()
   const { data: editingQuestionnaire, isLoading } = useQuestionnaire(Number(editingQuestionnaireId))
 
 
   const open = () => setQuestionnaireCreate({ questionnaireCreate: true });
-  const close = () => {
-    setQuestionnaireCreate({ questionnaireCreate: undefined });
-    setEditingQuestionnaireId({ editingQuestionnaireId: undefined });
-  }
+  // const close = () => {
+  //   setQuestionnaireCreate({ questionnaireCreate: undefined });
+  //   setEditingQuestionnaireId({ editingQuestionnaireId: undefined });
+  // }
+  const close = () => setUrlParams({ questionnaireCreate: "", editingQuestionnaireId: "" });
+
   const startEdit = (id: number) => setEditingQuestionnaireId({ editingQuestionnaireId: id })
 
   return {
-    questionnaireModalOpen: questionnaireCreate === 'true' || Boolean(editingQuestionnaire),
+    // 打开条件是Boolean(editingQuestionnaireId),而不是Boolean(editingQuestionnaire)
+    // 有id就打开，而不是等数据返回
+    questionnaireModalOpen: questionnaireCreate === 'true' || Boolean(editingQuestionnaireId),
     open,
     close,
     startEdit,

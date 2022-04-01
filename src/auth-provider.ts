@@ -1,18 +1,9 @@
+import { User } from './types/user'
 // 使用firebase等auth服务就可以不写这个文件
 
 const apiUrl = process.env.REACT_APP_API_URL
 
 
-export interface User {
-  id: number;
-  name: string;
-  createAt: string;
-  updateAt: string;
-  email: string;
-  avatar_url: string;
-  identity: number;
-  token: string;
-}
 
 const localStorageKey = '__auth_provider_token__'
 

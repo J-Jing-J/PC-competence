@@ -9,20 +9,10 @@ import { useDeleteQuestionnaires, useEditQuestionnaires } from '../../utils/ques
 import { ButtonNoPadding } from '../../components/lib';
 import { useAuth } from '../../context/auth-context';
 import { useQuestionnaireModal, useQuestionnaireQueryKey } from './util';
+import { displayedListType } from '../../types/questionnaire'
 
-// 展示出来的问卷列表
-export interface displayedListType {
-  id: number;
-  title: string;
-  discription: string;
-  typeId: number;
-  fullScore: string;
-  pin: boolean;
-  rank: string;
-  creater: string;
-  createTime: string;
-  logo: string;
-}
+
+
 
 // 直接把父组件传的参数，透传到这里，直接在父组件里传dataSource属性
 // TableProps代表Table组件的所有参数集合的类型

@@ -14,11 +14,19 @@ export const QuestionnaireModal = () => {
   // 选异步，因为要等结果返回再关闭窗口渲染结果
   const { mutateAsync, error, isLoading: mutateLoading } = useMutateQuestionnaire(useQuestionnaireQueryKey());
   const [form] = useForm()
+
   const onFinish = (values: any) => {
     mutateAsync({ ...editingQuestionnaire, ...values }).then(() => {
       form.resetFields();
       close();
     })
+  }
+
+  // 关闭窗口的同时清空数据
+  const closeModal = () => {
+    // 清空输入框
+    form.resetFields();
+    close()
   }
 
   const title = editingQuestionnaire ? "编辑量表" : '创建量表'
@@ -32,7 +40,7 @@ export const QuestionnaireModal = () => {
     forceRender={true}
     width={'100%'}
     visible={questionnaireModalOpen}
-    onClose={close}
+    onClose={closeModal}
   >
     <Containner>
       {isLoading ? <Spin size={"large"} /> : <>
