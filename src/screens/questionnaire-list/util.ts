@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useQuestionnaire } from "../../utils/questionnaire";
 import { useUrlQueryParam } from "../../utils/url";
 
 // 搜索问卷
@@ -15,3 +16,39 @@ export const useQuestionnairesSearchParams = () => {
     setInputContent
   ] as const
 }
+
+// 取出Questionnaire的queryKey
+export const useQuestionnaireQueryKey = () => {
+  const [params] = useQuestionnairesSearchParams()
+  return ['questionnaires', params];
+}
+
+// 读取url里对应的参数，相当于全局状态管理器
+export const useQuestionnaireModal = () => {
+  const [{ questionnaireCreate }, setQuestionnaireCreate] = useUrlQueryParam([
+    'questionnaireCreate'
+  ])
+  const [{ editingQuestionnaireId }, setEditingQuestionnaireId] = useUrlQueryParam([
+    'editingQuestionnaireId'
+  ])
+
+  const { data: editingQuestionnaire, isLoading } = useQuestionnaire(Number(editingQuestionnaireId))
+
+
+  const open = () => setQuestionnaireCreate({ questionnaireCreate: true });
+  const close = () => {
+    setQuestionnaireCreate({ questionnaireCreate: undefined });
+    setEditingQuestionnaireId({ editingQuestionnaireId: undefined });
+  }
+  const startEdit = (id: number) => setEditingQuestionnaireId({ editingQuestionnaireId: id })
+
+  return {
+    questionnaireModalOpen: questionnaireCreate === 'true' || Boolean(editingQuestionnaire),
+    open,
+    close,
+    startEdit,
+    editingQuestionnaire,
+    isLoading
+  }
+}
+

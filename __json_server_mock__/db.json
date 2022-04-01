@@ -36,7 +36,7 @@
       "creater": "创建人",
       "createTime": "1374832498500",
       "logo": "logo",
-      "pin": true
+      "pin": false
     },
     {
       "id": 2,
@@ -47,7 +47,8 @@
       "rank": "名次--暂无",
       "creater": "创建人",
       "createTime": "3647283374612",
-      "logo": "logo"
+      "logo": "logo",
+      "pin": true
     }
   ],
   "me": {

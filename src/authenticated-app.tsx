@@ -15,32 +15,48 @@ import { QuestionnaireModal } from "./screens/questionnaire-list/questionnaire-m
 import { QuestionnairePopover } from "./components/questionnaire-popover"
 
 export const AuthenticatedApp = () => {
-  const [questionnaireModalOpen, setQuestionnaireModalOpen] = useState(false)
-  // const value: any = undefined
+
+  // const [questionnaireModalOpen, setQuestionnaireModalOpen] = useState(false)
+
   return <Container>
     {/* {value.exist} */}
+    <Router>
 
-    <PageHeader setQuestionnaireModalOpen={setQuestionnaireModalOpen} />
-    <Main>
-      {/* <QuestionnaireListScreen /> */}
-      {/* BrowserRouter用于组件间共享信息，可以用reacthook获取 */}
-      <Router>
+      <PageHeader />
+      <Main>
+        {/* <QuestionnaireListScreen /> */}
+        {/* BrowserRouter用于组件间共享信息，可以用reacthook获取 */}
         {/* react-router6里，所有的router都要被包裹在Routes里面 */}
         <Routes>
           {/* /questionnaires */}
-          <Route path={'/questionnaires'} element={<QuestionnaireListScreen setQuestionnaireModalOpen={setQuestionnaireModalOpen} />}></Route>
+          <Route
+            path={'/questionnaires'}
+            element={<QuestionnaireListScreen
+            // questionnaireButton={
+            //   <ButtonNoPadding
+            //     type={"link"}
+            //     onClick={() => setQuestionnaireModalOpen(true)}
+            //   >创建量表
+            //   </ButtonNoPadding>}
+            />}
+          >
+          </Route>
           <Route path={'/questionnaires/:questionnaireId/*'} element={<QuestionaireScreen />}></Route>
           <Route path="*" element={<Navigate to="/questionnaires" replace={true} />} />
         </Routes>
-      </Router>
-    </Main>
-    <Aside>aside</Aside>
-    <Footer>footer</Footer>
-    <QuestionnaireModal questionnaireModalOpen={questionnaireModalOpen} onClose={() => setQuestionnaireModalOpen(false)} />
+      </Main>
+      <Aside>aside</Aside>
+      <Footer>footer</Footer>
+      <QuestionnaireModal
+      // questionnaireModalOpen={questionnaireModalOpen}
+      // onClose={() => setQuestionnaireModalOpen(false)}
+      />
+    </Router>
+
   </Container>
 }
 
-const PageHeader = (props: { setQuestionnaireModalOpen: (isOpen: boolean) => void }) => {
+const PageHeader = () => {
   return <Header between={true}>
     <HeaderLeft gap={true}>
       <ButtonNoPadding type={'link'} onClick={resetRoute}>
@@ -51,7 +67,7 @@ const PageHeader = (props: { setQuestionnaireModalOpen: (isOpen: boolean) => voi
       <h3 style={{ fontWeight: 'bold' }}>胜任力系统</h3>
       <span>首页</span>
       {/* <h3>心理量表</h3>*/}
-      <QuestionnairePopover setQuestionnaireModalOpen={props.setQuestionnaireModalOpen} />
+      <QuestionnairePopover />
       <span>数据中心</span>
       <span>激光枪</span>
       <span>测试与训练中心</span>

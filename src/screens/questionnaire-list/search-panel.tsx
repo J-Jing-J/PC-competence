@@ -2,7 +2,7 @@ import { Form, Input, Select } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
 import React from 'react'
 import { useEffect, useState } from "react"
-import { TypeSelect } from '../../components/type-select';
+import { QuestionnaireTypeSelect } from '../../components/type-select';
 import { displayedListType } from './list';
 
 export interface questionnaireType {
@@ -42,7 +42,7 @@ export const SearchPanel = ({ questionnaireTypes, inputContent, setInputContent 
         }} />
     </Form.Item>
     <Form.Item>
-      <TypeSelect
+      <QuestionnaireTypeSelect
         defaultOptionName={'问卷类型'}
         value={inputContent.typeId}
         onChange={value => setInputContent({
@@ -50,7 +50,7 @@ export const SearchPanel = ({ questionnaireTypes, inputContent, setInputContent 
           typeId: value
         })}
       >
-      </TypeSelect>
+      </QuestionnaireTypeSelect>
       {/* <Select
         value={inputContent.typeId}
       >

@@ -2,12 +2,14 @@ import styled from "@emotion/styled";
 import { Button, Divider, List, Popover, Typography } from "antd"
 import { Content } from "antd/lib/layout/layout"
 import { useAuth } from "../context/auth-context";
+import { useQuestionnaireModal } from "../screens/questionnaire-list/util";
 import { useQuestionnaires } from "../utils/questionnaire"
 import { ButtonNoPadding } from "./lib";
 
-export const QuestionnairePopover = (props: { setQuestionnaireModalOpen: (isOpen: boolean) => void }) => {
+export const QuestionnairePopover = () => {
 
   const { user } = useAuth()
+  const { open } = useQuestionnaireModal()
 
   const { data: questionnaires, isLoading } = useQuestionnaires();
   const pinnedQuestionnaires = questionnaires?.filter((questionnaire) => questionnaire.pin)
@@ -26,9 +28,10 @@ export const QuestionnairePopover = (props: { setQuestionnaireModalOpen: (isOpen
         <>
           <Divider />
           <ButtonNoPadding
-            type={"link"}
-            onClick={() => props.setQuestionnaireModalOpen(true)}
-          >创建量表</ButtonNoPadding>
+            onClick={open}
+            type={"link"}>
+            创建量表
+          </ButtonNoPadding>
         </>) : null
     }
   </ContentContainer>

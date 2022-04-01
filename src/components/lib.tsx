@@ -34,13 +34,25 @@ export const FullPageLoading = () => <FullPage>
   <Spin size={"large"} />
 </FullPage>
 
-// 提示系统维护显示错误信息
-export const FullPageErrorFallBack = ({ error }: { error: Error | null }) => <FullPage>
-  <Typography.Text type={"danger"}>请稍后再试：{error?.message}</Typography.Text>
-</FullPage>
 
 
 // 没有padding的按钮需要多次使用
 export const ButtonNoPadding = styled(Button)`
   padding: 0;
 `
+
+// 只要是error类型，才返回错误组件
+// 类型守卫，是否是error类型(鸭子类型))
+const isError = (value: any): value is Error => value?.message
+export const ErrorBox = ({ error }: { error: unknown }) => {
+  if (isError(error)) {
+    return <Typography.Text type={"danger"}>{error?.message}</Typography.Text>
+  }
+  return null;
+}
+
+// 提示系统维护显示错误信息
+export const FullPageErrorFallBack = ({ error }: { error: Error | null }) =>
+  <FullPage>
+    <ErrorBox error={error} />
+  </FullPage>

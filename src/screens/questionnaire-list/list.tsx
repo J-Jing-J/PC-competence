@@ -1,12 +1,14 @@
-import { Dropdown, Menu, Table } from 'antd';
+import { Dropdown, Menu, Modal, Table } from 'antd';
 import dayjs from 'dayjs'
 import { TableProps } from 'antd/es/table'
 import { questionnaireType } from './search-panel';
 import { render } from '@testing-library/react';
 import { Link } from 'react-router-dom'
 import { Pin } from '../../components/pin';
-import { useEditQuestionnaires } from '../../utils/questionnaire';
+import { useDeleteQuestionnaires, useEditQuestionnaires } from '../../utils/questionnaire';
 import { ButtonNoPadding } from '../../components/lib';
+import { useAuth } from '../../context/auth-context';
+import { useQuestionnaireModal, useQuestionnaireQueryKey } from './util';
 
 // 展示出来的问卷列表
 export interface displayedListType {
@@ -28,14 +30,15 @@ export interface displayedListType {
 interface ListProps extends TableProps<displayedListType> {
   // displayedList: displayedListType[];
   questionnaireTypes: questionnaireType[],
-  refresh?: () => void,
-  setQuestionnaireModalOpen: (isOpen: boolean) => void
+  // questionnaireButton: JSX.Element
 }
 
 // { questionnaireTypes, ...props }取出questionnaireTypes，剩下的键值全放在props里
 export const List = ({ questionnaireTypes, ...props }: ListProps) => {
-  const { mutate } = useEditQuestionnaires()
-  const pinQuestionnaire = (id: number) => (pin: boolean) => mutate({ id, pin }).then(props.refresh)
+  const { user } = useAuth()
+  const { mutate } = useEditQuestionnaires(useQuestionnaireQueryKey())
+  const pinQuestionnaire = (id: number) => (pin: boolean) => mutate({ id, pin });
+
   return <Table
     rowKey={"id"}
     loading
@@ -85,16 +88,7 @@ export const List = ({ questionnaireTypes, ...props }: ListProps) => {
       },
       {
         render(value, questionnaire) {
-          return <Dropdown
-            overlay={
-              <Menu>
-                <Menu.Item key={'edit'}>
-                  <ButtonNoPadding type={'link'} onClick={() => { props.setQuestionnaireModalOpen(true) }}>编辑</ButtonNoPadding>
-                </Menu.Item>
-              </Menu>
-            }>
-            <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
-          </Dropdown>
+          return <More questionnaire={questionnaire} />
         }
       }
     ]}
@@ -102,4 +96,36 @@ export const List = ({ questionnaireTypes, ...props }: ListProps) => {
     {...props}
   >
   </Table>
+}
+
+const More = ({ questionnaire }: { questionnaire: displayedListType }) => {
+  const { user } = useAuth()
+  const { startEdit } = useQuestionnaireModal();
+  const editQuestionnaire = (id: number) => () => startEdit(id)
+  const { mutate: deleteQuestionnaire } = useDeleteQuestionnaires(useQuestionnaireQueryKey())
+
+  const confirmDeleteQuestionnaire = (id: number) => {
+    Modal.confirm({
+      title: `确定删除问卷“${questionnaire.title}”吗？`,
+      content: '点击确定删除',
+      okText: '确定',
+      cancelText: '取消',
+      onOk: () => deleteQuestionnaire({ id })
+    })
+  }
+  return <Dropdown
+    overlay={
+      <Menu>
+        {
+          user?.identity === 1 ?
+            <>
+              <Menu.Item key={'edit'} onClick={editQuestionnaire(questionnaire.id)}>编辑</Menu.Item>
+              <Menu.Item key={'delete'} onClick={() => confirmDeleteQuestionnaire(questionnaire.id)}>删除</Menu.Item>
+            </>
+            : null
+        }
+      </Menu>
+    }>
+    <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
+  </Dropdown>
 }

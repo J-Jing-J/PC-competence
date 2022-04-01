@@ -9,6 +9,7 @@ import leftBackground from '../assets/left-background.svg'
 import rightBackground from '../assets/right-background.svg'
 import loginLogo from '../assets/login-logo.svg'
 import { useDocumentTitle } from "../utils"
+import { ErrorBox } from "../components/lib"
 
 
 
@@ -24,7 +25,7 @@ export const UnauthenticatedApp = () => {
     <Background />
     <ShadowCard>
       <Title>胜任力系统</Title>
-      {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
+      <ErrorBox error={error} />
       <Tip>{isRegister ? '请注册' : '请登录'}</Tip>
       {
         isRegister ? <RegisterScreen onError={setError} /> : <LoginScreen onError={setError} />

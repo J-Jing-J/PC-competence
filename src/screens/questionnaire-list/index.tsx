@@ -11,14 +11,15 @@ import { useQuestionnaires } from "../../utils/questionnaire"
 import { useQuestionnaireTypes } from "../../utils/questionnaire-types"
 import { Helmet } from 'react-helmet'
 import { useUrlQueryParam } from "../../utils/url"
-import { useQuestionnairesSearchParams } from "./util"
-import { ButtonNoPadding, Row } from "../../components/lib"
+import { useQuestionnaireModal, useQuestionnairesSearchParams } from "./util"
+import { ButtonNoPadding, ErrorBox, Row } from "../../components/lib"
 import { useAuth } from "../../context/auth-context"
 
 const apiUrl = process.env.REACT_APP_API_URL
 
-export const QuestionnaireListScreen = (props: { setQuestionnaireModalOpen: (isOpen: boolean) => void }) => {
+export const QuestionnaireListScreen = () => {
   const { user } = useAuth()
+  const { open } = useQuestionnaireModal()
   useDocumentTitle('心理量表', false)
   const [inputContent, setInputContent] = useQuestionnairesSearchParams()
   // const [inputContent] = useUrlQueryParam(['title', 'id'])
@@ -36,7 +37,7 @@ export const QuestionnaireListScreen = (props: { setQuestionnaireModalOpen: (isO
   // 查找之后展示的数据
   // const [displayedList, setDisplayedList] = useState([])
   // const { run, isLoading, error, data: displayedList } = useAsync<displayedListType[]>()
-  const { isLoading, error, data: displayedList, retry } = useQuestionnaires(useDebounce(inputContent, 200));
+  const { isLoading, error, data: displayedList } = useQuestionnaires(useDebounce(inputContent, 200));
   // questionnaire变化时请求接口
   // useEffect(() => {
   // client返回一个promise，而run需要接收一个promise
@@ -75,17 +76,29 @@ export const QuestionnaireListScreen = (props: { setQuestionnaireModalOpen: (isO
       <Row between={true}>
         <h1>心理量表</h1>
         {
-          user?.identity === 1 ? <Button onClick={() => props.setQuestionnaireModalOpen(true)}>创建量表</Button> : null
+          user?.identity === 1 ?
+            <ButtonNoPadding
+              onClick={open}
+              type={"link"}>
+              创建量表
+            </ButtonNoPadding>
+            : null
         }
       </Row>
       <SearchPanel questionnaireTypes={questionnaireTypes || []} inputContent={inputContent} setInputContent={setInputContent} />
-      {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
+      <ErrorBox error={error} />
       <List
-        refresh={retry}
+        // refresh={retry}
         loading={isLoading}
         questionnaireTypes={questionnaireTypes || []}
         dataSource={displayedList || []}
-        setQuestionnaireModalOpen={props.setQuestionnaireModalOpen}
+      // questionnaireButton={
+      //   <ButtonNoPadding
+      //     onClick={open}
+      //     type={"link"}>
+      //     创建量表
+      //   </ButtonNoPadding>
+      // }
       />
     </Container>)
 }
