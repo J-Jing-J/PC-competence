@@ -36,7 +36,7 @@
       "creater": "创建人",
       "createTime": "1374832498500",
       "logo": "logo",
-      "pin": false
+      "pin": true
     },
     {
       "id": 2,
@@ -48,6 +48,14 @@
       "creater": "创建人",
       "createTime": "3647283374612",
       "logo": "logo",
+      "pin": true
+    },
+    {
+      "title": "11",
+      "typeId": 1,
+      "fullScore": "11",
+      "discription": "11",
+      "id": 3,
       "pin": true
     }
   ],

@@ -1,3 +1,4 @@
+import React from 'react'
 import { Dropdown, Menu, Modal, Table } from 'antd';
 import dayjs from 'dayjs'
 import { TableProps } from 'antd/es/table'
@@ -10,6 +11,7 @@ import { ButtonNoPadding } from '../../components/lib';
 import { useAuth } from '../../context/auth-context';
 import { useQuestionnaireModal, useQuestionnaireQueryKey } from './util';
 import { displayedListType } from '../../types/questionnaire'
+import { useMemo } from 'react';
 
 
 
@@ -24,7 +26,7 @@ interface ListProps extends TableProps<displayedListType> {
 }
 
 // { questionnaireTypes, ...props }取出questionnaireTypes，剩下的键值全放在props里
-export const List = ({ questionnaireTypes, ...props }: ListProps) => {
+export const List = React.memo(({ questionnaireTypes, ...props }: ListProps) => {
   const { user } = useAuth()
   const { mutate } = useEditQuestionnaires(useQuestionnaireQueryKey())
   const pinQuestionnaire = (id: number) => (pin: boolean) => mutate({ id, pin });
@@ -86,7 +88,7 @@ export const List = ({ questionnaireTypes, ...props }: ListProps) => {
     {...props}
   >
   </Table>
-}
+})
 
 const More = ({ questionnaire }: { questionnaire: displayedListType }) => {
   const { user } = useAuth()

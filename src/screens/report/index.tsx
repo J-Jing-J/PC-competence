@@ -36,4 +36,4 @@ export const ReportQuestionnaireScreen = () => {
       </div>)
     }
   </>
-}
+} 

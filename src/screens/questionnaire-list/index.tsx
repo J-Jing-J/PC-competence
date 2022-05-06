@@ -1,7 +1,7 @@
 import { List } from "./list"
 import { displayedListType } from '../../types/questionnaire'
 import { SearchPanel } from "./search-panel"
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Profiler } from 'react'
 import styled from '@emotion/styled'
 import { cleanObject, useDebounce, useDocumentTitle, useMount } from "../../utils"
 import * as qs from "qs"
@@ -101,7 +101,8 @@ export const QuestionnaireListScreen = () => {
       //   </ButtonNoPadding>
       // }
       />
-    </Container>)
+    </Container>
+  )
 }
 
 QuestionnaireListScreen.whyDidYouRender = true;

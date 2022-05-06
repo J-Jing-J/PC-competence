@@ -5,6 +5,7 @@ import { Navigate, Route, Routes } from 'react-router'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import { QuestionnaireListScreen } from "./screens/questionnaire-list"
+import { Home } from './screens/home'
 import { ButtonNoPadding, Row } from "./components/lib"
 // 用svg的方式，而不是img的方式渲染图片
 import { ReactComponent as LoginLogo } from './assets/login-logo.svg'
@@ -14,38 +15,27 @@ import { useState } from "react"
 import { QuestionnaireModal } from "./screens/questionnaire-list/questionnaire-modal"
 import { QuestionnairePopover } from "./components/questionnaire-popover"
 
-export const AuthenticatedApp = () => {
-
+//eslint-disable-next-line
+export default () => {
   // const [questionnaireModalOpen, setQuestionnaireModalOpen] = useState(false)
-
   return <Container>
     {/* {value.exist} */}
     <Router>
-
       <PageHeader />
+
       <Main>
         {/* <QuestionnaireListScreen /> */}
         {/* BrowserRouter用于组件间共享信息，可以用reacthook获取 */}
         {/* react-router6里，所有的router都要被包裹在Routes里面 */}
         <Routes>
           {/* /questionnaires */}
-          <Route
-            path={'/questionnaires'}
-            element={<QuestionnaireListScreen
-            // questionnaireButton={
-            //   <ButtonNoPadding
-            //     type={"link"}
-            //     onClick={() => setQuestionnaireModalOpen(true)}
-            //   >创建量表
-            //   </ButtonNoPadding>}
-            />}
-          >
-          </Route>
+          <Route path={'/home'} element={<Home />}></Route>
+          <Route path={'/questionnaires'} element={<QuestionnaireListScreen />}></Route>
           <Route path={'/questionnaires/:questionnaireId/*'} element={<QuestionaireScreen />}></Route>
-          <Route path="*" element={<Navigate to="/questionnaires" replace={true} />} />
+          <Route path="*" element={<Navigate to="/home" replace={true} />} />
         </Routes>
       </Main>
-      <Aside>aside</Aside>
+      {/* <Aside>aside</Aside> */}
       <Footer>footer</Footer>
       <QuestionnaireModal
       // questionnaireModalOpen={questionnaireModalOpen}
@@ -64,13 +54,16 @@ const PageHeader = () => {
         <LoginLogo style={{ margin: -10, }} height={'5rem'} width={'5rem'} color={'rgb(38, 132, 255)'} />
         {/* <img src={LoginLogo} /> */}
       </ButtonNoPadding>
-      <h3 style={{ fontWeight: 'bold' }}>胜任力系统</h3>
-      <span>首页</span>
-      {/* <h3>心理量表</h3>*/}
-      <QuestionnairePopover />
-      <span>数据中心</span>
+      <h3 style={{ fontWeight: 'bold' }} onClick={resetRoute}>胜任力系统</h3>
+      <ButtonNoPadding type={'link'} color="black" onClick={resetRoute}>
+        <span>首页</span>
+      </ButtonNoPadding>
+      <ButtonNoPadding type={'link'} color="black" onClick={() => window.location.href = '/questionnaires'}>
+        <QuestionnairePopover />
+      </ButtonNoPadding>
+      {/* <span>数据中心</span>
       <span>激光枪</span>
-      <span>测试与训练中心</span>
+      <span>测试与训练中心</span> */}
     </HeaderLeft>
     <HeaderRight>
       <User />
@@ -95,14 +88,15 @@ const User = () => {
   </Dropdown>
 }
 
-// 整个容器
+// 整个容器12qqqqqqqq 
 const Container = styled.div`
   display: grid; 
   grid-template-rows: 6rem 1fr 6rem;  //从上到下的大小 1fr表示自动
   grid-template-columns: 20rem 1fr 20rem;  //从左到右的大小 1fr表示自动
   grid-template-areas: 
   "header header header"  
-  "main main aside"
+  /* "main main aside" */
+  "main main main"
   "footer footer footer";
   height: 100vh;
   grid-gap: 1rem;  //每一块的间距

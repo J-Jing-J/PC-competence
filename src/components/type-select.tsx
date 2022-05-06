@@ -7,3 +7,4 @@ export const QuestionnaireTypeSelect = (props: React.ComponentProps<typeof IdSel
   const { data: types } = useQuestionnaireTypes()
   return <IdSelect options={types || []} {...props}></IdSelect>
 }
+

@@ -22,21 +22,31 @@ const bootstrapUser = async () => {
     // 如果有token，就携带在请求头里
     // 要判断token是否有效，所以不用useHttp，用http
     const data = await http('me', { token });
-
-    // user = data.user;
     user = data;
+    // user = data.user;
   }
   return user;
 }
 
 // React.createContext返回一个context对象
-export const AuthContext = React.createContext<{
-  user: User | null,
-  register: (form: AuthForm) => Promise<void>
-  login: (form: AuthForm) => Promise<void>
-  logout: () => Promise<void>
-} | undefined>(undefined)
-AuthContext.displayName = 'AuthContext'
+// export const AuthContext = React.createContext<{
+//   user: User | null,
+//   register: (form: AuthForm) => Promise<void>
+//   login: (form: AuthForm) => Promise<void>
+//   logout: () => Promise<void>
+// } | undefined>(undefined)
+// AuthContext.displayName = 'AuthContext'
+const AuthContext = React.createContext<
+  | {
+    user: User | null;
+    register: (form: AuthForm) => Promise<void>;
+    login: (form: AuthForm) => Promise<void>;
+    logout: () => Promise<void>;
+  }
+  | undefined
+>(undefined);
+AuthContext.displayName = "AuthContext";
+
 
 
 // React.ReactNode是组件的render函数的返回值
@@ -51,11 +61,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // (user) => setUser(user) 可以写成 setUser
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
-  const logout = () => auth.logout().then(() => {
-    setUser(null);
-    // 登出时要清除缓存
-    queryClient.clear()
-  });
+  const logout = () =>
+    auth.logout().then(() => {
+      setUser(null);
+      // 登出时要清除缓存
+      queryClient.clear()
+    });
 
   // 页面加载时，就会执行AuthProvider，就会执行这个方法重置user
   useMount(() => {

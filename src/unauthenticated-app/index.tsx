@@ -12,8 +12,8 @@ import { useDocumentTitle } from "../utils"
 import { ErrorBox } from "../components/lib"
 
 
-
-export const UnauthenticatedApp = () => {
+//eslint-disable-next-line
+export default () => {
   // 是否是注册页面，默认是登陆页面，用于切换页面
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null)

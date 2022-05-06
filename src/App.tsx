@@ -1,11 +1,14 @@
 
 import React from 'react';
 import './App.css';
-import { AuthenticatedApp } from './authenticated-app';
 import { ErrorBoundary } from './components/error-boundary';
-import { FullPageErrorFallBack } from './components/lib';
+import { FullPageErrorFallBack, FullPageLoading } from './components/lib';
 import { useAuth } from './context/auth-context';
-import { UnauthenticatedApp } from './unauthenticated-app';
+
+// React.lazy动态引入
+const AuthenticatedApp = React.lazy(() => import('./authenticated-app'))
+const UnauthenticatedApp = React.lazy(() => import('./unauthenticated-app'))
+
 
 function App() {
   const { user } = useAuth()
@@ -13,7 +16,10 @@ function App() {
     <div className="App">
       <ErrorBoundary fallbackRender={FullPageErrorFallBack}>
         {/* <QuestionnaireListScreen /> */}
-        {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+        {/* 懒加载先后渲染时，中间等待时渲染的内容 */}
+        <React.Suspense fallback={<FullPageLoading />}>
+          {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+        </React.Suspense>
       </ErrorBoundary>
     </div>
   );
