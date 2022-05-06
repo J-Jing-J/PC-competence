@@ -36,7 +36,7 @@ export default () => {
         </Routes>
       </Main>
       {/* <Aside>aside</Aside> */}
-      <Footer>footer</Footer>
+      {/* <Footer>footer123</Footer> */}
       <QuestionnaireModal
       // questionnaireModalOpen={questionnaireModalOpen}
       // onClose={() => setQuestionnaireModalOpen(false)}

@@ -1,6 +1,8 @@
 import { useAuth } from "../../context/auth-context"
 import styled from '@emotion/styled'
 import { Button, DatePicker } from "antd"
+import { Footer } from '../../components/Footer';
+
 import { QuestionnaireListScreen } from "../../screens/questionnaire-list"
 import { DataTrendIndex } from '../../components/DataTrendIndex';
 
@@ -73,6 +75,9 @@ export const Home = () => {
           {/* </RightBottomImg> */}
         </RightContent>
       </ContentBox>
+      <FootBox>
+        <Footer />
+      </FootBox>
       <SettingBtn>
         {/* <SettingOutlined
           style={{ fontSize: 36, color: '#326fff' }}
@@ -81,8 +86,6 @@ export const Home = () => {
         SettingOutlined
       </SettingBtn>
     </Main>
-    <Aside>aside</Aside>
-    <Footer>footer</Footer>
   </Container>
 }
 
@@ -123,7 +126,7 @@ export const HeaderRight = styled.div`
 const Main = styled.main`grid-area: main;`
 const Nav = styled.nav`grid-area: nav;`
 const Aside = styled.aside`grid-area: aside;`
-const Footer = styled.footer`grid-area: footer;`
+// const Footer = styled.footer`grid-area: footer;`
 
 const ContentBox = styled.div` 
   width: 100%;
@@ -204,6 +207,13 @@ const RightBottomImg = styled.div`
 background-color: #edeef0;
             font-size: 12px;
 `
+
+const FootBox = styled.div` 
+  width: 100%;
+        height: 100px;
+        margin-top: 20px;
+`
+
 const SettingBtn = styled.div` 
 width: 50px;
     height: 50px;
