@@ -77,9 +77,9 @@ export const Home = () => {
               <Button size="small" style={{ fontSize: '10px' }}>按钮2</Button>
             </RightFooterBtns>
           </RightFooterArea>
-          {/* <RightBottomImg> */}
-          <img src="assets/imgs/right-bg.png" alt="" style={{ width: '100%', height: '150px' }} />
-          {/* </RightBottomImg> */}
+          <RightBottomImg>
+            <img src="assets/right-bg.png" alt="" style={{ width: '100%', height: '150px' }} />
+          </RightBottomImg>
         </RightContent>
       </ContentBox>
       <FootBox>

@@ -76,7 +76,7 @@ export const DataTrendIndex = (props: IProps) => {
       name: '心理评分1',
       value: 99,
       persent: '100',
-      icon: 'assets/imgs/card-icon1',
+      icon: 'assets/card-icon1',
       isSelected: true,
     },
     {
@@ -84,7 +84,7 @@ export const DataTrendIndex = (props: IProps) => {
       name: '心理评分2',
       value: 80,
       persent: 100,
-      icon: 'assets/imgs/card-icon2',
+      icon: 'assets/card-icon2',
       isSelected: false,
     },
     {
@@ -92,7 +92,7 @@ export const DataTrendIndex = (props: IProps) => {
       name: '心理评分3',
       value: 88,
       persent: 100,
-      icon: 'assets/imgs/card-icon3',
+      icon: 'assets/card-icon3',
       isSelected: false,
     },
   ];
