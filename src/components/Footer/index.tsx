@@ -19,7 +19,7 @@ export const Footer = (props: IProps) => {
           ))
         }
       </FooterMenu>
-      <FooterCopyRight>©2022 使用胜任力系统前必读 京公安网备 10100000号 互联网信息服务许可 我已阅读并接受慕课推广服务合同 欢迎访问胜任力推广政策中心</FooterCopyRight>
+      <FooterCopyRight>©2022 使用胜任力系统前必读 京公安网备 10100000号 互联网信息服务许可 欢迎访问胜任力系统</FooterCopyRight>
     </FooterComponentBox>
   );
 }

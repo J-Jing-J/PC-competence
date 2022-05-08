@@ -7,4 +7,7 @@ export interface User {
   avatar_url: string;
   identity: number;
   token: string;
+  usageTime: number
+  grade: number,
+  score: number
 }

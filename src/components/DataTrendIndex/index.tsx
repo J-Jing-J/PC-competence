@@ -34,64 +34,64 @@ export const DataTrendIndex = (props: IProps) => {
   const defaultChartData: ChartItemType[] = [
     {
       year: '2011',
-      value: 3,
+      value: 50,
     },
     {
       year: '2012',
-      value: 4,
+      value: 60,
     },
     {
       year: '2013',
-      value: 3.5,
+      value: 63,
     },
     {
       year: '2014',
-      value: 5,
+      value: 65,
     },
     {
       year: '2015',
-      value: 4.9,
+      value: 70,
     },
     {
       year: '2016',
-      value: 6,
+      value: 80,
     },
     {
       year: '2017',
-      value: 7,
+      value: 90,
     },
     {
       year: '2018',
-      value: 9,
+      value: 93,
     },
     {
       year: '2019',
-      value: 13,
+      value: 99,
     },
   ]
 
   const defaultCardData: CardItemType[] = [
     {
       id: '1',
-      name: '消费（元）',
-      value: 2000,
-      persent: '',
+      name: '心理评分1',
+      value: 99,
+      persent: '100',
       icon: 'assets/imgs/card-icon1',
       isSelected: true,
     },
     {
       id: '2',
-      name: '展现（次）',
-      value: 5988,
-      persent: 88.9,
+      name: '心理评分2',
+      value: 80,
+      persent: 100,
       icon: 'assets/imgs/card-icon2',
       isSelected: false,
     },
     {
       id: '3',
-      name: '点击（次）',
-      value: 199,
-      persent: 12.6,
+      name: '心理评分3',
+      value: 88,
+      persent: 100,
       icon: 'assets/imgs/card-icon3',
       isSelected: false,
     },
@@ -99,8 +99,6 @@ export const DataTrendIndex = (props: IProps) => {
 
   const [cardData, setCardData] = useState(defaultCardData);
   const [chartData, setChartData] = useState(defaultChartData);
-
-
 
 
   // const cloneDeep = (_object: _typeObj, _obj: _typeObj = {}): _typeObj => {
@@ -122,6 +120,7 @@ export const DataTrendIndex = (props: IProps) => {
       const tempCardItem = cloneDeep(cardItem);
       if (tempCardItem.id === selectedId) {
         tempCardItem.isSelected = true;
+
       } else {
         tempCardItem.isSelected = false;
       }
@@ -129,6 +128,7 @@ export const DataTrendIndex = (props: IProps) => {
     });
     const newChartData = chartData.map((chartItem: ChartItemType) => {
       const tempChartItem = cloneDeep(chartItem);
+
       tempChartItem.value += 2;
       return tempChartItem;
     });

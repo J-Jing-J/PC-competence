@@ -5,10 +5,18 @@ import { Footer } from '../../components/Footer';
 
 import { QuestionnaireListScreen } from "../../screens/questionnaire-list"
 import { DataTrendIndex } from '../../components/DataTrendIndex';
+import { Account } from "./components/account";
+import { Banner } from "./components/banner";
 
 
 export const Home = () => {
-  const { user, logout } = useAuth()
+  const { user, logout } = useAuth();
+  const userBalance = {
+    name: user?.name,
+    usageTime: user?.usageTime,
+    status: user?.grade,
+    score: user?.score
+  };
   return <Container>
     <Main>
       <ContentBox>
@@ -51,23 +59,22 @@ export const Home = () => {
         </LeftContent>
         <RightContent>
           <AccountArea>
-            {/* <Account /> */}
-            Account
+            <Account userBalance={userBalance} />
+            {/* Account */}
           </AccountArea>
           <IndexBannerArea>
-            {/* <IndexBanner /> */}
-            IndexBanner
+            <Banner />
           </IndexBannerArea>
           <ProductNewsArea>
             {/* <ProductNews /> */}
             ProductNews
           </ProductNewsArea>
           <RightFooterArea>
-            <RightFooterTitle>品牌推广</RightFooterTitle>
+            <RightFooterTitle>胜任力APP推广</RightFooterTitle>
             <RightFooterBtns>
-              <RightFooterLabel>热门产品：</RightFooterLabel>
-              <Button size="small" style={{ marginRight: 10 }}>品牌专区</Button>
-              <Button size="small">巨屏广告</Button>
+              <RightFooterLabel>Label</RightFooterLabel>
+              <Button size="small" style={{ marginRight: 10, fontSize: '10px' }}>按钮1</Button>
+              <Button size="small" style={{ fontSize: '10px' }}>按钮2</Button>
             </RightFooterBtns>
           </RightFooterArea>
           {/* <RightBottomImg> */}
@@ -140,6 +147,8 @@ const ContentBox = styled.div`
 
 const LeftContent = styled.div` 
   width: 74%;
+  margin-right: 10px;
+  box-shadow: 1px 1px 20px 0 rgba(183,183,188,.1);
 `
 const ChartArea = styled.div` 
   // height: 437px;
@@ -172,7 +181,7 @@ const RightContent = styled.div`
   width: 288px;
 `
 const AccountArea = styled.div` 
-  height: 267px;
+  /* height: 267px; */
 `
 const IndexBannerArea = styled.div` 
   height: 148px;
@@ -186,7 +195,7 @@ const RightFooterArea = styled.div`
 margin-top: 10px;
         border-top: 1px solid #eee;
         background-color: #ffffff;
-        padding: 18px 20px 64px 20px;
+        padding: 18px 20px 20px 20px;
         border-radius: 8px;
 `
 const RightFooterTitle = styled.div` 

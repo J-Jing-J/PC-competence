@@ -14,9 +14,9 @@ export const CardTabs = (props: IProps) => {
 
   const handleChange = (selectedId: string) => {
     if (onChange) {
-        onChange(selectedId);
+      onChange(selectedId);
     }
-}
+  }
 
   return (
     <CardtabsComponentBox>
