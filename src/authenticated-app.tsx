@@ -22,7 +22,6 @@ export default () => {
     {/* {value.exist} */}
     <Router>
       <PageHeader />
-
       <Main>
         {/* <QuestionnaireListScreen /> */}
         {/* BrowserRouter用于组件间共享信息，可以用reacthook获取 */}
@@ -114,6 +113,9 @@ export const Header = styled(Row)`
   padding: 3.2rem;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   z-index: 1;
+  position: sticky;
+  top: 0;
+  background-color: rgb(244, 245, 247);
 `
 const HeaderItem = styled.h3` 
   margin-right: 3rem;

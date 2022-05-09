@@ -59,6 +59,48 @@
       "pin": true
     }
   ],
+  "tests": [
+    {
+      "id": 0,
+      "title": "问题1",
+      "discription": "问题说明",
+      "type": 0,
+      "fullScore": 150,
+      "creater": "创建人",
+      "createTime": "1546900800000",
+      "processorId": 1
+    },
+    {
+      "id": 1,
+      "title": "问题2",
+      "discription": "问题说明",
+      "type": 1,
+      "fullScore": 150,
+      "creater": "创建人",
+      "createTime": "1546900800000",
+      "processorId": 1
+    },
+    {
+      "id": 2,
+      "title": "问题3",
+      "discription": "问题说明",
+      "type": 2,
+      "fullScore": 150,
+      "creater": "创建人",
+      "createTime": "1546900800000",
+      "processorId": 1
+    },
+    {
+      "id": 3,
+      "title": "问题4",
+      "discription": "问题说明",
+      "type": 3,
+      "fullScore": 150,
+      "creater": "创建人",
+      "createTime": "1546900800000",
+      "processorId": 1
+    }
+  ],
   "me": {
     "token": "123",
     "name": "蒋静",

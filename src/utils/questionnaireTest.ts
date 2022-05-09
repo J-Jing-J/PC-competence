@@ -1,9 +1,10 @@
 import { useQuery } from "react-query";
 import { cleanObject } from ".";
-import { QuestionnaireReportType } from "../types/questionnaireReport";
+import { QuestionnaireTest } from "../types/questionnaireTest";
 import { useHttp } from "./http";
 
-export const useQuestionnaireReport = (inputContent?: Partial<QuestionnaireReportType>) => {
+// 获取Test列表
+export const useQuestionnaireTest = (inputContent?: Partial<QuestionnaireTest>) => {
   const client = useHttp();
   // const { run, ...result } = useAsync<displayedListType[]>()
   // const fetchQuestionnaire = useCallback(() => client('questionnaires', { data: cleanObject(inputContent || {}) }), [client, inputContent])
@@ -12,6 +13,6 @@ export const useQuestionnaireReport = (inputContent?: Partial<QuestionnaireRepor
   //   run(fetchQuestionnaire(), { retry: fetchQuestionnaire })
   // }, [inputContent, run, fetchQuestionnaire]);
   // return result
-  return useQuery<QuestionnaireReportType[]>(['report', inputContent], () =>
-    client('report', { data: cleanObject(inputContent || {}) }))
+  return useQuery<QuestionnaireTest[]>(['tests', inputContent], () =>
+    client('tests', { data: cleanObject(inputContent || {}) }))
 }

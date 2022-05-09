@@ -38,7 +38,6 @@ export const Home = () => {
             <HeaderBox>
               <ChartTitle>数据趋势</ChartTitle>
               <ChartSelectArea>
-                Select
                 {/* <Select
                     defaultValue="0"
                     style={{ width: 120 }}

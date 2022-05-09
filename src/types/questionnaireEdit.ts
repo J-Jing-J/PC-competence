@@ -1,5 +1,11 @@
-export interface QuestionnaireEditType {
+export interface QuestionnaireEdit {
   id: number;
   name: string;
-  projectId: number;
+  processorId: number;
+  questionnaireId: number;
+  // 任务组
+  // epicId: number
+  testId: number;
+  typeId: number; //题型
+  description: string;
 }

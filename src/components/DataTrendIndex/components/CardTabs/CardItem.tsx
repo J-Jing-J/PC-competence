@@ -28,7 +28,9 @@ export const CardItem = (props: IProps) => {
     alignItems: 'center',
     cursor: 'pointer',
     marginRight: '10px',
-    backgroundImage: 'linear-gradient(137deg, #5f51ff, #326fff 76%)'
+    backgroundImage: 'linear-gradient(137deg, #5f51ff, #326fff 76%)',
+    paddingLeft: '30px',
+    paddingRight: '10px'
   }
 
   const CarditemBoxStyle = {
@@ -39,7 +41,9 @@ export const CardItem = (props: IProps) => {
     height: '79px',
     alignItems: 'center',
     cursor: 'pointer',
-    marginRight: '10px'
+    marginRight: '10px',
+    paddingLeft: '30px',
+    paddingRight: '10px'
   }
 
   const cardItemStyle = isSelected ? 'carditem-component-box carditem-selected' : 'carditem-component-box';
@@ -51,7 +55,7 @@ export const CardItem = (props: IProps) => {
       className={cardItemStyle}
       onClick={() => { handleClick(id); }}
     >
-      <Icon src='./card-icon1-selected.png' alt="" />
+      {/* <Icon src='./card-icon1-selected.png' alt="" /> */}
       {/* {iconPath} */}
       <Info>
         <NamePersent>

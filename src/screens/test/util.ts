@@ -12,6 +12,12 @@ export const useQuestionnaireIdInUrl = () => {
 
 // 通过id请求问卷数据
 export const useQuestionnaireInUrl = () => {
-  // console.log(useQuestionnaire(Number(useQuestionnaireIdInUrl())));
+  // console.log(111, useQuestionnaire(Number(useQuestionnaireIdInUrl())));
   return useQuestionnaire(useQuestionnaireIdInUrl());
 }
+
+export const useTestSearchParams = () => ({ questionnaireId: useQuestionnaireIdInUrl() })
+export const useTestQueryKey = () => ['tests', useTestSearchParams()];
+
+export const useSettingSearchParams = () => ({ questionnaireId: useQuestionnaireIdInUrl() });
+export const useSettingQueryKey = () => ['setting', useSettingSearchParams()];

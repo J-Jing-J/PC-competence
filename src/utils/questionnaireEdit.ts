@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
 import { cleanObject } from ".";
-import { QuestionnaireEditType } from "../types/questionnaireEdit";
+import { QuestionnaireEdit } from "../types/questionnaireEdit";
 import { useHttp } from "./http";
 
-export const useQuestionnaireEdit = (inputContent?: Partial<QuestionnaireEditType>) => {
+export const useQuestionnaireEdit = (inputContent?: Partial<QuestionnaireEdit>) => {
   const client = useHttp();
   // const { run, ...result } = useAsync<displayedListType[]>()
   // const fetchQuestionnaire = useCallback(() => client('questionnaires', { data: cleanObject(inputContent || {}) }), [client, inputContent])
@@ -12,6 +12,6 @@ export const useQuestionnaireEdit = (inputContent?: Partial<QuestionnaireEditTyp
   //   run(fetchQuestionnaire(), { retry: fetchQuestionnaire })
   // }, [inputContent, run, fetchQuestionnaire]);
   // return result
-  return useQuery<QuestionnaireEditType[]>(['edit', inputContent], () =>
+  return useQuery<QuestionnaireEdit[]>(['edit', inputContent], () =>
     client('edit', { data: cleanObject(inputContent || {}) }))
 }
