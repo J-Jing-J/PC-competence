@@ -2,11 +2,13 @@ import { useAuth } from "../../context/auth-context"
 import styled from '@emotion/styled'
 import { Button, DatePicker } from "antd"
 import { Footer } from '../../components/Footer';
-
+import { SettingOutlined } from '@ant-design/icons';
 import { QuestionnaireListScreen } from "../../screens/questionnaire-list"
 import { DataTrendIndex } from '../../components/DataTrendIndex';
 import { Account } from "./components/account";
 import { Banner } from "./components/banner";
+import { News } from "./components/news";
+import { useState } from "react";
 
 
 export const Home = () => {
@@ -17,6 +19,17 @@ export const Home = () => {
     status: user?.grade,
     score: user?.score
   };
+
+  const defaultTheme = {
+    buttonType: 'primary',
+  }
+  const [theme, setTheme] = useState(defaultTheme);
+
+  const hanleContextChange = () => {
+    const newButtonType = theme.buttonType === 'primary' ? 'defalut' : 'primary';
+    setTheme({ buttonType: newButtonType });
+  }
+
   return <Container>
     <Main>
       <ContentBox>
@@ -66,8 +79,7 @@ export const Home = () => {
             <Banner />
           </IndexBannerArea>
           <ProductNewsArea>
-            {/* <ProductNews /> */}
-            ProductNews
+            <News />
           </ProductNewsArea>
           <RightFooterArea>
             <RightFooterTitle>胜任力APP推广</RightFooterTitle>
@@ -86,11 +98,10 @@ export const Home = () => {
         <Footer />
       </FootBox>
       <SettingBtn>
-        {/* <SettingOutlined
-          style={{ fontSize: 36, color: '#326fff' }}
-          onClick={this.hanleContextChange}
-        /> */}
-        SettingOutlined
+        <SettingOutlined
+          style={{ fontSize: 30, color: '#326fff' }}
+          onClick={hanleContextChange}
+        />
       </SettingBtn>
     </Main>
   </Container>
@@ -99,7 +110,7 @@ export const Home = () => {
 // 整个容器
 const Container = styled.div`
   display: grid; 
-  grid-template-rows: 6rem 1fr 6rem;  //从上到下的大小 1fr表示自动
+  grid-template-rows: 2rem 1fr 6rem;  //从上到下的大小 1fr表示自动
   grid-template-columns: 20rem 1fr 20rem;  //从左到右的大小 1fr表示自动
   grid-template-areas: 
   "header header header"  
@@ -224,13 +235,13 @@ const FootBox = styled.div`
 `
 
 const SettingBtn = styled.div` 
-width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background-color: #ffffff;
     border-radius: 5px;
     position: fixed;
-    right: 20px;
-    top: 300px;
+    right: 5px;
+    top: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
