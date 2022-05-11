@@ -68,7 +68,11 @@
       "fullScore": 150,
       "creater": "创建人",
       "createTime": "1546900800000",
-      "processorId": 1
+      "processorId": 1,
+      "gaugeType": 1,
+      "gaugeMin": 1,
+      "gaugeMax": 5,
+      "gaugeDefaultValue": 1
     },
     {
       "id": 1,
@@ -85,6 +89,16 @@
       "title": "问题3",
       "discription": "问题说明",
       "type": 2,
+      "fullScore": 150,
+      "creater": "创建人",
+      "createTime": "1546900800000",
+      "processorId": 1
+    },
+    {
+      "id": 3,
+      "title": "问题4",
+      "discription": "问题说明",
+      "type": 3,
       "fullScore": 150,
       "creater": "创建人",
       "createTime": "1546900800000",

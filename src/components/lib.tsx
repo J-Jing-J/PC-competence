@@ -41,6 +41,13 @@ export const ButtonNoPadding = styled(Button)`
   padding: 0;
 `
 
+export const SubmitButton = styled(Button)`
+  position: absolute;
+  left: 50%;
+  transform: translate(0, 50%);
+  margin: 20px 0 20px 0;
+`
+
 // 只要是error类型，才返回错误组件
 // 类型守卫，是否是error类型(鸭子类型))
 const isError = (value: any): value is Error => value?.message

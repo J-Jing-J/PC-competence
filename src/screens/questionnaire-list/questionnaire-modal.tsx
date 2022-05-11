@@ -13,7 +13,7 @@ export const QuestionnaireModal = () => {
   const useMutateQuestionnaire = editingQuestionnaire ? useEditQuestionnaires : useAddQuestionnaires;
   // 选异步，因为要等结果返回再关闭窗口渲染结果
   const { mutateAsync, error, isLoading: mutateLoading } = useMutateQuestionnaire(useQuestionnaireQueryKey());
-  const [form] = useForm()
+  const [form] = useForm();
 
   const onFinish = (values: any) => {
     mutateAsync({ ...editingQuestionnaire, ...values }).then(() => {
@@ -26,7 +26,7 @@ export const QuestionnaireModal = () => {
   const closeModal = () => {
     // 清空输入框
     form.resetFields();
-    close()
+    close();
   }
 
   const title = editingQuestionnaire ? "编辑量表" : '创建量表'
@@ -91,7 +91,6 @@ export const QuestionnaireModal = () => {
         </Form>
       </>
       }
-      <h1>Modal</h1>
       <Button onClick={close}>关闭</Button>
     </Containner>
   </Drawer >

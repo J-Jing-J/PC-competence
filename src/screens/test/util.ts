@@ -19,5 +19,5 @@ export const useQuestionnaireInUrl = () => {
 export const useTestSearchParams = () => ({ questionnaireId: useQuestionnaireIdInUrl() })
 export const useTestQueryKey = () => ['tests', useTestSearchParams()];
 
-export const useSettingSearchParams = () => ({ questionnaireId: useQuestionnaireIdInUrl() });
-export const useSettingQueryKey = () => ['setting', useSettingSearchParams()];
+export const useHistorySearchParams = () => ({ questionnaireId: useQuestionnaireIdInUrl() });
+export const useHistoryQueryKey = () => ['history', useHistorySearchParams()];

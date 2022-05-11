@@ -1,18 +1,23 @@
 import React, { useState } from 'react'
 import {
   Form,
-  Button,
+  Button
 } from 'antd';
-import { useDocumentTitle } from '../../utils'
+import { useForm } from "antd/es/form/Form"
+import { resetRoute, useDocumentTitle } from '../../utils'
 import { useQuestionnaireTest } from '../../utils/questionnaireTest';
 import { useQuestionnaireInUrl } from './util';
 import { TestItem } from './test-item';
 import styled from '@emotion/styled';
-import { SubmitButton } from '../../components/Buttons';
+import { SubmitButton } from '../../components/lib';
 import { ScreenContainer } from '../../components/lib';
 
 
 export const TestQuestionnaireScreen = () => {
+
+  const [form] = useForm();
+
+
 
   // const { data: currentQuestionnaire } = useQuestionnaireInUrl()
   const currentQuestionnaire = {
@@ -29,18 +34,19 @@ export const TestQuestionnaireScreen = () => {
     "pin": true
   }
 
-  const { data: tests } = useQuestionnaireTest()
 
-  useDocumentTitle(currentQuestionnaire?.title);
 
-  const [value, setValue] = useState(currentQuestionnaire.value);
+  useDocumentTitle(currentQuestionnaire?.title ? currentQuestionnaire?.title : '问卷');
 
-  // const onChange = e => {
-  //   console.log('radio checked', e.target.value);
-  //   // this.setState({
-  //   //   value: e.target.value,
-  //   // });
-  // };
+  // 提交的同时清空数据
+  const onFinish = (values: any) => {
+    // mutateAsync({ ...editingQuestionnaire, ...values }).then(() => {
+    //   form.resetFields();
+    // })
+    console.log(values);
+    form.resetFields();
+    window.location.replace('finish')
+  }
 
   return (
     <ScreenContainer>
@@ -51,15 +57,18 @@ export const TestQuestionnaireScreen = () => {
           <TestForm
             labelCol={{ span: 4 }}
             wrapperCol={{ span: 14 }}
-            layout="horizontal"
-          // initialValues={{ size: componentSize }}
-          // onValuesChange={onFormLayoutChange}
-          // size={componentSize as SizeType}
+            layout={"vertical"}
+            onFinish={onFinish}
+            form={form}
           >
             <TestItem />
-            {/* <Form.Item> */}
-            <SubmitButton style={{ marginBottom: '20px' }} size="large">提交</SubmitButton>
-            {/* </Form.Item> */}
+            <Form.Item style={{ textAlign: 'right', marginTop: '40px' }}>
+              <Button
+                size="large"
+                type={'primary'}
+                htmlType={"submit"}
+              >提交</Button>
+            </Form.Item>
           </TestForm>
         }
       </QuestionnaireContainer>
@@ -73,18 +82,18 @@ const QuestionnaireContainer = styled.div`
   /* overflow: hidden; */
   align-items: center;
   min-width: 75rem;
-  border-radius: 6px;
+  border-radius:20px;
   background-color: rgb(244, 245, 247);
   padding: 0.7rem 0.7rem 1rem;
   margin-right: 1.5rem;
-  overflow: scroll;
 `
 
-const QuestionnaireTitle = styled.h1`
+export const QuestionnaireTitle = styled.h1`
   width: 70%;
   text-align: center;
+  margin-top: 30px;
 `
-const QuestionnaireDescription = styled.p`
+export const QuestionnaireDescription = styled.p`
   color: gray;
   text-align: center;
 `
