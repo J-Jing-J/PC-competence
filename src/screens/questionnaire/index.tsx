@@ -26,7 +26,7 @@ export const QuestionaireScreen = () => {
       <Aside>
         <Menu mode={'inline'} selectedKeys={[routeType]}>
           <Menu.Item key={'test'}>
-            <Link style={{ marginRight: '10px' }} to={'test'}>报表</Link>
+            <Link style={{ marginRight: '10px' }} to={'test'}>量表</Link>
           </Menu.Item>
           <Menu.Item key={'history'}>
             <Link style={{ marginRight: '10px' }} to={'history'}>测试历史</Link>
@@ -56,9 +56,9 @@ export const QuestionaireScreen = () => {
 const Aside = styled.aside`
   background-color: rgb(244, 245, 247);
   display: flex;
-  /* position: sticky;
-  top: 6rem;
-  height: 100vh; */
+  position: sticky;
+  top: 10rem;
+  max-height: 80vh;
 `
 
 const Main = styled.div`

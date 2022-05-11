@@ -1,7 +1,12 @@
+import styled from '@emotion/styled'
 import React from 'react'
 import { ScreenContainer } from '../../components/lib'
+import { useDocumentTitle } from '../../utils'
 import { QuestionnaireDescription, QuestionnaireTitle } from '../test'
 import { CreateTest } from './create-test'
+import { TestEditColumn } from './test-edit-column'
+import { TestTypeColumn } from './test-type-column'
+// import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 export const EditQuestionnaireScreen = () => {
 
@@ -19,12 +24,22 @@ export const EditQuestionnaireScreen = () => {
     "pin": true
   }
 
+  useDocumentTitle('编辑问卷');
 
   return (
     <ScreenContainer>
-      <QuestionnaireTitle>{currentQuestionnaire?.title}</QuestionnaireTitle>
-      <QuestionnaireDescription>{currentQuestionnaire?.discription}</QuestionnaireDescription>
-      <CreateTest />
-    </ScreenContainer>
+      {/* <CreateTest /> */}
+      <ColumnsContainer>
+        <TestTypeColumn />
+        <TestEditColumn />
+      </ColumnsContainer>
+      {/* <TaskModal /> */}
+    </ScreenContainer >
   )
 }
+
+const ColumnsContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  /* overflow-x: scroll; */
+`;

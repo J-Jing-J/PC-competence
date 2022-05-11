@@ -117,20 +117,6 @@ export const TestItem = () => {
                 <Option value="Yiminghe">yiminghe</Option>
               </Select>
             </TestFormItem>
-          ) : +test.type === 6 ? (
-            <TestFormItem
-              label={`${test.id + 1}. ${test.title}`}
-              name={`${test.id}`}
-            >
-              <Select defaultValue="lucy" style={{ width: 400 }}>
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-                <Option value="disabled" disabled>
-                  Disabled
-                </Option>
-                <Option value="Yiminghe">yiminghe</Option>
-              </Select>
-            </TestFormItem>
           ) : (<div>暂无匹配题型</div>)
         }
       </TestItemCard>)

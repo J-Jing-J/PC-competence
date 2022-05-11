@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { Rate } from 'antd'
 import { useForm } from "antd/es/form/Form"
 import { useDocumentTitle } from '../../utils'
 import { ScreenContainer } from '../../components/lib';
-import { ReactComponent as LoginLogo } from '../../assets/login-logo.svg'
+import { ReactComponent as TestFinish } from '../../assets/test-finish.svg'
+import styled from '@emotion/styled';
 
 
 
@@ -27,15 +29,36 @@ export const TestFinishScreen = () => {
     "pin": true
   }
 
+  const testRateOptions = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+
 
 
   useDocumentTitle(currentQuestionnaire?.title ? currentQuestionnaire?.title : '问卷完成');
 
   return (
     <ScreenContainer>
-      <LoginLogo style={{ margin: -10, }} height={'5rem'} width={'5rem'} color={'rgb(38, 132, 255)'} />
-      <h1>问卷到此结束，感谢您的参与</h1>
+      <TestFinishContainer>
+        <FinishImg>
+          <TestFinish height={'20rem'} width={'20rem'} />
+        </FinishImg>
+        <FinishTest>问卷到此结束，感谢您的参与</FinishTest>
+      </TestFinishContainer>
     </ScreenContainer>
   )
 }
+
+const TestFinishContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+const FinishImg = styled.div`
+  margin-top: 7rem;
+`
+
+const FinishTest = styled.p`
+  margin-top: 4rem;
+  font-size: 3rem;
+`
 
