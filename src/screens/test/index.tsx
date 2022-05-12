@@ -94,8 +94,8 @@ export const QuestionnaireTitle = styled.h1`
   margin-top: 30px;
 `
 export const QuestionnaireDescription = styled.p`
-  color: gray;
-  text-align: center;
+  text-align: left;
+  width: 70%;
 `
 const TestForm = styled(Form)`
   width: 70%;

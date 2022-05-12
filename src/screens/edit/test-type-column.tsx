@@ -17,12 +17,11 @@ import styled from '@emotion/styled';
 
 
 export const TestTypeColumn = () => {
-
   const svgStyle = { verticalAlign: 'middle' }
   return <TestTypeContainer>
     <Button style={{ marginBottom: '1rem' }} type='primary' size='large'>题目控件</Button>
     {
-      testTypes.map(type => <TypeItemCard style={{ marginBottom: '0.5rem' }} key={type.id}>
+      testTypes.map(type => <TypeItemCard hoverable style={{ marginBottom: '0.5rem' }} key={type.id}>
         {
           type.icon === 'Radio' ? <RadioSVG style={svgStyle} height={'3.5rem'} width={'3.5rem'} /> :
             type.icon === 'MultiRadio' ? <MultiRadioSVG style={svgStyle} height={'3rem'} width={'3rem'} /> :

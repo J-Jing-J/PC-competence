@@ -31,11 +31,11 @@ export const TestEditColumn = () => {
 
   return (
     <ScreenContainer>
-      {/* <QuestionnaireContainer> */}
-      <QuestionnaireTitle>{currentQuestionnaire?.title}</QuestionnaireTitle>
-      <QuestionnaireDescription>{currentQuestionnaire?.discription}</QuestionnaireDescription>
-      <TestItem />
-      {/* </QuestionnaireContainer> */}
+      <QuestionnaireContainer>
+        <QuestionnaireTitle>{currentQuestionnaire?.title}</QuestionnaireTitle>
+        <QuestionnaireDescription>{currentQuestionnaire?.discription}</QuestionnaireDescription>
+        <TestItem />
+      </QuestionnaireContainer>
     </ScreenContainer>
   )
 }
@@ -50,14 +50,18 @@ const QuestionnaireContainer = styled.div`
   background-color: rgb(244, 245, 247);
   padding: 0.7rem 0.7rem 1rem;
   margin-right: 1.5rem;
+  margin-top: 2rem;
 `
 
 export const QuestionnaireTitle = styled.h1`
   width: 70%;
   text-align: center;
   margin-top: 30px;
+  font-size: 3rem;
 `
+
 export const QuestionnaireDescription = styled.p`
-  color: gray;
-  text-align: center;
+  text-align: left;
+  width: 100%;
+  padding-left: 12rem;
 `

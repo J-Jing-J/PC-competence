@@ -27,7 +27,9 @@ export const TestItem = () => {
 
   return <>
     {
-      allTests?.map(test => <TestItemCard key={test.id}>
+      allTests?.map(test => <TestItemCard hoverable key={test.id}>
+        <TestTitle>{test.title}</TestTitle>
+        <TestDescription>{test.discription}</TestDescription>
         {
           +test.type === 0 ? (
             // return <Radio.Group onChange={onChange} value={value}>
@@ -100,6 +102,18 @@ const TestFormItem = styled(Form.Item)`
 `
 
 export const TestItemCard = styled(Card)`
-  margin-bottom: 0.5rem;
-  margin-top: 20px;
+  padding: 0 0 2rem 10rem;
+  margin-top: 0.5rem;
+  width: 100%;
+  min-height: 20rem;
+`
+const TestTitle = styled.h3`
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: normal;
+`
+const TestDescription = styled.p`
+  color: gray;
+  font-size: 1.2rem;
+  margin-top: 1rem;
 `

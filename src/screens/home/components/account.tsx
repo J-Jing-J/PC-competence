@@ -15,6 +15,10 @@ export const Account = (props: IProps) => {
   const {
     name = '', usageTime = 150, grade = 2, score = 0,
   } = userBalance;
+
+  const handleToTest = () => {
+    window.location.replace("questionnaires");
+  }
   return (
     <SummaryComponentBox>
       <div>
@@ -42,7 +46,7 @@ export const Account = (props: IProps) => {
           <Value>{usageTime}</Value>
           <Text> 次测试</Text>
         </div>
-        <Button type="primary" size="small" style={{ fontSize: '10px' }}>继续测试</Button>
+        <Button type="primary" size="small" onClick={handleToTest} style={{ fontSize: '10px' }}>继续测试</Button>
       </UsageTime>
       {/* <Score>
         <div>
