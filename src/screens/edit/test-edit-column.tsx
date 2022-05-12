@@ -10,15 +10,21 @@ import { TestItem } from './test-item';
 import styled from '@emotion/styled';
 import { SubmitButton } from '../../components/lib';
 import { ScreenContainer } from '../../components/lib';
+import { CreateTest } from './create-test';
 
+interface TestEditColumnProps {
+  addType: number
+}
 
-export const TestEditColumn = () => {
+export const TestEditColumn = (props: TestEditColumnProps) => {
+
+  const { addType } = props;
 
   // const { data: currentQuestionnaire } = useQuestionnaireInUrl()
   const currentQuestionnaire = {
     "id": 0,
     "title": "问卷1",
-    "discription": "问卷说明",
+    "description": "问卷说明",
     "typeId": 1,
     "fullScore": 150,
     "value": 0,  //0代表未选择，1代表A，以此类推
@@ -29,12 +35,17 @@ export const TestEditColumn = () => {
     "pin": true
   }
 
+
+
   return (
     <ScreenContainer>
       <QuestionnaireContainer>
         <QuestionnaireTitle>{currentQuestionnaire?.title}</QuestionnaireTitle>
-        <QuestionnaireDescription>{currentQuestionnaire?.discription}</QuestionnaireDescription>
+        <QuestionnaireDescription>{currentQuestionnaire?.description}</QuestionnaireDescription>
         <TestItem />
+        {
+          addType < 10 ? <CreateTest addType={addType} /> : null
+        }
       </QuestionnaireContainer>
     </ScreenContainer>
   )

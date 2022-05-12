@@ -18,7 +18,7 @@ export const TestFinishScreen = () => {
   const currentQuestionnaire = {
     "id": 0,
     "title": "问卷1",
-    "discription": "问卷说明",
+    "description": "问卷说明",
     "typeId": 1,
     "fullScore": 150,
     "value": 0,  //0代表未选择，1代表A，以此类推

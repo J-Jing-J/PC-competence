@@ -112,7 +112,7 @@ const MyCarousel = styled(Carousel)`
             }
             .slick-active {
                 button {
-                    background: #326fff;
+                    background: #12ADA9;
                 }
             }
         }

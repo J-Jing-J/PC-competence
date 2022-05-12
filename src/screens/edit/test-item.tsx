@@ -14,13 +14,15 @@ import {
 import { gaugeType, QuestionnaireTest } from '../../types/questionnaireTest'
 import { useQuestionnaireTest } from '../../utils/questionnaireTest';
 import styled from '@emotion/styled';
+import { CreateTest } from './create-test';
+import { TestItemCard } from '../test/test-item';
 
 const { Option } = Select;
+const { TextArea } = Input;
+
 
 // export const TestItem = ({ test }: { test: QuestionnaireTest }) => {
 export const TestItem = () => {
-
-  const { TextArea } = Input;
 
   const { data: allTests } = useQuestionnaireTest();
 
@@ -29,7 +31,7 @@ export const TestItem = () => {
     {
       allTests?.map(test => <TestItemCard hoverable key={test.id}>
         <TestTitle>{test.title}</TestTitle>
-        <TestDescription>{test.discription}</TestDescription>
+        <TestDescription>{test.description}</TestDescription>
         {
           +test.type === 0 ? (
             // return <Radio.Group onChange={onChange} value={value}>
@@ -101,12 +103,6 @@ const TestFormItem = styled(Form.Item)`
   }
 `
 
-export const TestItemCard = styled(Card)`
-  padding: 0 0 2rem 10rem;
-  margin-top: 0.5rem;
-  width: 100%;
-  min-height: 20rem;
-`
 const TestTitle = styled.h3`
   width: 100%;
   font-size: 1.5rem;

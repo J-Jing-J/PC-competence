@@ -24,7 +24,7 @@ export const gaugeType = [
 export interface QuestionnaireTest {
   id: number;
   title: string;
-  discription: string;
+  description: string;
   type: number;
   score: number;  //该题分数
   // 负责人

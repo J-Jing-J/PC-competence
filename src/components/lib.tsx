@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Button, Spin, Typography } from "antd";
+import { Button, Spin, Typography, BackTop } from "antd";
 
 export const Row = styled.div<{
   gap?: number | boolean;
@@ -71,4 +71,15 @@ export const ScreenContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+`
+
+export const BackTopDiv = styled(BackTop)`
+  height: 40;
+  width: 40;
+  line-height: 40px;
+  border-radius: 50%;
+  background-color: #12ADA9;
+  color: #fff;
+  text-align: center;
+  font-size: 14;
 `

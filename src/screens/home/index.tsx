@@ -1,6 +1,6 @@
 import { useAuth } from "../../context/auth-context"
 import styled from '@emotion/styled'
-import { Button, DatePicker } from "antd"
+import { BackTop, Button, DatePicker } from "antd"
 import { Footer } from '../../components/Footer';
 import { SettingOutlined } from '@ant-design/icons';
 import { QuestionnaireListScreen } from "../../screens/questionnaire-list"
@@ -9,6 +9,7 @@ import { Account } from "./components/account";
 import { Banner } from "./components/banner";
 import { News } from "./components/news";
 import { useState } from "react";
+import { BackTopDiv } from "../../components/lib";
 
 
 export const Home = () => {
@@ -98,11 +99,14 @@ export const Home = () => {
       </FootBox>
       <SettingBtn>
         <SettingOutlined
-          style={{ fontSize: 30, color: '#326fff' }}
+          style={{ fontSize: 30, color: '#12ADA9' }}
           onClick={hanleContextChange}
         />
       </SettingBtn>
     </Main>
+    <BackTop>
+      <BackTopDiv>UP</BackTopDiv>
+    </BackTop>
   </Container>
 }
 

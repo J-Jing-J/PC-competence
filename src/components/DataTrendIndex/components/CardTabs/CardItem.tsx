@@ -28,7 +28,7 @@ export const CardItem = (props: IProps) => {
     alignItems: 'center',
     cursor: 'pointer',
     marginRight: '10px',
-    backgroundImage: 'linear-gradient(137deg, #5f51ff, #326fff 76%)',
+    backgroundImage: 'linear-gradient(137deg, #0bd3c3, #12ADA9 76%)',
     paddingLeft: '30px',
     paddingRight: '10px'
   }

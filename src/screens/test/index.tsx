@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import {
   Form,
-  Button
+  Button,
+  BackTop
 } from 'antd';
 import { useForm } from "antd/es/form/Form"
 import { resetRoute, useDocumentTitle } from '../../utils'
@@ -9,7 +10,7 @@ import { useQuestionnaireTest } from '../../utils/questionnaireTest';
 import { useQuestionnaireInUrl } from './util';
 import { TestItem } from './test-item';
 import styled from '@emotion/styled';
-import { SubmitButton } from '../../components/lib';
+import { BackTopDiv, SubmitButton } from '../../components/lib';
 import { ScreenContainer } from '../../components/lib';
 
 
@@ -23,7 +24,7 @@ export const TestQuestionnaireScreen = () => {
   const currentQuestionnaire = {
     "id": 0,
     "title": "问卷1",
-    "discription": "问卷说明",
+    "description": "问卷说明",
     "typeId": 1,
     "fullScore": 150,
     "value": 0,  //0代表未选择，1代表A，以此类推
@@ -52,7 +53,7 @@ export const TestQuestionnaireScreen = () => {
     <ScreenContainer>
       <QuestionnaireContainer>
         <QuestionnaireTitle>{currentQuestionnaire?.title}</QuestionnaireTitle>
-        <QuestionnaireDescription>{currentQuestionnaire?.discription}</QuestionnaireDescription>
+        <QuestionnaireDescription>{currentQuestionnaire?.description}</QuestionnaireDescription>
         {
           <TestForm
             labelCol={{ span: 4 }}
@@ -72,6 +73,9 @@ export const TestQuestionnaireScreen = () => {
           </TestForm>
         }
       </QuestionnaireContainer>
+      <BackTop>
+        <BackTopDiv>UP</BackTopDiv>
+      </BackTop>
     </ScreenContainer>
   )
 }

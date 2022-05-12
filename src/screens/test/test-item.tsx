@@ -135,6 +135,8 @@ const TestFormItem = styled(Form.Item)`
 `
 
 export const TestItemCard = styled(Card)`
-  margin-bottom: 0.5rem;
-  margin-top: 20px;
+  padding: 0 0 2rem 10rem;
+  margin-top: 0.5rem;
+  width: 100%;
+  min-height: 20rem;
 `

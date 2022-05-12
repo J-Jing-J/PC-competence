@@ -86,10 +86,10 @@ const Grade = styled.div`
 
 const GradeOk = styled.div`
   font-size: 12px;
-            border: 1px solid #1890ff;
+            border: 1px solid #12ADA9;
             border-radius: 9px;
             padding: 0 6px;
-            color: #1890ff;
+            color: #12ADA9;
             height: 22px;
             line-height: 20px;
 `

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
-import React from 'react'
-import { ScreenContainer } from '../../components/lib'
+import React, { useState } from 'react'
+import { BackTop } from 'antd';
+import { BackTopDiv, ScreenContainer } from '../../components/lib'
 import { useDocumentTitle } from '../../utils'
 import { QuestionnaireDescription, QuestionnaireTitle } from '../test'
 import { CreateTest } from './create-test'
@@ -13,7 +14,7 @@ export const EditQuestionnaireScreen = () => {
   const currentQuestionnaire = {
     "id": 0,
     "title": "问卷1",
-    "discription": "问卷说明",
+    "description": "问卷说明",
     "typeId": 1,
     "fullScore": 150,
     "value": 0,  //0代表未选择，1代表A，以此类推
@@ -24,16 +25,24 @@ export const EditQuestionnaireScreen = () => {
     "pin": true
   }
 
+  const [addType, setAddType] = useState(10);
+
+
+  // const addTypeChange = (setAddType: Function) => {}
+
   useDocumentTitle('编辑问卷');
 
   return (
     <ScreenContainer>
       {/* <CreateTest /> */}
       <ColumnsContainer>
-        <TestTypeColumn />
-        <TestEditColumn />
+        <TestTypeColumn setAddType={setAddType} />
+        <TestEditColumn addType={addType} />
       </ColumnsContainer>
       {/* <TaskModal /> */}
+      <BackTop>
+        <BackTopDiv>UP</BackTopDiv>
+      </BackTop>
     </ScreenContainer >
   )
 }
@@ -43,3 +52,4 @@ const ColumnsContainer = styled.div`
   justify-content: flex-start;
   /* overflow-x: scroll; */
 `;
+

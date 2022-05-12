@@ -24,7 +24,7 @@ export const LineChart = (props: IProps) => {
       shape: 'diamond',
       style: {
         fill: 'white',
-        stroke: '#5B8FF9',
+        stroke: '#12ADA9',
         lineWidth: 2,
       },
     },

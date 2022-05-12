@@ -2,7 +2,7 @@
 export interface displayedListType {
   id: number;
   title: string;
-  discription: string;
+  description: string;
   typeId: number;
   fullScore: string;
   pin: boolean;

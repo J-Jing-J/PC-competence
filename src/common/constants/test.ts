@@ -31,3 +31,8 @@ export const testTypes = [
   }
 ]
 
+export type testTypesType = {
+  id: number,
+  name: string,
+  icon?: string
+}

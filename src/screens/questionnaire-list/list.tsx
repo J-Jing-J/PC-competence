@@ -54,7 +54,7 @@ export const List = React.memo(({ questionnaireTypes, ...props }: ListProps) => 
       },
       {
         title: '说明',
-        dataIndex: 'discription', //在对应的questionnair上读name属性
+        dataIndex: 'description', //在对应的questionnair上读name属性
       },
       {
         title: '总分',

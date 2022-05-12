@@ -41,7 +41,6 @@ export default () => {
       // onClose={() => setQuestionnaireModalOpen(false)}
       />
     </Router>
-
   </Container>
 }
 
@@ -113,19 +112,17 @@ export const Header = styled(Row)`
   padding: 3.2rem;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   z-index: 1;
-  position: sticky;
-  top: 0;
+  position: fixed;
   background-color: rgb(244, 245, 247);
+  width: 100%;
+  max-height: 3rem;
 `
 const HeaderItem = styled.h3` 
   margin-right: 3rem;
 `
 
 export const HeaderLeft = styled(Row)``;
-
-export const HeaderRight = styled.div`
-  
-`
+export const HeaderRight = styled.div``
 const Main = styled.main`grid-area: main;`
 const Aside = styled.aside`grid-area: aside;`
 const Footer = styled.footer`

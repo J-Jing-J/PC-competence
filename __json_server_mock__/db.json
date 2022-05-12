@@ -17,7 +17,7 @@
     {
       "id": 0,
       "title": "问卷1",
-      "discription": "问卷说明",
+      "description": "问卷说明",
       "typeId": 1,
       "fullScore": 150,
       "rank": "名次--暂无",
@@ -29,7 +29,7 @@
     {
       "id": 1,
       "title": "问卷2",
-      "discription": "说明",
+      "description": "说明",
       "typeId": 1,
       "fullScore": 150,
       "rank": "名次--暂无",
@@ -41,7 +41,7 @@
     {
       "id": 2,
       "title": "问卷3",
-      "discription": "说明",
+      "description": "说明",
       "typeId": 2,
       "fullScore": 150,
       "rank": "名次--暂无",
@@ -54,7 +54,7 @@
       "title": "11",
       "typeId": 1,
       "fullScore": "11",
-      "discription": "11",
+      "description": "11",
       "id": 3,
       "pin": true
     }
@@ -63,7 +63,7 @@
     {
       "id": 0,
       "title": "问题1",
-      "discription": "问题说明",
+      "description": "问题说明",
       "type": 0,
       "fullScore": 150,
       "creater": "创建人",
@@ -77,7 +77,7 @@
     {
       "id": 1,
       "title": "问题2",
-      "discription": "问题说明",
+      "description": "问题说明",
       "type": 1,
       "fullScore": 150,
       "creater": "创建人",
@@ -87,7 +87,7 @@
     {
       "id": 2,
       "title": "问题3",
-      "discription": "问题说明",
+      "description": "问题说明",
       "type": 2,
       "fullScore": 150,
       "creater": "创建人",
@@ -97,7 +97,7 @@
     {
       "id": 3,
       "title": "问题4",
-      "discription": "问题说明",
+      "description": "问题说明",
       "type": 3,
       "fullScore": 150,
       "creater": "创建人",
@@ -107,7 +107,7 @@
     {
       "id": 3,
       "title": "问题4",
-      "discription": "问题说明",
+      "description": "问题说明",
       "type": 3,
       "fullScore": 150,
       "creater": "创建人",

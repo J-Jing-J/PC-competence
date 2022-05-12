@@ -77,7 +77,7 @@ export const QuestionnaireModal = () => {
           </Form.Item>
           <Form.Item
             label={'问卷说明'}
-            name={'discription'}
+            name={'description'}
           >
             <Input placeholder="请输入问卷说明（选填）" />
           </Form.Item>
