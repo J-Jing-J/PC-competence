@@ -68,7 +68,7 @@ export const FullPageErrorFallBack = ({ error }: { error: Error | null }) =>
 
 export const ScreenContainer = styled.div`
   padding: 0 3rem 0 3rem;
-  width: 100%;
+  width: 95%;
   display: flex;
   flex-direction: column;
 `

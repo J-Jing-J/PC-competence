@@ -44,24 +44,25 @@ export const TestEditColumn = (props: TestEditColumnProps) => {
   }
 
   const [title, setTitle] = useState(currentQuestionnaire.title);
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(currentQuestionnaire.description);
   const [inputTitleMode, setInputTitleMode] = useState(false);
   const [inputDescriptionMode, setInputDescriptionMode] = useState(false);
 
   const questionnaireId = useQuestionnaireIdInUrl();
   // const { mutateAsync: addTest } = useAddTest(useTestQueryKey());
 
-  const submitTitle = (value: string) => {
+  const submitTitle = () => {
     // await 
     setInputTitleMode(false);
-    setTitle(value);
+    // setTitle(value);
   }
 
   const submitDescription = () => {
     // await 
     setInputDescriptionMode(false);
-    setDescription('');
+    // setDescription(value);
   }
+
 
   const openTitleInput = () => {
     setInputTitleMode(true);
@@ -72,6 +73,9 @@ export const TestEditColumn = (props: TestEditColumnProps) => {
     setInputDescriptionMode(true);
     setInputTitleMode(false);
   }
+
+  const toggleTitleMode = () => setInputTitleMode(mode => !mode);
+  const toggleDescriptionMode = () => setInputDescriptionMode(mode => !mode);
 
 
   // useEffect(() => {
@@ -86,8 +90,16 @@ export const TestEditColumn = (props: TestEditColumnProps) => {
         {
           inputTitleMode ? (
             <TitleCard>
-              <Input onBlur={(evt) => submitTitle(evt.target.value)} defaultValue={title} />
-              {/* <Button onClick={submitTitle}>确定</Button> */}
+              <Input
+                style={{ width: '30rem' }}
+                onBlur={toggleTitleMode}
+                value={title}
+                placeholder={'请输入问卷题目'}
+                autoFocus={true}
+                onPressEnter={submitTitle}
+                onChange={evt => setTitle(evt.target.value)}
+              />
+              <Button type='primary' onClick={submitTitle}>确定</Button>
             </TitleCard>
           ) : (
             <TitleCard onClick={openTitleInput}>
@@ -98,8 +110,16 @@ export const TestEditColumn = (props: TestEditColumnProps) => {
         {
           inputDescriptionMode ? (
             <TitleCard>
-              <Input onBlur={submitDescription} defaultValue={description} />
-              <Button onClick={submitDescription}>确定</Button>
+              <Input
+                style={{ width: '30rem' }}
+                onBlur={toggleDescriptionMode}
+                value={description}
+                placeholder={'请输入问卷备注'}
+                autoFocus={true}
+                onPressEnter={submitDescription}
+                onChange={evt => setDescription(evt.target.value)}
+              />
+              <Button type='primary' onClick={submitDescription}>确定</Button>
             </TitleCard>
           ) : (
             <TitleCard onClick={openDescriptionInput}>
@@ -134,6 +154,7 @@ const TitleCard = styled.div`
   padding: 0 0 2rem 15rem;
   margin-top: 0.5rem;
   width: 100%;
+  text-align: center;
 `
 
 export const QuestionnaireTitle = styled.h1`

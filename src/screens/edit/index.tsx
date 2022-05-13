@@ -27,7 +27,7 @@ export const EditQuestionnaireScreen = () => {
 
   const [addType, setAddType] = useState(10);
 
-  
+
 
 
   // const addTypeChange = (setAddType: Function) => {}
@@ -52,6 +52,5 @@ export const EditQuestionnaireScreen = () => {
 const ColumnsContainer = styled.div`
   display: flex;
   justify-content: flex-start;
-  /* overflow-x: scroll; */
 `;
 

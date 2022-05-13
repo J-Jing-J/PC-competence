@@ -57,6 +57,13 @@
       "description": "11",
       "id": 3,
       "pin": true
+    },
+    {
+      "title": "名称",
+      "typeId": 1,
+      "fullScore": "100",
+      "description": "fff",
+      "id": 4
     }
   ],
   "tests": [

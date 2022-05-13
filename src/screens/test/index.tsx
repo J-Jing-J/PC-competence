@@ -85,11 +85,11 @@ const QuestionnaireContainer = styled.div`
   flex-direction: column;
   /* overflow: hidden; */
   align-items: center;
-  min-width: 75rem;
+  max-width: 100%;
   border-radius:20px;
   background-color: rgb(244, 245, 247);
   padding: 0.7rem 0.7rem 1rem;
-  margin-right: 1.5rem;
+  /* margin-right: 1.5rem; */
 `
 
 export const QuestionnaireTitle = styled.h1`
