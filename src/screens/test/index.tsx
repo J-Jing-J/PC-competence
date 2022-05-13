@@ -93,16 +93,17 @@ const QuestionnaireContainer = styled.div`
 `
 
 export const QuestionnaireTitle = styled.h1`
-  width: 70%;
+  width: 100%;
   text-align: center;
   margin-top: 30px;
 `
 export const QuestionnaireDescription = styled.p`
+  margin-left: 35rem;
   text-align: left;
-  width: 70%;
+  width: 100%;
 `
 const TestForm = styled(Form)`
-  width: 70%;
+  width: 100%;
   margin-bottom: 50px;
   padding-bottom: 50px;
 `

@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Form,
-  Button
+  Button,
+  Input
 } from 'antd';
 import { useForm } from "antd/es/form/Form"
 import { resetRoute, useDocumentTitle } from '../../utils'
@@ -11,14 +12,21 @@ import styled from '@emotion/styled';
 import { SubmitButton } from '../../components/lib';
 import { ScreenContainer } from '../../components/lib';
 import { CreateTest } from './create-test';
+import { useQuestionnaireIdInUrl, useTestQueryKey } from '../test/util';
+import { useAddTest } from '../../utils/questionnaireEdit';
+import { TestItemCard } from '../test/test-item';
 
 interface TestEditColumnProps {
   addType: number
+  setAddType: (typeId: number) => void
 }
 
 export const TestEditColumn = (props: TestEditColumnProps) => {
 
-  const { addType } = props;
+  const [finishAddTest, setFinishAddTest] = useState(false)
+  useEffect(() => { }, [finishAddTest]);
+
+  const { addType, setAddType } = props;
 
   // const { data: currentQuestionnaire } = useQuestionnaireInUrl()
   const currentQuestionnaire = {
@@ -35,16 +43,73 @@ export const TestEditColumn = (props: TestEditColumnProps) => {
     "pin": true
   }
 
+  const [title, setTitle] = useState(currentQuestionnaire.title);
+  const [description, setDescription] = useState('');
+  const [inputTitleMode, setInputTitleMode] = useState(false);
+  const [inputDescriptionMode, setInputDescriptionMode] = useState(false);
 
+  const questionnaireId = useQuestionnaireIdInUrl();
+  // const { mutateAsync: addTest } = useAddTest(useTestQueryKey());
+
+  const submitTitle = (value: string) => {
+    // await 
+    setInputTitleMode(false);
+    setTitle(value);
+  }
+
+  const submitDescription = () => {
+    // await 
+    setInputDescriptionMode(false);
+    setDescription('');
+  }
+
+  const openTitleInput = () => {
+    setInputTitleMode(true);
+    setInputDescriptionMode(false);
+  }
+
+  const openDescriptionInput = () => {
+    setInputDescriptionMode(true);
+    setInputTitleMode(false);
+  }
+
+
+  // useEffect(() => {
+  //   if (!inputTitleMode) {
+  //     setTitle('');
+  //   }
+  // }, [inputTitleMode, inputDescriptionMode])
 
   return (
     <ScreenContainer>
       <QuestionnaireContainer>
-        <QuestionnaireTitle>{currentQuestionnaire?.title}</QuestionnaireTitle>
-        <QuestionnaireDescription>{currentQuestionnaire?.description}</QuestionnaireDescription>
+        {
+          inputTitleMode ? (
+            <TitleCard>
+              <Input onBlur={(evt) => submitTitle(evt.target.value)} defaultValue={title} />
+              {/* <Button onClick={submitTitle}>确定</Button> */}
+            </TitleCard>
+          ) : (
+            <TitleCard onClick={openTitleInput}>
+              <QuestionnaireTitle>{currentQuestionnaire?.title}</QuestionnaireTitle>
+            </TitleCard>
+          )
+        }
+        {
+          inputDescriptionMode ? (
+            <TitleCard>
+              <Input onBlur={submitDescription} defaultValue={description} />
+              <Button onClick={submitDescription}>确定</Button>
+            </TitleCard>
+          ) : (
+            <TitleCard onClick={openDescriptionInput}>
+              <QuestionnaireDescription>{currentQuestionnaire?.description}</QuestionnaireDescription>
+            </TitleCard>
+          )
+        }
         <TestItem />
         {
-          addType < 10 ? <CreateTest addType={addType} /> : null
+          addType < 10 ? <CreateTest finishAddTest={finishAddTest} setFinishAddTest={setFinishAddTest} addType={addType} setAddType={setAddType} /> : null
         }
       </QuestionnaireContainer>
     </ScreenContainer>
@@ -62,6 +127,13 @@ const QuestionnaireContainer = styled.div`
   padding: 0.7rem 0.7rem 1rem;
   margin-right: 1.5rem;
   margin-top: 2rem;
+`
+
+const TitleCard = styled.div`
+  min-height: 10rem;
+  padding: 0 0 2rem 15rem;
+  margin-top: 0.5rem;
+  width: 100%;
 `
 
 export const QuestionnaireTitle = styled.h1`

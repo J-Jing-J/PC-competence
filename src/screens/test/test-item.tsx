@@ -38,11 +38,11 @@ export const TestItem = () => {
               name={`${test.id}`}
               rules={[{ required: true, message: '请至少选择一项' }]}
             >
-              <span>
+              <span style={{ width: '100%' }}>
                 {`非常不${gaugeType.find(type => type.id === test.gaugeType)?.name}  `}
                 <Radio.Group>
                   {
-                    new Array(test.gaugeMax).fill(0).map((radio, index) => <Radio value={index + 1}>{index + 1}</Radio>)
+                    new Array(test.gaugeRange).fill(0).map((radio, index) => <Radio value={index + 1}>{index + 1}</Radio>)
                   }
                 </Radio.Group>
                 {`  非常${gaugeType.find(type => type.id === test.gaugeType)?.name}`}
@@ -135,7 +135,7 @@ const TestFormItem = styled(Form.Item)`
 `
 
 export const TestItemCard = styled(Card)`
-  padding: 0 0 2rem 10rem;
+  padding: 0 0 2rem 15rem;
   margin-top: 0.5rem;
   width: 100%;
   min-height: 20rem;

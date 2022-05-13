@@ -1,6 +1,6 @@
 import { Button, InputNumber, Form, Input, Select, Spin, Checkbox } from "antd"
 import { useForm } from "antd/es/form/Form"
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { TestTypeSelect } from "../../components/type-select";
 import { useAddTest } from "../../utils/questionnaireEdit";
 import { TestItemCard } from "../test/test-item";
@@ -9,36 +9,66 @@ import {
   CloseOutlined
 } from '@ant-design/icons';
 import styled from "@emotion/styled";
+import { scrollToBottom } from "../../utils/scroll";
 
 const { Option } = Select;
 
-interface TestEditColumnProps {
-  addType: number
+interface CreateTestProps {
+  addType: number;
+  setAddType: (typeId: number) => void;
+  finishAddTest: boolean;
+  setFinishAddTest: (finishAddTest: boolean) => void
 }
 
-export const CreateTest = (props: TestEditColumnProps) => {
-  const { addType } = props;
+export const CreateTest = (props: CreateTestProps) => {
+  const { addType, setAddType, finishAddTest, setFinishAddTest } = props;
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [type, setType] = useState(0);
-  const [score, setScore] = useState(0);
   // const [type, setType] = useState(0);
+  const [score, setScore] = useState(0);
+  const [isRequired, setIsRequired] = useState(true);
+  const [gaugeType, setGaugeType] = useState(0);
+  const [gaugeRange, setGaugeRange] = useState(5);
+  const [options, setOptions] = useState(['', '']);
+
+  useEffect(() => {
+    if (addType > 9) {
+      setTitle('');
+      setDescription('');
+      setAddType(0);
+      setScore(0);
+      setIsRequired(true);
+      setGaugeType(0);
+      setGaugeRange(5);
+    }
+  }, [addType]);
+
   const questionnaireId = useQuestionnaireIdInUrl();
   const { mutateAsync: addTest } = useAddTest(useTestQueryKey());
 
   const [form] = useForm();
 
-  const onFinish = (values: any) => {
-    console.log(values);
-
+  const onFinish = async (values: any) => {
+    const optionsResult = JSON.stringify(options);
+    await addTest({ questionnaireId, title, description, type: addType, score, isRequired, gaugeType, gaugeRange, options: optionsResult });
+    setFinishAddTest(!finishAddTest)
     form.resetFields();
+    console.log(values);
+    form.resetFields();
+    setAddType(10);
+
+    setTitle('');
+    setDescription('');
+    setAddType(0);
+    setScore(0);
+    setIsRequired(true);
+    setGaugeType(0);
+    setGaugeRange(5);
+
+    window.location.reload();
   }
 
-  const Submit = async () => {
-    await addTest({ questionnaireId, title, description, type, score });
-    setTitle('');
-  }
 
   const formItemLayout = {
     labelCol: { span: 6 },
@@ -62,7 +92,7 @@ export const CreateTest = (props: TestEditColumnProps) => {
         >
           <Input
             placeholder={'新建问题名称'}
-            onPressEnter={Submit}
+            autoFocus={true}
             value={title}
             onChange={evt => setTitle(evt.target.value)}
           />
@@ -73,34 +103,39 @@ export const CreateTest = (props: TestEditColumnProps) => {
         >
           <Input
             placeholder={'新建问题描述/备注'}
-            onPressEnter={Submit}
             value={description}
             onChange={evt => setDescription(evt.target.value)}
           />
         </Form.Item>
         <Form.Item
-          label={'类型'}
-          name={'typeId'}
-          rules={[{ required: true, message: '请选择问题类型' }]}
-        >
-          <TestTypeSelect
-            defaultOptionName={"请选择问题类型"}>
-          </TestTypeSelect>
-        </Form.Item>
-        <Form.Item
           label={'分值'}
           name={'score'}
-          rules={[{ required: true, message: '请输入分值' }]}
         >
-          <Input placeholder="请输入分值" />
+          <InputNumber
+            min={1}
+            max={100}
+            defaultValue={10}
+            onChange={value => setScore(value)}
+          />
         </Form.Item>
         <Form.Item
           label={'是否必填'}
           name={'isRequired'}
         >
-          <Checkbox checked>Checkbox</Checkbox>
+          <Checkbox
+            checked={isRequired}
+            onChange={evt => setIsRequired(evt.target.value)}
+          />
         </Form.Item>
-        <CustomTest addType={addType} />
+        <CustomTest
+          addType={addType}
+          gaugeType={gaugeType}
+          setGaugeType={setGaugeType}
+          gaugeRange={gaugeRange}
+          setGaugeRange={setGaugeRange}
+          options={options}
+          setOptions={setOptions}
+        />
         <Form.Item>
           <Button
             style={{ marginLeft: '30rem' }}
@@ -116,11 +151,20 @@ export const CreateTest = (props: TestEditColumnProps) => {
 
 
 interface CustomTestProps {
-  addType: number
+  addType: number;
+  gaugeType: number;
+  setGaugeType: (range: number) => void;
+  gaugeRange: number;
+  setGaugeRange: (range: number) => void;
+  options: string[];
+  setOptions: (options: string[]) => void;
 }
 
 const CustomTest = (props: CustomTestProps) => {
-  const { addType } = props;
+  const {
+    addType, gaugeType, setGaugeType, gaugeRange, setGaugeRange, options, setOptions
+  } = props;
+
   return <>
     {
       addType === 0 ? (
@@ -129,42 +173,59 @@ const CustomTest = (props: CustomTestProps) => {
             label={'量表类型'}
             name={'gaugeType'}
           >
-            <Select defaultValue="0" style={{ width: 400 }}>
-              <Option value="0">认同度</Option>
-              <Option value="1">满意度</Option>
-              <Option value="2">重要度</Option>
-              <Option value="3">意愿度</Option>
-              <Option value="4">符合度</Option>
+            <Select
+              placeholder={"请选择"}
+              value={gaugeType}
+              onChange={value => setGaugeType(value)}
+              style={{ width: 300 }}
+            >
+              <Option value={1}>认同度</Option>
+              <Option value={2}>满意度</Option>
+              <Option value={3}>重要度</Option>
+              <Option value={4}>意愿度</Option>
+              <Option value={5}>符合度</Option>
             </Select>
           </Form.Item>
           <Form.Item
             label={'量表范围'}
-            name={'gaugeType'}
+            name={'gaugeRange'}
           >
-            <InputNumber min={1} max={100} defaultValue={5} />
+            <InputNumber
+              value={gaugeRange}
+              defaultValue={5}
+              min={1}
+              max={100}
+              onChange={value => setGaugeRange(value)}
+            />
           </Form.Item>
         </>
       ) : addType === 1 || addType === 2 || addType === 5 ? (
-        <CreateOptions />
+        <CreateOptions options={options} setOptions={setOptions} />
       ) : null
     }
   </>
 }
 
 
-const CreateOptions = () => {
-  let [options, setOptions] = useState(['', '', '', ''])
+interface CreateOptionsProps {
+  options: string[];
+  setOptions: (options: string[]) => void;
+}
+
+const CreateOptions = (props: CreateOptionsProps) => {
+
+  const { options, setOptions } = props;
 
   const addOption = () => {
     setOptions([...options, ''])
+    console.log(options);
   }
 
   const deleteOption = (index: number) => {
-    console.log(index);
     const newOptions = [...options];
-    console.log(JSON.stringify(newOptions));
     newOptions.splice(index, 1);
     setOptions([...newOptions]);
+    console.log(options);
   }
 
   return <>

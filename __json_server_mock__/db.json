@@ -70,8 +70,7 @@
       "createTime": "1546900800000",
       "processorId": 1,
       "gaugeType": 1,
-      "gaugeMin": 1,
-      "gaugeMax": 5,
+      "gaugeRange": 5,
       "gaugeDefaultValue": 1
     },
     {
@@ -113,6 +112,129 @@
       "creater": "创建人",
       "createTime": "1546900800000",
       "processorId": 1
+    },
+    {
+      "questionnaireId": 0,
+      "title": "问题",
+      "description": "描述",
+      "type": 0,
+      "score": 10,
+      "isRequired": true,
+      "gaugeType": 2,
+      "gaugeRange": 6,
+      "id": 4
+    },
+    {
+      "questionnaireId": 0,
+      "title": "啥啊",
+      "description": "备注备注",
+      "type": 0,
+      "score": 0,
+      "isRequired": true,
+      "gaugeType": 4,
+      "gaugeRange": 7,
+      "id": 5
+    },
+    {
+      "questionnaireId": 0,
+      "title": "量表132131",
+      "description": "123123",
+      "type": 0,
+      "score": 0,
+      "isRequired": true,
+      "gaugeType": 5,
+      "gaugeRange": 8,
+      "id": 6
+    },
+    {
+      "questionnaireId": 0,
+      "title": "题目1234123",
+      "description": "1231231",
+      "type": 0,
+      "score": 0,
+      "isRequired": true,
+      "gaugeType": 3,
+      "gaugeRange": 9,
+      "id": 7
+    },
+    {
+      "questionnaireId": 0,
+      "title": "213123",
+      "description": "123123",
+      "type": 0,
+      "score": 0,
+      "isRequired": true,
+      "gaugeType": 2,
+      "gaugeRange": 5,
+      "id": 8
+    },
+    {
+      "questionnaireId": 0,
+      "title": "45645",
+      "description": "456456",
+      "type": 0,
+      "score": 0,
+      "isRequired": true,
+      "gaugeType": 3,
+      "gaugeRange": 6,
+      "id": 9
+    },
+    {
+      "questionnaireId": 0,
+      "title": "单行输入",
+      "description": "单行",
+      "type": 0,
+      "score": 0,
+      "isRequired": true,
+      "gaugeType": 0,
+      "gaugeRange": 5,
+      "id": 10
+    },
+    {
+      "questionnaireId": 0,
+      "title": "单行输入",
+      "description": "描述",
+      "type": 3,
+      "score": 0,
+      "isRequired": true,
+      "gaugeType": 0,
+      "gaugeRange": 5,
+      "id": 11
+    },
+    {
+      "questionnaireId": 0,
+      "title": "多行",
+      "description": "111",
+      "type": 4,
+      "score": 0,
+      "isRequired": true,
+      "gaugeType": 0,
+      "gaugeRange": 5,
+      "id": 12
+    },
+    {
+      "questionnaireId": 0,
+      "title": "单选",
+      "description": "描述",
+      "type": 1,
+      "score": 0,
+      "isRequired": true,
+      "gaugeType": 0,
+      "gaugeRange": 5,
+      "options": "[\"\",\"\"]",
+      "id": 14
+    },
+    {
+      "questionnaireId": 0,
+      "title": "选你",
+      "description": "备注",
+      "type": 1,
+      "score": 0,
+      "isRequired": true,
+      "gaugeType": 0,
+      "gaugeRange": 5,
+      "options": "[\"\",\"\"]",
+      "id": 15
     }
   ],
   "me": {

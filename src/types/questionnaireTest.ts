@@ -27,11 +27,11 @@ export interface QuestionnaireTest {
   description: string;
   type: number;
   score: number;  //该题分数
-  // 负责人
-  processorId: number;
+  isRequired: boolean;
+  processorId: number;  // 负责人
   questionnaireId: number;
   gaugeType?: number;   //满意度 认同度
-  gaugeMin?: number,
-  gaugeMax?: number,
-  gaugeDefaultValue?: number
+  gaugeRange?: number,
+  gaugeDefaultValue?: number;
+  options?: string;
 }

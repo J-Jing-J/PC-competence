@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Checkbox,
   Col,
@@ -26,11 +26,10 @@ export const TestItem = () => {
 
   const { data: allTests } = useQuestionnaireTest();
 
-
   return <>
     {
-      allTests?.map(test => <TestItemCard hoverable key={test.id}>
-        <TestTitle>{test.title}</TestTitle>
+      allTests?.map((test, index) => <TestItemCard hoverable key={test.id}>
+        <TestTitle><strong>{index + 1}</strong>、{test.title}</TestTitle>
         <TestDescription>{test.description}</TestDescription>
         {
           +test.type === 0 ? (
@@ -39,7 +38,7 @@ export const TestItem = () => {
               {`非常不${gaugeType.find(type => type.id === test.gaugeType)?.name}  `}
               <Radio.Group>
                 {
-                  new Array(test.gaugeMax).fill(0).map((radio, index) => <Radio value={index + 1}>{index + 1}</Radio>)
+                  new Array(test.gaugeRange).fill(0).map((radio, index) => <Radio value={index + 1}>{index + 1}</Radio>)
                 }
               </Radio.Group>
               {`  非常${gaugeType.find(type => type.id === test.gaugeType)?.name}`}
@@ -48,9 +47,15 @@ export const TestItem = () => {
             // return <Radio.Group onChange={onChange} value={value}>
             <Radio.Group>
               <Space direction="vertical">
-                <Radio value={1}>Option A</Radio>
+                {
+                  test.options ? JSON.parse(test.options).map((option: string, index: number) =>
+                    <Radio value={index}>{option}</Radio>
+                  )
+                    : null
+                }
+                {/* <Radio value={1}>Option A</Radio>
                 <Radio value={2}>Option B</Radio>
-                <Radio value={3}>Option C</Radio>
+                <Radio value={3}>Option C</Radio> */}
               </Space>
             </Radio.Group>
           ) : +test.type === 2 ? (

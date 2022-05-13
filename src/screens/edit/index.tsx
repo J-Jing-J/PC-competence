@@ -27,6 +27,8 @@ export const EditQuestionnaireScreen = () => {
 
   const [addType, setAddType] = useState(10);
 
+  
+
 
   // const addTypeChange = (setAddType: Function) => {}
 
@@ -37,7 +39,7 @@ export const EditQuestionnaireScreen = () => {
       {/* <CreateTest /> */}
       <ColumnsContainer>
         <TestTypeColumn setAddType={setAddType} />
-        <TestEditColumn addType={addType} />
+        <TestEditColumn addType={addType} setAddType={setAddType} />
       </ColumnsContainer>
       {/* <TaskModal /> */}
       <BackTop>
