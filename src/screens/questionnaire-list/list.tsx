@@ -12,6 +12,7 @@ import { useAuth } from '../../context/auth-context';
 import { useQuestionnaireModal, useQuestionnaireQueryKey } from './util';
 import { displayedListType } from '../../types/questionnaire'
 import { useMemo } from 'react';
+import { getEPQ } from '../../utils/fixedQuestionnaire';
 
 
 
@@ -27,9 +28,10 @@ interface ListProps extends TableProps<displayedListType> {
 
 // { questionnaireTypes, ...props }取出questionnaireTypes，剩下的键值全放在props里
 export const List = React.memo(({ questionnaireTypes, ...props }: ListProps) => {
-  const { user } = useAuth()
+  const { user } = useAuth();
   const { mutate } = useEditQuestionnaires(useQuestionnaireQueryKey())
   const pinQuestionnaire = (id: number) => (pin: boolean) => mutate({ id, pin });
+
 
   return <Table
     rowKey={"id"}

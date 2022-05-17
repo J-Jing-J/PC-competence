@@ -6,6 +6,7 @@ import { FullPageErrorFallBack, FullPageLoading } from '../components/lib';
 import { useMount } from '../utils';
 import { http } from '../utils/http';
 import { useAsync } from '../utils/use-async';
+import { tokenKey } from '../common/constants/storageKey';
 
 interface AuthForm {
   idNumber: string;
@@ -17,11 +18,13 @@ interface AuthForm {
 const bootstrapUser = async () => {
   let user = null;
   // 从localstorage里读token
-  const token = auth.getToken();
+  let token = JSON.parse(auth.getToken())
+  const headers = { token };
   if (token) {
     // 如果有token，就携带在请求头里
     // 要判断token是否有效，所以不用useHttp，用http
-    const data = await http('user/getUserInfo', { token });
+    console.log('token', token);
+    const data = await http('user/getUserInfo', { headers: headers });
     user = data;
     // user = data.user;
   }

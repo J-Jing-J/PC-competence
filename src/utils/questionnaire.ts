@@ -1,6 +1,4 @@
 // 合并use-async
-import Item from 'antd/lib/list/Item';
-import { useState, useEffect, useCallback } from 'react'
 import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
 import { displayedListType } from '../types/questionnaire'
 import { useQuestionnairesSearchParams } from '../screens/questionnaire-list/util';
@@ -21,6 +19,7 @@ export const useQuestionnaires = (inputContent?: Partial<displayedListType>) => 
   //   run(fetchQuestionnaire(), { retry: fetchQuestionnaire })
   // }, [inputContent, run, fetchQuestionnaire]);
   // return result
+
   return useQuery<displayedListType[]>(['questionnaires', inputContent], () => client('questionnaires', { data: cleanObject(inputContent || {}) }))
 }
 

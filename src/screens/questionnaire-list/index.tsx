@@ -15,6 +15,7 @@ import { useUrlQueryParam } from "../../utils/url"
 import { useQuestionnaireModal, useQuestionnairesSearchParams } from "./util"
 import { ButtonNoPadding, ErrorBox, Row } from "../../components/lib"
 import { useAuth } from "../../context/auth-context"
+import { getEPQ } from "../../utils/fixedQuestionnaire"
 
 const apiUrl = process.env.REACT_APP_API_URL
 
@@ -39,6 +40,9 @@ export const QuestionnaireListScreen = () => {
   // const [displayedList, setDisplayedList] = useState([])
   // const { run, isLoading, error, data: displayedList } = useAsync<displayedListType[]>()
   const { isLoading, error, data: displayedList } = useQuestionnaires(useDebounce(inputContent, 200));
+  const EPQTest = getEPQ();
+  let ListData = displayedList ? [EPQTest, ...displayedList] : displayedList;
+
   // questionnaire变化时请求接口
   // useEffect(() => {
   // client返回一个promise，而run需要接收一个promise

@@ -21,8 +21,10 @@ export const http = async (
   const config = {
     method: 'GET',
     headers: {
-      Authorization: token ? `Bearer ${token}` : '',
-      'Content-Type': data ? 'application/json' : ''
+      // Authorization: token ? `Bearer ${token}` : '',
+      'Content-Type': data ? 'application/json' : '',
+      // token: token ? token : null,
+      ...headers
     },
     // 会覆盖上面的值，例如传入method:'POST'
     ...customConfig
@@ -31,6 +33,7 @@ export const http = async (
   // get：参数拼接在后面
   // post：参数放到body里
   if (config.method.toUpperCase() === 'GET') {
+
     endPoint += `?${qs.stringify(data)}`
   } else {
     config.body = JSON.stringify(data || {})
