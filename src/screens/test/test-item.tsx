@@ -42,7 +42,7 @@ export const TestItem = () => {
                 {`非常不${gaugeType.find(type => type.id === test.gaugeType)?.name}  `}
                 <Radio.Group>
                   {
-                    new Array(test.gaugeRange).fill(0).map((radio, index) => <Radio value={index + 1}>{index + 1}</Radio>)
+                    new Array(test.gaugeRange).fill(0).map((radio, index) => <Radio key={radio} value={index + 1}>{index + 1}</Radio>)
                   }
                 </Radio.Group>
                 {`  非常${gaugeType.find(type => type.id === test.gaugeType)?.name}`}
@@ -139,4 +139,5 @@ export const TestItemCard = styled(Card)`
   margin-top: 0.5rem;
   width: 100%;
   min-height: 20rem;
+  cursor: pointer;
 `

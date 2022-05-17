@@ -8,7 +8,7 @@ import { http } from '../utils/http';
 import { useAsync } from '../utils/use-async';
 
 interface AuthForm {
-  username: string;
+  idNumber: string;
   password: string;
 }
 
@@ -21,7 +21,7 @@ const bootstrapUser = async () => {
   if (token) {
     // 如果有token，就携带在请求头里
     // 要判断token是否有效，所以不用useHttp，用http
-    const data = await http('me', { token });
+    const data = await http('user/getUserInfo', { token });
     user = data;
     // user = data.user;
   }

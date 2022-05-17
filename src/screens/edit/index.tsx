@@ -7,6 +7,7 @@ import { QuestionnaireDescription, QuestionnaireTitle } from '../test'
 import { CreateTest } from './create-test'
 import { TestEditColumn } from './test-edit-column'
 import { TestTypeColumn } from './test-type-column'
+import { TaskModal } from './test-modal';
 // import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 export const EditQuestionnaireScreen = () => {
@@ -45,6 +46,7 @@ export const EditQuestionnaireScreen = () => {
       <BackTop>
         <BackTopDiv>UP</BackTopDiv>
       </BackTop>
+      <TaskModal />
     </ScreenContainer >
   )
 }

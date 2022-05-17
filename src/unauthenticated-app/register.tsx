@@ -1,6 +1,6 @@
 import Reacts, { FormEvent } from 'react';
 import { Button, Form, Input } from 'antd'
-
+import CryptoJs from 'crypto-js'
 import { useAuth } from '../context/auth-context';
 import { LongButton } from '.';
 import { useAsync } from '../utils/use-async';
@@ -25,7 +25,16 @@ export const RegisterScreen = ({ onError }: { onError: (error: Error) => void })
     // 默认会把event.currentTarget.elements[0]当成element类型，上面没有value
     // const username = (event.currentTarget.elements[0] as HTMLInputElement).value
     // const password = (event.currentTarget.elements[1] as HTMLInputElement).value;
-    run(register(values).catch((error) => onError(error)))
+
+    const tempPwd = CryptoJs.MD5(values.password).toString();
+
+    const tempForm = {
+      idNumber: values.username,
+      password: values.password,
+      userName: values.username
+    }
+
+    run(register(tempForm).catch((error) => onError(error)))
   }
 
   return <Form onFinish={handleSubmit}>

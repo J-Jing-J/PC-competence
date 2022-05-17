@@ -16,7 +16,7 @@
   "questionnaires": [
     {
       "id": 0,
-      "title": "问卷1",
+      "title": "问题1",
       "description": "问卷说明",
       "typeId": 1,
       "fullScore": 150,
@@ -36,7 +36,8 @@
       "creater": "创建人",
       "createTime": "1374832498500",
       "logo": "logo",
-      "pin": true
+      "pin": true,
+      "options": "['A','B','C']"
     },
     {
       "id": 2,
@@ -69,8 +70,8 @@
   "tests": [
     {
       "id": 0,
-      "title": "问题1",
-      "description": "问题说明",
+      "title": "我不是一个容易忧虑的人。",
+      "description": "请根据如下情况作出选择",
       "type": 0,
       "fullScore": 150,
       "creater": "创建人",
@@ -82,13 +83,16 @@
     },
     {
       "id": 1,
-      "title": "问题2",
-      "description": "问题说明",
-      "type": 1,
+      "title": "我喜欢周围有很多朋友。",
+      "description": "请根据如下情况作出选择",
+      "type": 0,
       "fullScore": 150,
       "creater": "创建人",
       "createTime": "1546900800000",
-      "processorId": 1
+      "processorId": 1,
+      "gaugeType": 1,
+      "gaugeRange": 5,
+      "gaugeDefaultValue": 1
     },
     {
       "id": 2,
@@ -102,7 +106,7 @@
     },
     {
       "id": 3,
-      "title": "问题4",
+      "title": "多选",
       "description": "问题说明",
       "type": 3,
       "fullScore": 150,
@@ -112,9 +116,19 @@
     },
     {
       "id": 3,
-      "title": "问题4",
+      "title": "单行问答题",
       "description": "问题说明",
       "type": 3,
+      "fullScore": 150,
+      "creater": "创建人",
+      "createTime": "1546900800000",
+      "processorId": 1
+    },
+    {
+      "id": 4,
+      "title": "多行问答题",
+      "description": "问题说明",
+      "type": 4,
       "fullScore": 150,
       "creater": "创建人",
       "createTime": "1546900800000",
@@ -144,7 +158,7 @@
     },
     {
       "questionnaireId": 0,
-      "title": "量表132131",
+      "title": "量表132",
       "description": "123123",
       "type": 0,
       "score": 0,
@@ -189,17 +203,6 @@
     {
       "questionnaireId": 0,
       "title": "单行输入",
-      "description": "单行",
-      "type": 0,
-      "score": 0,
-      "isRequired": true,
-      "gaugeType": 0,
-      "gaugeRange": 5,
-      "id": 10
-    },
-    {
-      "questionnaireId": 0,
-      "title": "单行输入",
       "description": "描述",
       "type": 3,
       "score": 0,
@@ -221,27 +224,15 @@
     },
     {
       "questionnaireId": 0,
-      "title": "单选",
+      "title": "量表",
       "description": "描述",
-      "type": 1,
+      "type": 0,
       "score": 0,
       "isRequired": true,
-      "gaugeType": 0,
-      "gaugeRange": 5,
+      "gaugeType": 5,
+      "gaugeRange": 7,
       "options": "[\"\",\"\"]",
-      "id": 14
-    },
-    {
-      "questionnaireId": 0,
-      "title": "选你",
-      "description": "备注",
-      "type": 1,
-      "score": 0,
-      "isRequired": true,
-      "gaugeType": 0,
-      "gaugeRange": 5,
-      "options": "[\"\",\"\"]",
-      "id": 15
+      "id": 13
     }
   ],
   "me": {

@@ -38,17 +38,23 @@ export const TestTypeColumn = (props: TestItemProps) => {
   return <TestTypeContainer>
     <Button style={{ marginBottom: '1rem' }} type='primary' size='large'>题目控件</Button>
     {
-      testTypes.map(type => <TypeItemCard onClick={() => handleTypeCard(type.id)} hoverable style={{ marginBottom: '0.5rem' }} key={type.id}>
-        {
-          type.icon === 'Radio' ? <RadioSVG style={svgStyle} /> :
-            type.icon === 'MultiRadio' ? <MultiRadioSVG style={svgStyle} /> :
-              type.icon === 'Gauge' ? <GaugeSVG style={svgStyle} /> :
-                type.icon === 'Input' ? <InputSVG style={svgStyle} /> :
-                  type.icon === 'Textarea' ? <TextareaSVG style={svgStyle} /> :
-                    type.icon === 'Select' ? <SelectSVG style={svgStyle} /> : null
-        }
-        <TypeText>{type.name}</TypeText>
-      </TypeItemCard>)
+      testTypes.map(type =>
+        <TypeItemCard
+          onClick={() => handleTypeCard(type.id)}
+          hoverable
+          style={{ marginBottom: '0.5rem' }}
+          key={type.id}
+        >
+          {
+            type.icon === 'Radio' ? <RadioSVG style={svgStyle} /> :
+              type.icon === 'MultiRadio' ? <MultiRadioSVG style={svgStyle} /> :
+                type.icon === 'Gauge' ? <GaugeSVG style={svgStyle} /> :
+                  type.icon === 'Input' ? <InputSVG style={svgStyle} /> :
+                    type.icon === 'Textarea' ? <TextareaSVG style={svgStyle} /> :
+                      type.icon === 'Select' ? <SelectSVG style={svgStyle} /> : null
+          }
+          <TypeText>{type.name}</TypeText>
+        </TypeItemCard>)
     }
   </TestTypeContainer>
 };

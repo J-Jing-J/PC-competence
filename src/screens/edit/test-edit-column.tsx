@@ -4,7 +4,6 @@ import {
   Button,
   Input
 } from 'antd';
-import { useForm } from "antd/es/form/Form"
 import { resetRoute, useDocumentTitle } from '../../utils'
 import { useQuestionnaireTest } from '../../utils/questionnaireTest';
 import { TestItem } from './test-item';
@@ -15,6 +14,8 @@ import { CreateTest } from './create-test';
 import { useQuestionnaireIdInUrl, useTestQueryKey } from '../test/util';
 import { useAddTest } from '../../utils/questionnaireEdit';
 import { TestItemCard } from '../test/test-item';
+import { TaskModal } from './test-modal';
+import { useEditTestModal } from './util';
 
 interface TestEditColumnProps {
   addType: number
@@ -23,7 +24,7 @@ interface TestEditColumnProps {
 
 export const TestEditColumn = (props: TestEditColumnProps) => {
 
-  const [finishAddTest, setFinishAddTest] = useState(false)
+  const [finishAddTest, setFinishAddTest] = useState(false);
   useEffect(() => { }, [finishAddTest]);
 
   const { addType, setAddType } = props;
@@ -155,6 +156,7 @@ const TitleCard = styled.div`
   margin-top: 0.5rem;
   width: 100%;
   text-align: center;
+  cursor: pointer;
 `
 
 export const QuestionnaireTitle = styled.h1`

@@ -9,5 +9,14 @@ export interface User {
   token: string;
   usageTime: number
   grade: number,
-  score: number
+  score: number,
+
+  authorityId: number
+  gender: string
+  groupName: string
+  idNumber: number
+  sex: string
+  userGroup: number
+  userId: number
+  userName: string
 }

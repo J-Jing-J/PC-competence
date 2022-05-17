@@ -18,7 +18,7 @@ export const QuestionnairePopover = () => {
     <Typography.Text>收藏问卷</Typography.Text>
     <List>
       {
-        pinnedQuestionnaires?.map((pinned) => <List.Item>
+        pinnedQuestionnaires?.map(pinned => <List.Item key={pinned.id}>
           <List.Item.Meta title={pinned.title} />
         </List.Item>)
       }

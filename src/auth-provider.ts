@@ -10,14 +10,17 @@ const localStorageKey = '__auth_provider_token__'
 // 获取token
 export const getToken = () => window.localStorage.getItem(localStorageKey);
 
-export const handleUserResponse = ({ user }: { user: User }) => {
+export const handleUserResponse = ({ user, token }: { user: User, token: string }) => {
   // 当返回的token为undefined时，给一个空字符串
-  window.localStorage.setItem(localStorageKey, user.token || '')
+  console.log(token);
+  console.log(user)
+
+  window.localStorage.setItem(localStorageKey, token || '')
   return user
 }
 
-export const login = (data: { username: string, password: string }) => {
-  return fetch(`${apiUrl}/login`, {
+export const login = (data: { idNumber: string, password: string }) => {
+  return fetch(`${apiUrl}/user/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -26,7 +29,9 @@ export const login = (data: { username: string, password: string }) => {
   }).then(async (response) => {
     if (response.ok) {
       // ok，返回user数据
-      return handleUserResponse(await response.json())
+      const res = await response.json();
+      console.log(res);
+      return handleUserResponse(res.data)
     } else {
       // 报错
       // Promise.reject()效果类似于throw new Errow
@@ -35,8 +40,8 @@ export const login = (data: { username: string, password: string }) => {
   })
 }
 
-export const register = (data: { username: string, password: string }) => {
-  return fetch(`${apiUrl}/register`, {
+export const register = (data: { idNumber: string, password: string }) => {
+  return fetch(`${apiUrl}/user/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

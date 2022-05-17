@@ -93,7 +93,7 @@ export const useQuestionnaire = (id?: number) => {
     // questionnaire是缓存的key
     // {id}是变化时触发刷新
     ['questionnaire', { id }],
-    () => client(`questionnire/${id}`),
+    () => client(`questionnires/${id}`),
     // useQuery的第三个参数是配置参数，只有在id有值时才触发
     { enabled: Boolean(id) }
   )

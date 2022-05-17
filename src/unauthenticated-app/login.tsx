@@ -1,5 +1,7 @@
 import { FormEvent } from 'react';
 import { Button, Form, Input } from 'antd'
+// import crypto from 'crypto' // 引用md5加密
+import CryptoJs from 'crypto-js'
 import { useAuth } from '../context/auth-context';
 import { LongButton } from '.';
 import { useAsync } from '../utils/use-async';
@@ -19,13 +21,39 @@ export const LoginScreen = ({ onError }: { onError: (error: Error) => void }) =>
     // 类型antd根据Form.Item的name推断
     values: { username: string, password: string }
   ) => {
+    // values.password
+
+    const tempPwd = CryptoJs.MD5(values.password).toString();
+    // md5.update(values.password) // 需要加密的密码
+    // var password = md5.digest('hex') // 提取加密的密码
+    // var tempPwd = password // 用临时变量tempPwd存储加密后的密码
+
+    // // 普通用户登陆数据
+    // let postNormalData = {
+    //   idNumber: this.user.userName,
+    //   // userName: this.user.userName,
+    //   password: tempPwd
+    // }
+    // // 管理员登陆数据
+    // let postAdminData = {
+    //   adminName: this.user.userName,
+    //   password: tempPwd
+    // }
+
+    const tempForm = {
+      idNumber: values.username,
+      password: tempPwd
+    }
+
     // event.preventDefault()
     // 浏览器的form标准：event.currentTarget.elements 里有所有input的信息
     // 默认会把event.currentTarget.elements[0]当成element类型，上面没有value
     // const username = (event.currentTarget.elements[0] as HTMLInputElement).value
     // const password = (event.currentTarget.elements[1] as HTMLInputElement).value;
     // login({ username, password })
-    run(login(values).catch((error) => onError(error)))
+
+    // run(login(values).catch((error) => onError(error)))
+    run(login(tempForm).catch((error) => onError(error)))
   }
 
   // return <form onSubmit={handleSubmit}>
