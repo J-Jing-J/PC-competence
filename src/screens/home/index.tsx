@@ -15,7 +15,7 @@ import { BackTopDiv } from "../../components/lib";
 export const Home = () => {
   const { user, logout } = useAuth();
   const userBalance = {
-    name: user?.name,
+    name: user?.userName,
     usageTime: user?.usageTime,
     status: user?.grade,
     score: user?.score

@@ -1,4 +1,6 @@
+import { useQuery } from 'react-query';
 import * as auth from '../auth-provider'
+import { http, useHttp } from './http';
 const apiUrl = process.env.REACT_APP_API_URL
 
 interface updatePasswordForm {
@@ -8,7 +10,6 @@ interface updatePasswordForm {
 
 export const updatePassword = (data: updatePasswordForm) => {
   const token = JSON.parse(auth.getToken());
-  console.log(JSON.stringify(data));
   return fetch(`${apiUrl}/user/updatePassword`, {
     method: 'POST',
     headers: {
@@ -27,4 +28,20 @@ export const updatePassword = (data: updatePasswordForm) => {
       return Promise.reject(await response.json())
     }
   })
+}
+
+
+export const useUserTask = () => {
+  const client = useHttp();
+  // 从localstorage里读token
+  let token = JSON.parse(auth.getToken());
+  const headers = { token };
+  const res = useQuery(
+    ['user/getUserTask'],
+    () => client(
+      'user/getUserTask',
+      { ...headers }
+    )
+  )
+  return res
 }

@@ -90,7 +90,7 @@ const User = () => {
           <Button type={"link"} onClick={toAccount}>用户中心</Button>
         </Menu.Item>
       </Menu>}>
-    <Button type={"link"} onClick={e => e.preventDefault()}>Hi,{user?.name}</Button>
+    <Button type={"link"} onClick={e => e.preventDefault()}>Hi,{user?.userName}</Button>
   </Dropdown>
 }
 

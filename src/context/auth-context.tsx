@@ -31,11 +31,11 @@ const bootstrapUser = async () => {
     // 要判断token是否有效，所以不用useHttp，用http
     console.log('token', token);
     const data = await http('user/getUserInfo', { headers: headers });
-    user = data;
-    // user = data.user;
+    user = data.userInfo;
   }
   return user;
 }
+
 
 // React.createContext返回一个context对象
 // export const AuthContext = React.createContext<{

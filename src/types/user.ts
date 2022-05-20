@@ -2,7 +2,6 @@ type sex = '未知' | '男' | '女'
 
 export interface User {
   id: number;
-  name: string;
   createAt: string;
   updateAt: string;
   email: string;

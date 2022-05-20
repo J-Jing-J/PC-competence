@@ -61,4 +61,7 @@ export const register = (data: { idNumber: string, password: string, userName: s
 
 
 // 加async才可以返回promise
-export const logout = async () => window.localStorage.removeItem(tokenKey);
+export const logout = async () => {
+  window.localStorage.removeItem(tokenKey);
+  window.location.pathname = '/login'
+}

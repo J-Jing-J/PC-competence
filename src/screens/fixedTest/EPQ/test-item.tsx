@@ -26,8 +26,7 @@ const { Option } = Select;
 // export const TestItem = ({ test }: { test: QuestionnaireTest }) => {
 export const EPQTestItem = () => {
 
-  const { TextArea } = Input;
-  const { isLoading, error, data: EPQ } = useEPQ();
+  const { isLoading, data: EPQ } = useEPQ();
   const instruction = EPQ?.instruction;
   const allTests = EPQ?.list;
   // const {instruction, list} = EPQ.data
