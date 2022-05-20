@@ -24,7 +24,6 @@ export const TestItem = () => {
 
   const { data: allTests } = useQuestionnaireTest();
 
-
   return <>
     {
       allTests?.map(test => <TestItemCard key={test.id}>

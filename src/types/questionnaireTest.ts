@@ -35,3 +35,34 @@ export interface QuestionnaireTest {
   gaugeDefaultValue?: number;
   options?: string;
 }
+
+export interface fixedTest {
+  instruction: EPQInstruction
+  list: FixedList[]
+}
+
+export interface FixedList {
+  categoryId?: number
+  id: number
+  point1?: number
+  point2?: number
+  point3?: number
+  point4?: number
+  point5?: number
+  point6?: number
+  point7?: number
+  option1: string
+  option2: string
+  option3?: string
+  option4?: string
+  option5?: string
+  option6?: string
+  option7?: string
+  questionName?: string
+}
+
+export interface EPQInstruction {
+  id: number,
+  testName: string,
+  testDescription?: string
+}

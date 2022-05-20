@@ -43,7 +43,7 @@ export const SearchPanel = ({ questionnaireTypes, inputContent, setInputContent 
         }} />
     </Form.Item>
     <Form.Item>
-      <QuestionnaireTypeSelect
+      {/* <QuestionnaireTypeSelect
         defaultOptionName={'问卷类型'}
         value={inputContent.typeId}
         onChange={value => setInputContent({
@@ -51,15 +51,7 @@ export const SearchPanel = ({ questionnaireTypes, inputContent, setInputContent 
           typeId: value
         })}
       >
-      </QuestionnaireTypeSelect>
-      {/* <Select
-        value={inputContent.typeId}
-      >
-        <Select.Option value={''}>问卷类型</Select.Option>
-        {
-          questionnaireTypes.map(item => <Select.Option key={item.id} value={item.id}>{item.name}</Select.Option>)
-        }
-      </Select> */}
+      </QuestionnaireTypeSelect> */}
     </Form.Item>
   </Form>
 }

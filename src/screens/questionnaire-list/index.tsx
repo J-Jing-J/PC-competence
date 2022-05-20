@@ -4,18 +4,11 @@ import { SearchPanel } from "./search-panel"
 import React, { useState, useEffect, Profiler } from 'react'
 import styled from '@emotion/styled'
 import { cleanObject, useDebounce, useDocumentTitle, useMount } from "../../utils"
-import * as qs from "qs"
-import { useHttp } from "../../utils/http"
-import { Button, Typography } from "antd"
-import { useAsync } from "../../utils/use-async"
-import { useQuestionnaires } from "../../utils/questionnaire"
-import { useQuestionnaireTypes } from "../../utils/questionnaire-types"
-import { Helmet } from 'react-helmet'
-import { useUrlQueryParam } from "../../utils/url"
+// import { useQuestionnaireTypes } from "../../utils/questionnaire-types"
 import { useQuestionnaireModal, useQuestionnairesSearchParams } from "./util"
 import { ButtonNoPadding, ErrorBox, Row } from "../../components/lib"
 import { useAuth } from "../../context/auth-context"
-import { getEPQ } from "../../utils/fixedQuestionnaire"
+import { fixedQuestionnaireData } from "../../common/constants/fixQuestionnaire"
 
 const apiUrl = process.env.REACT_APP_API_URL
 
@@ -39,9 +32,12 @@ export const QuestionnaireListScreen = () => {
   // 查找之后展示的数据
   // const [displayedList, setDisplayedList] = useState([])
   // const { run, isLoading, error, data: displayedList } = useAsync<displayedListType[]>()
-  const { isLoading, error, data: displayedList } = useQuestionnaires(useDebounce(inputContent, 200));
-  const EPQTest = getEPQ();
-  let ListData = displayedList ? [EPQTest, ...displayedList] : displayedList;
+
+
+  // const { isLoading, error, data: displayedList } = useQuestionnaires(useDebounce(inputContent, 200));
+  const displayedList: displayedListType[] = [];  //正确写法在上面
+  let ListData = [...fixedQuestionnaireData, ...displayedList]
+
 
   // questionnaire变化时请求接口
   // useEffect(() => {
@@ -70,7 +66,8 @@ export const QuestionnaireListScreen = () => {
   //   }
   // })
   // })
-  const { data: questionnaireTypes } = useQuestionnaireTypes()
+
+  // const { data: questionnaireTypes } = useQuestionnaireTypes()
 
   // 设置网页的document.title
 
@@ -90,13 +87,14 @@ export const QuestionnaireListScreen = () => {
             : null
         }
       </Row>
-      <SearchPanel questionnaireTypes={questionnaireTypes || []} inputContent={inputContent} setInputContent={setInputContent} />
-      <ErrorBox error={error} />
+      {/* <SearchPanel questionnaireTypes={questionnaireTypes || []} inputContent={inputContent} setInputContent={setInputContent} /> */}
+      {/* <ErrorBox error={error} /> */}
+      <ErrorBox />
       <List
         // refresh={retry}
-        loading={isLoading}
-        questionnaireTypes={questionnaireTypes || []}
-        dataSource={displayedList || []}
+        // loading={isLoading}
+        // questionnaireTypes={questionnaireTypes || []}
+        dataSource={fixedQuestionnaireData || []}
       // questionnaireButton={
       //   <ButtonNoPadding
       //     onClick={open}

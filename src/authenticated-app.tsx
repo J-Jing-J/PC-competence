@@ -14,6 +14,7 @@ import { resetRoute } from "./utils"
 import { useState } from "react"
 import { QuestionnaireModal } from "./screens/questionnaire-list/questionnaire-modal"
 import { QuestionnairePopover } from "./components/questionnaire-popover"
+import { AccountScreen } from "./screens/account"
 
 //eslint-disable-next-line
 export default () => {
@@ -31,6 +32,7 @@ export default () => {
           <Route path={'/home'} element={<Home />}></Route>
           <Route path={'/questionnaires'} element={<QuestionnaireListScreen />}></Route>
           <Route path={'/questionnaires/:questionnaireId/*'} element={<QuestionaireScreen />}></Route>
+          <Route path={'/account/*'} element={<AccountScreen />}></Route>
           <Route path="*" element={<Navigate to="/home" replace={true} />} />
         </Routes>
       </Main>
@@ -70,7 +72,9 @@ const PageHeader = () => {
 }
 
 const User = () => {
-  const { user, logout } = useAuth()
+  const { user, logout } = useAuth();
+  const toAccount = () => window.location.pathname = 'account'
+
   return <Dropdown
     overlay={
       <Menu>
@@ -80,6 +84,10 @@ const User = () => {
         <Menu.Item key={'logout'}>
           {/* <a onClick={logout}>登出</a> 用a标签建议跳转时才使用：href */}
           <Button type={"link"} onClick={logout}>登出</Button>
+        </Menu.Item>
+        <Menu.Item key={'user'}>
+          {/* <a onClick={logout}>登出</a> 用a标签建议跳转时才使用：href */}
+          <Button type={"link"} onClick={toAccount}>用户中心</Button>
         </Menu.Item>
       </Menu>}>
     <Button type={"link"} onClick={e => e.preventDefault()}>Hi,{user?.name}</Button>

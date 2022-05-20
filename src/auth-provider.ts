@@ -20,7 +20,8 @@ export const login = (data: { idNumber: string, password: string }) => {
   return fetch(`${apiUrl}/user/login`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Connection': 'keep-alive'
     },
     body: JSON.stringify(data)
   }).then(async (response) => {
@@ -37,8 +38,9 @@ export const login = (data: { idNumber: string, password: string }) => {
   })
 }
 
-export const register = (data: { idNumber: string, password: string }) => {
-  return fetch(`${apiUrl}/user/register`, {
+export const register = (data: { idNumber: string, password: string, userName: string }) => {
+  console.log(JSON.stringify(data));
+  return fetch(`${apiUrl}/user/reg`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -55,6 +57,8 @@ export const register = (data: { idNumber: string, password: string }) => {
     }
   })
 }
+
+
 
 // 加async才可以返回promise
 export const logout = async () => window.localStorage.removeItem(tokenKey);

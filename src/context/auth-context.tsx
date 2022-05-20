@@ -8,9 +8,15 @@ import { http } from '../utils/http';
 import { useAsync } from '../utils/use-async';
 import { tokenKey } from '../common/constants/storageKey';
 
-interface AuthForm {
+interface LoginForm {
   idNumber: string;
   password: string;
+}
+
+interface RegisterForm {
+  idNumber: string;
+  password: string;
+  userName: string;
 }
 
 // 每次刷新页面都要判断token是否过期
@@ -42,8 +48,8 @@ const bootstrapUser = async () => {
 const AuthContext = React.createContext<
   | {
     user: User | null;
-    register: (form: AuthForm) => Promise<void>;
-    login: (form: AuthForm) => Promise<void>;
+    register: (form: RegisterForm) => Promise<void>;
+    login: (form: LoginForm) => Promise<void>;
     logout: () => Promise<void>;
   }
   | undefined
@@ -62,8 +68,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient()
   // point free
   // (user) => setUser(user) 可以写成 setUser
-  const login = (form: AuthForm) => auth.login(form).then(setUser);
-  const register = (form: AuthForm) => auth.register(form).then(setUser);
+  const login = (form: LoginForm) => auth.login(form).then(setUser);
+  const register = (form: RegisterForm) => auth.register(form).then(setUser);
   const logout = () =>
     auth.logout().then(() => {
       setUser(null);

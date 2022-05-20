@@ -5,8 +5,6 @@ import { useAuth } from '../context/auth-context';
 import { LongButton } from '.';
 import { useAsync } from '../utils/use-async';
 
-const apiUrl = process.env.REACT_APP_API_URL
-
 export const RegisterScreen = ({ onError }: { onError: (error: Error) => void }) => {
 
   // 不管在哪，只要调用了useAuth，都可以拿到user信息
@@ -14,9 +12,12 @@ export const RegisterScreen = ({ onError }: { onError: (error: Error) => void })
   const { run, isLoading } = useAsync(undefined, { throwOnError: true })
 
   // 点击提交按钮
-  const handleSubmit = ({ cpassword, ...values }: { username: string, password: string, cpassword: string }) => {
+  const handleSubmit = (values: { username: string, password: string, cpassword: string, telephoneNumber: string }) => {
     // 确认密码单独解构，因为不参与服务端的交互
-    if (cpassword != values.password) {
+    // console.log(Number(values.cpassword));
+    // console.log(Number(values.password));
+
+    if (values.cpassword !== values.password) {
       onError(new Error('请确认两次输入的密码相同'))
       return
     }
@@ -29,15 +30,20 @@ export const RegisterScreen = ({ onError }: { onError: (error: Error) => void })
     const tempPwd = CryptoJs.MD5(values.password).toString();
 
     const tempForm = {
-      idNumber: values.username,
-      password: values.password,
+      idNumber: values.telephoneNumber,
+      password: tempPwd,
       userName: values.username
     }
+
+    
 
     run(register(tempForm).catch((error) => onError(error)))
   }
 
   return <Form onFinish={handleSubmit}>
+    <Form.Item name={'telephoneNumber'} rules={[{ required: true, message: '请输入手机号' }]}>
+      <Input placeholder={'手机号'} type="telephoneNumber" id={'telephoneNumber'} />
+    </Form.Item>
     <Form.Item name={'username'} rules={[{ required: true, message: '请输入用户名' }]}>
       <Input placeholder={'用户名'} type="text" id={'username'} />
     </Form.Item>
@@ -47,12 +53,9 @@ export const RegisterScreen = ({ onError }: { onError: (error: Error) => void })
     <Form.Item name={'cpassword'} rules={[{ required: true, message: '请确认密码' }]}>
       <Input placeholder={'确认密码'} type="password" id={'cpassword'} />
     </Form.Item>
-    <Form.Item name={'email'} >
+    {/* <Form.Item name={'email'} >
       <Input placeholder={'邮箱（选填）'} type="email" id={'email'} />
-    </Form.Item>
-    <Form.Item name={'telephoneNumber'} >
-      <Input placeholder={'手机号（选填）'} type="telephoneNumber" id={'telephoneNumber'} />
-    </Form.Item>
+    </Form.Item> */}
     <Form.Item>
       <LongButton loading={isLoading} htmlType={'submit'} type={"primary"}>登录</LongButton>
     </Form.Item>

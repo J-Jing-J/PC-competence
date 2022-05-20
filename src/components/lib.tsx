@@ -51,7 +51,8 @@ export const SubmitButton = styled(Button)`
 // 只要是error类型，才返回错误组件
 // 类型守卫，是否是error类型(鸭子类型))
 const isError = (value: any): value is Error => value?.message
-export const ErrorBox = ({ error }: { error: unknown }) => {
+// export const ErrorBox = ({ error }: { error: unknown }) => {
+export const ErrorBox = ({ error }: { error?: unknown }) => {
   if (isError(error)) {
     return <Typography.Text type={"danger"}>{error?.message}</Typography.Text>
   }
@@ -82,4 +83,23 @@ export const BackTopDiv = styled(BackTop)`
   color: #fff;
   text-align: center;
   font-size: 14;
+`
+
+export const Aside = styled.aside`
+  background-color: rgb(244, 245, 247);
+  display: flex;
+  position: sticky;
+  top: 10rem;
+  max-height: 80vh;
+`
+
+export const Main = styled.div`
+  box-shadow: -5px 0 5px -5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex: 1;
+`
+
+export const Container = styled.div`
+  display: grid;
+  grid-template-columns: 16rem 1fr;
 `

@@ -7,7 +7,7 @@ import {
 import { useForm } from "antd/es/form/Form"
 import { resetRoute, useDocumentTitle } from '../../utils'
 import { useQuestionnaireTest } from '../../utils/questionnaireTest';
-import { useQuestionnaireInUrl } from './util';
+import { useQuestionnaireIdInUrl, useQuestionnaireInUrl } from './util';
 import { TestItem } from './test-item';
 import styled from '@emotion/styled';
 import { BackTopDiv, SubmitButton } from '../../components/lib';
@@ -20,20 +20,21 @@ export const TestQuestionnaireScreen = () => {
 
 
 
-  // const { data: currentQuestionnaire } = useQuestionnaireInUrl()
-  const currentQuestionnaire = {
-    "id": 0,
-    "title": "问卷1",
-    "description": "问卷说明",
-    "typeId": 1,
-    "fullScore": 150,
-    "value": 0,  //0代表未选择，1代表A，以此类推
-    "rank": "名次--暂无",
-    "creater": "创建人",
-    "createTime": "1546900800000",
-    "logo": "logo",
-    "pin": true
-  }
+  const { data: currentQuestionnaire } = useQuestionnaireInUrl();
+
+  // const currentQuestionnaire = {
+  //   "id": 0,
+  //   "title": "问卷1",
+  //   "description": "问卷说明",
+  //   "typeId": 1,
+  //   "fullScore": 150,
+  //   "value": 0,  //0代表未选择，1代表A，以此类推
+  //   "rank": "名次--暂无",
+  //   "creater": "创建人",
+  //   "createTime": "1546900800000",
+  //   "logo": "logo",
+  //   "pin": true
+  // }
 
 
 
@@ -48,6 +49,7 @@ export const TestQuestionnaireScreen = () => {
     form.resetFields();
     window.location.replace('finish')
   }
+
 
   return (
     <ScreenContainer>

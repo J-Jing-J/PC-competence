@@ -64,9 +64,9 @@ export const QuestionnaireModal = () => {
             name={'typeId'}
             rules={[{ required: true, message: '请选择量表类型' }]}
           >
-            <QuestionnaireTypeSelect
+            {/* <QuestionnaireTypeSelect
               defaultOptionName={"请选择量表类型"}>
-            </QuestionnaireTypeSelect>
+            </QuestionnaireTypeSelect> */}
           </Form.Item>
           <Form.Item
             label={'总分'}

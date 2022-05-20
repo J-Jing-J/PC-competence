@@ -3,7 +3,6 @@ import { Button, Divider, List, Popover, Typography } from "antd"
 import { Content } from "antd/lib/layout/layout"
 import { useAuth } from "../context/auth-context";
 import { useQuestionnaireModal } from "../screens/questionnaire-list/util";
-import { getEPQ } from "../utils/fixedQuestionnaire";
 import { useQuestionnaires } from "../utils/questionnaire"
 import { ButtonNoPadding } from "./lib";
 
@@ -12,10 +11,8 @@ export const QuestionnairePopover = () => {
   const { user } = useAuth()
   const { open } = useQuestionnaireModal()
 
-  const { data: questionnaires, isLoading } = useQuestionnaires();
-
-  // const EPQTest = getEPQ();
-  const pinnedQuestionnaires = questionnaires?.filter((questionnaire) => questionnaire.pin)
+  // const { data: questionnaires, isLoading } = useQuestionnaires();
+  // const pinnedQuestionnaires = questionnaires?.filter((questionnaire) => questionnaire.pin)
 
   const content = <ContentContainer>
     {/* <Typography.Text>收藏问卷</Typography.Text>
@@ -29,11 +26,11 @@ export const QuestionnairePopover = () => {
 
     <Typography.Text>心理量表</Typography.Text>
     <List>
-      {
+      {/* {
         pinnedQuestionnaires?.map(pinned => <List.Item key={pinned.id}>
           <List.Item.Meta title={pinned.title} />
         </List.Item>)
-      }
+      } */}
     </List>
 
     {

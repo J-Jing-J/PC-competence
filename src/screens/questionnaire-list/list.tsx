@@ -22,7 +22,7 @@ import { getEPQ } from '../../utils/fixedQuestionnaire';
 // ListProps包含TableProps<displayedListType> 和 questionnaireTypes
 interface ListProps extends TableProps<displayedListType> {
   // displayedList: displayedListType[];
-  questionnaireTypes: questionnaireType[],
+  questionnaireTypes?: questionnaireType[],
   // questionnaireButton: JSX.Element
 }
 
@@ -35,16 +35,16 @@ export const List = React.memo(({ questionnaireTypes, ...props }: ListProps) => 
 
   return <Table
     rowKey={"id"}
-    loading
+    // loading
     pagination={false}
     columns={[
-      {
-        title: <Pin checked={true} disabled={true} />,
-        render(value, questionnaire) {
-          // 先得到questionnaire.id,当函数传入pin时，才得到pin  ----  函数柯里化
-          return <Pin checked={questionnaire.pin} onCheckedChange={pinQuestionnaire(questionnaire.id)} />
-        }
-      },
+      // {
+      //   title: <Pin checked={true} disabled={true} />,
+      //   render(value, questionnaire) {
+      //     // 先得到questionnaire.id,当函数传入pin时，才得到pin  ----  函数柯里化
+      //     return <Pin checked={questionnaire.pin} onCheckedChange={pinQuestionnaire(questionnaire.id)} />
+      //   }
+      // },
       {
         title: '问卷名称',
         // dataIndex: 'title', //在对应的questionnair上读name属性
@@ -62,14 +62,14 @@ export const List = React.memo(({ questionnaireTypes, ...props }: ListProps) => 
         title: '总分',
         dataIndex: 'fullScore', //在对应的questionnair上读name属性
       },
-      {
-        title: '问卷类型',
-        render(value, questionnaire) {
-          return <span>
-            {questionnaireTypes.find(type => type.id === questionnaire.typeId)?.name || "未找到该类型"}
-          </span>
-        }
-      },
+      // {
+      //   title: '问卷类型',
+      //   render(value, questionnaire) {
+      //     return <span>
+      //       {questionnaireTypes.find(type => type.id === questionnaire.typeId)?.name || "未找到该类型"}
+      //     </span>
+      //   }
+      // },
       {
         title: '创建时间',
         render(value, questionnaire) {

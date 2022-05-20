@@ -51,7 +51,10 @@ export const http = async (
         return Promise.reject({ message: '请重新登录' })
       }
       // 不是401
-      const data = await response.json()
+      let data = await response.json();
+      while (data.data) {
+        data = data.data
+      }
       if (response.ok) {
         return data
       } else {
@@ -65,11 +68,18 @@ export const http = async (
 // 请求用useCarryTokene，而不是上面的http，就可以每次都自动把token放到body里
 export const useHttp = () => {
   const { user } = useAuth();
+  let token = JSON.parse(auth.getToken());
+  const headers = { token };
   // Parameters<typeof http> ts操作符
   // Parameters是ts中的utility Types之一
   // typeof http静态检查时提取出http的类型（function）
   // Parameters传入函数类型，读出函数的参数类型
+
+  // return useCallback((...[endPoint, config]: Parameters<typeof http>) => {
+  //   return http(endPoint, { ...config, token: user?.token })
+  // }, [user?.token])
+
   return useCallback((...[endPoint, config]: Parameters<typeof http>) => {
-    return http(endPoint, { ...config, token: user?.token })
-  }, [user?.token])
+    return http(endPoint, { ...config, headers })
+  }, [headers])
 }
