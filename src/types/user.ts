@@ -1,3 +1,5 @@
+type sex = '未知' | '男' | '女'
+
 export interface User {
   id: number;
   name: string;
@@ -12,11 +14,13 @@ export interface User {
   score: number,
 
   authorityId: number
-  gender: string
-  groupName: string
-  idNumber: number
-  sex: string
-  userGroup: number
   userId: number
   userName: string
+  gender: number
+  groupName: string
+  idNumber: string
+  sex: sex
+  userGroup: number
 }
+
+
