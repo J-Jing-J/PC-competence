@@ -22,4 +22,15 @@ export interface User {
   userGroup: number
 }
 
+export interface UserTask {
+  endTime: string
+  groupId: number
+  id: number
+  questionnaireIdList: Array<number>
+  questionnaireIds: string
+  questionnaireNameList: Array<string>
+  startTime: string
+  status: number
+  taskName: string
+}
 
