@@ -1,6 +1,5 @@
 import { Button, Dropdown, Space, Table, Tag } from "antd";
 import { ScreenContainer } from "../../components/lib";
-import { UserTask } from "../../types/user";
 import { useUserTask } from "../../utils/user"
 
 export const UserTaskScreen = () => {
