@@ -33,8 +33,9 @@ export const http = async (
   // get：参数拼接在后面
   // post：参数放到body里
   if (config.method.toUpperCase() === 'GET') {
-
-    endPoint += `?${qs.stringify(data)}`
+    if (data) {
+      endPoint += `?${qs.stringify(data)}`
+    }
   } else {
     config.body = JSON.stringify(data || {})
   }

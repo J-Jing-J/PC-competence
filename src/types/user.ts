@@ -34,3 +34,14 @@ export interface UserTask {
   taskName: string
 }
 
+export interface TestRecord {
+  id: 5010
+  userId: 141
+  taskId?: null
+  createTime: string
+  factorE: 2  //内外向
+  factorL: 1  //掩饰质
+  factorN: 1  //情绪的稳定性 精神质
+  factorP: 1  //精神质
+}
+

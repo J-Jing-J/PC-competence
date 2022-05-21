@@ -1,5 +1,6 @@
 import { useQuery } from 'react-query';
 import * as auth from '../auth-provider'
+import { useQuestionnaireIdInUrl } from '../screens/test/util';
 import { http, useHttp } from './http';
 const apiUrl = process.env.REACT_APP_API_URL
 
@@ -45,3 +46,22 @@ export const useUserTask = () => {
   )
   return res
 }
+
+
+export const useTestRecord = () => {
+  const client = useHttp();
+  // 从localstorage里读token
+  let token = JSON.parse(auth.getToken());
+  const questionnaireId = useQuestionnaireIdInUrl()
+  const headers = { token };
+  const res = useQuery(
+    [`user/getTestRecord?testId=${questionnaireId}`],
+    () => client(
+      `user/getTestRecord?testId=${questionnaireId}`,
+      { ...headers, }
+    )
+  )
+  console.log(res);
+  return res;
+}
+

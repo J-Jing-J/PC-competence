@@ -1,35 +1,65 @@
+import React, { useState } from 'react'
+import { ScreenContainer } from '../../components/lib'
 import { Button, Dropdown, Space, Table, Tag } from "antd";
-import { ScreenContainer } from "../../components/lib";
-import { useUserTask } from "../../utils/user"
+import { useTestRecord } from "../../utils/user"
 
 export const TestRecordScreen = () => {
+  const { isLoading, error, data } = useTestRecord();
+  const record = data?.record;
 
   const columns = [
     {
       title: '序号',
       dataIndex: 'taskName',
       key: 'taskName',
-    },
-    // questionnaireIdList: [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    // questionnaireIds: "1,2,3,4,5,6,7,8,9"
-    // questionnaireNameList: ["艾森克人格问卷量表", "主动性人格量表", "Frost多维度完美主义量表", "大五人格测验NEO-FFI量表", "卡特尔16种人格量表", "抑郁自测量表", "焦虑自测量表",…]
-    // status: 1
-    {
-      title: '测试日期',
-      dataIndex: 'taskContent',
-      key: 'taskContent',
+      render: (taskName: string) => <a>{taskName}</a>,
     },
     {
-      title: '操作',
-      dataIndex: 'startTime',
-      key: 'startTime',
+      title: '内外向分数',
+      dataIndex: 'factorE',
+      key: 'factorE',
+      render: (factorE: number) => <span>{factorE}</span>,
     },
+    {
+      title: '掩饰质分数',
+      dataIndex: 'factorL',
+      key: 'factorL',
+      render: (factorL: number) => <span>{factorL}</span>,
+    },
+    {
+      title: '神经质分数',
+      dataIndex: 'factorN',
+      key: 'factorN',
+      render: (factorN: number) => <span>{factorN}</span>,
+    },
+    {
+      title: '精神质分数',
+      dataIndex: 'factorP',
+      key: 'factorP',
+      render: (factorP: number) => <span>{factorP}</span>,
+    },
+    {
+      title: '开始时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
+      render: (createTime: string) => <span>{createTime}</span>,
+    },
+    // {
+    //   title: '综合结果',
+    //   key: 'result',
+    //   dataIndex: 'result',
+    //   render: (factorE: number, factorL: number, factorN: number, factorP: number) => (
+    //     <Tag color="success">不典型</Tag>
+    //     // factorE + factorL + factorN + factorP >= 38.5 && factorE + factorL + factorN + factorP <= 61.5 ?
+    //     //   (<Tag color="success">不典型</Tag>) :
+    //     //   factorE + factorL + factorN + factorP >= 43.3 && factorE + factorL + factorN + factorP <= 56.7 ?
+    //     //     (<Tag color="success">平衡型</Tag>) :
+    //     //     (<Tag color="success">典型型</Tag>)
+    //   ),
+    // },
   ];
 
   return <ScreenContainer>
-    <Table
-      columns={columns}
-    // dataSource={tasks}
-    />
+    <Table columns={columns} dataSource={record} />
   </ScreenContainer>
 }

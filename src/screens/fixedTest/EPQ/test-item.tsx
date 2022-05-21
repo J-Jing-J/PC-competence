@@ -54,8 +54,8 @@ export const EPQTestItem = () => {
           >
             <Radio.Group style={{ width: '100%' }}
               onChange={(e) => onChange(e.target.value, index)}>
-              <Radio key={test.point1} value={test.point1}>{test.option1}</Radio>
-              <Radio key={test.point2} value={test.point1}>{test.option2}</Radio>
+              <Radio key={test.point1} value={1}>{test.option1}</Radio>
+              <Radio key={test.point2} value={2}>{test.option2}</Radio>
             </Radio.Group>
           </TestFormItem>
         }

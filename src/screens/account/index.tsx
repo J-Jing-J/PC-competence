@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Routes, Route, Navigate, useLocation } from 'react-router'
 import { EditQuestionnaireScreen } from '../edit'
-import { HistoryQuestionnaireScreen } from '../history'
+import { TestRecordScreen } from '../testRecord'
 import { TestQuestionnaireScreen } from '../test'
 import styled from '@emotion/styled'
 import { Menu } from 'antd'
@@ -11,7 +11,7 @@ import { TestFinishScreen } from '../test/test-finish'
 import { FixedTestScreen } from '../fixedTest'
 import { Aside, Container, Main } from '../../components/lib'
 import { AccountDetailScreen } from '../accountDetail'
-import { TestRecordScreen } from '../testRecord'
+import { AllTestRecordScreen } from '../allTestRecord'
 import { UserTaskScreen } from '../userTask'
 import { ResetPasswordScreen } from '../resetPassword'
 
@@ -49,7 +49,7 @@ export const AccountScreen = () => {
       <Main>
         <Routes>
           <Route path={'accountDetail'} element={<AccountDetailScreen />}></Route>
-          <Route path={'testRecord'} element={<TestRecordScreen />}></Route>
+          <Route path={'testRecord'} element={<AllTestRecordScreen />}></Route>
           <Route path={'userTask'} element={<UserTaskScreen />}></Route>
           <Route path={'resetPassword'} element={<ResetPasswordScreen />}></Route>
           {/* <Route path={'finish'} element={<TestFinishScreen />}></Route> */}
