@@ -3,16 +3,16 @@ import { ScreenContainer } from '../../components/lib'
 import { Button, Dropdown, Space, Table, Tag } from "antd";
 import { useTestRecord } from "../../utils/user"
 
-export const TestRecordScreen = () => {
-  const { isLoading, error, data } = useTestRecord();
-  const record = data?.record;
+export const GameManageScreen = () => {
+  // const { isLoading, error, data } = useTestRecord();
+  // const record = data?.record;
 
   const columns = [
     {
       title: '序号',
       dataIndex: 'taskName',
       key: 'taskName',
-      render: (taskName: string) => <a>{taskName}</a>,
+      render: (taskName: string) => <span>{taskName}</span>,
     },
     {
       title: '内外向分数',
@@ -60,6 +60,6 @@ export const TestRecordScreen = () => {
   ];
 
   return <ScreenContainer>
-    <Table columns={columns} dataSource={record} />
+    {/* <Table columns={columns} dataSource={record} /> */}
   </ScreenContainer>
 }

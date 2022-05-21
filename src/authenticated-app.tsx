@@ -1,6 +1,6 @@
 import { useAuth } from "./context/auth-context"
 import styled from '@emotion/styled'
-import { Button, Dropdown, Menu } from "antd"
+import { Button, Dropdown, Menu, Tag } from "antd"
 import { Navigate, Route, Routes } from 'react-router'
 import { BrowserRouter as Router } from 'react-router-dom'
 
@@ -14,27 +14,36 @@ import { resetRoute } from "./utils"
 import { useState } from "react"
 import { QuestionnaireModal } from "./screens/questionnaire-list/questionnaire-modal"
 import { QuestionnairePopover } from "./components/questionnaire-popover"
-import { AccountScreen } from "./screens/account"
+import { AccountScreen } from "./screens/user"
+import { AdminScreen } from "./screens/admin"
 
 //eslint-disable-next-line
 export default () => {
-  // const [questionnaireModalOpen, setQuestionnaireModalOpen] = useState(false)
+  const { user } = useAuth()
   return <Container>
-    {/* {value.exist} */}
     <Router>
       <PageHeader />
       <Main>
         {/* <QuestionnaireListScreen /> */}
         {/* BrowserRouter用于组件间共享信息，可以用reacthook获取 */}
         {/* react-router6里，所有的router都要被包裹在Routes里面 */}
-        <Routes>
-          {/* /questionnaires */}
-          <Route path={'/home'} element={<Home />}></Route>
-          <Route path={'/questionnaires'} element={<QuestionnaireListScreen />}></Route>
-          <Route path={'/questionnaires/:questionnaireId/*'} element={<QuestionaireScreen />}></Route>
-          <Route path={'/account/*'} element={<AccountScreen />}></Route>
-          <Route path="*" element={<Navigate to="/home" replace={true} />} />
-        </Routes>
+        {
+          user?.authorityId === 1 || user?.authorityId === 2 ? (
+            <Routes>
+              <Route path={'/account/*'} element={<AdminScreen />}></Route>
+              <Route path="*" element={<Navigate to="/account" replace={true} />} />
+            </Routes>
+          ) : (
+            <Routes>
+              <Route path={'/home'} element={<Home />}></Route>
+              <Route path={'/questionnaires'} element={<QuestionnaireListScreen />}></Route>
+              <Route path={'/questionnaires/:questionnaireId/*'} element={<QuestionaireScreen />}></Route>
+              <Route path={'/account/*'} element={<AccountScreen />}></Route>
+              <Route path="*" element={<Navigate to="/home" replace={true} />} />
+            </Routes>
+          )
+        }
+
       </Main>
       {/* <Aside>aside</Aside> */}
       {/* <Footer>footer123</Footer> */}
@@ -47,6 +56,7 @@ export default () => {
 }
 
 const PageHeader = () => {
+  const { user } = useAuth()
   return <Header between={true}>
     <HeaderLeft gap={true}>
       <ButtonNoPadding type={'link'} onClick={resetRoute}>
@@ -54,13 +64,21 @@ const PageHeader = () => {
         <LoginLogo style={{ margin: -10, }} height={'5rem'} width={'5rem'} color={'rgb(38, 132, 255)'} />
         {/* <img src={LoginLogo} /> */}
       </ButtonNoPadding>
-      <h3 style={{ fontWeight: 'bold' }} onClick={resetRoute}>胜任力系统</h3>
-      <ButtonNoPadding type={'link'} color="black" onClick={resetRoute}>
-        <span>首页</span>
-      </ButtonNoPadding>
-      <ButtonNoPadding type={'link'} color="black" onClick={() => window.location.href = '/questionnaires'}>
-        <QuestionnairePopover />
-      </ButtonNoPadding>
+      {
+        user?.authorityId === 1 || user?.authorityId === 2 ? (
+          <h3 style={{ fontWeight: 'bold' }} onClick={resetRoute}>胜任力系统管理员端</h3>
+        ) : (
+          <>
+            <h3 style={{ fontWeight: 'bold' }} onClick={resetRoute}>胜任力系统</h3>
+            <ButtonNoPadding type={'link'} color="black" onClick={resetRoute}>
+              <span>首页</span>
+            </ButtonNoPadding>
+            <ButtonNoPadding type={'link'} color="black" onClick={() => window.location.href = '/questionnaires'}>
+              <QuestionnairePopover />
+            </ButtonNoPadding>
+          </>
+        )
+      }
       {/* <span>数据中心</span>
       <span>激光枪</span>
       <span>测试与训练中心</span> */}
@@ -79,7 +97,11 @@ const User = () => {
     overlay={
       <Menu>
         {
-          user?.identity === 1 ? '管理员' : '普通用户'
+          user?.authorityId === 1 ? (
+            <Tag>超级管理员</Tag>
+          ) : user?.authorityId === 2 ? (
+            <Tag>普通管理员</Tag>
+          ) : (<Tag>普通用户</Tag>)
         }
         <Menu.Item key={'logout'}>
           {/* <a onClick={logout}>登出</a> 用a标签建议跳转时才使用：href */}

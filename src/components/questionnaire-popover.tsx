@@ -34,7 +34,7 @@ export const QuestionnairePopover = () => {
     </List>
 
     {
-      user?.identity === 1 ? (
+      user?.authorityId === 1 || user?.authorityId === 2 ? (
         <>
           <Divider />
           <ButtonNoPadding

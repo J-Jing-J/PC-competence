@@ -20,7 +20,15 @@ export interface User {
   idNumber: string
   sex: sex
   userGroup: number
+
+  // 管理员
+  adminGroup: number
+  adminId: number
+  adminName: string
+  adminNo: number
+  adminState: number
 }
+
 
 export interface UserTask {
   endTime: string

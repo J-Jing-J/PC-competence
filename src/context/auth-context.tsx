@@ -8,8 +8,13 @@ import { http } from '../utils/http';
 import { useAsync } from '../utils/use-async';
 import { tokenKey } from '../common/constants/storageKey';
 
-interface LoginForm {
+export interface UserLoginForm {
   idNumber: string;
+  password: string;
+}
+
+export interface AdminLoginForm {
+  adminName: string;
   password: string;
 }
 
@@ -49,7 +54,7 @@ const AuthContext = React.createContext<
   | {
     user: User | null;
     register: (form: RegisterForm) => Promise<void>;
-    login: (form: LoginForm) => Promise<void>;
+    login: (form: UserLoginForm | AdminLoginForm, identity: number) => Promise<void>;
     logout: () => Promise<void>;
   }
   | undefined
@@ -68,7 +73,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient()
   // point free
   // (user) => setUser(user) 可以写成 setUser
-  const login = (form: LoginForm) => auth.login(form).then(setUser);
+  const login = (form: UserLoginForm | AdminLoginForm, identity: number) => auth.login(form, identity).then(setUser);
   const register = (form: RegisterForm) => auth.register(form).then(setUser);
   const logout = () =>
     auth.logout().then(() => {
@@ -76,7 +81,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // 登出时要清除缓存
       queryClient.clear()
     });
-
   // 页面加载时，就会执行AuthProvider，就会执行这个方法重置user
   useMount(() => {
     run(bootstrapUser())

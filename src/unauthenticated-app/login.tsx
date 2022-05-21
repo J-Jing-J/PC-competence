@@ -1,5 +1,5 @@
 import { FormEvent } from 'react';
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Radio } from 'antd'
 // import crypto from 'crypto' // 引用md5加密
 import CryptoJs from 'crypto-js'
 import { useAuth } from '../context/auth-context';
@@ -19,31 +19,16 @@ export const LoginScreen = ({ onError }: { onError: (error: Error) => void }) =>
   const handleSubmit = (
     // event: FormEvent<HTMLFormElement>
     // 类型antd根据Form.Item的name推断
-    values: { username: string, password: string }
+    values: { username: string, password: string, identity: number }
   ) => {
-    // values.password
-
     const tempPwd = CryptoJs.MD5(values.password).toString();
-    // md5.update(values.password) // 需要加密的密码
-    // var password = md5.digest('hex') // 提取加密的密码
-    // var tempPwd = password // 用临时变量tempPwd存储加密后的密码
-
-    // // 普通用户登陆数据
-    // let postNormalData = {
-    //   idNumber: this.user.userName,
-    //   // userName: this.user.userName,
-    //   password: tempPwd
-    // }
-    // // 管理员登陆数据
-    // let postAdminData = {
-    //   adminName: this.user.userName,
-    //   password: tempPwd
-    // }
-
-    const tempForm = {
+    const tempForm = +values.identity === 1 ? ({
       idNumber: values.username,
       password: tempPwd
-    }
+    }) : ({
+      adminName: values.username,
+      password: tempPwd
+    })
 
     // event.preventDefault()
     // 浏览器的form标准：event.currentTarget.elements 里有所有input的信息
@@ -53,7 +38,7 @@ export const LoginScreen = ({ onError }: { onError: (error: Error) => void }) =>
     // login({ username, password })
 
     // run(login(values).catch((error) => onError(error)))
-    run(login(tempForm).catch((error) => onError(error)))
+    run(login(tempForm, values.identity).catch((error) => onError(error)));
   }
 
   // return <form onSubmit={handleSubmit}>
@@ -74,6 +59,12 @@ export const LoginScreen = ({ onError }: { onError: (error: Error) => void }) =>
     </Form.Item>
     <Form.Item name={'password'} rules={[{ required: true, message: '请输入用户名' }]}>
       <Input placeholder={'密码'} type="password" id={'password'} />
+    </Form.Item>
+    <Form.Item name={'identity'} rules={[{ required: true, message: '请选择身份' }]}>
+      <Radio.Group>
+        <Radio.Button value={"1"}>普通用户</Radio.Button>
+        <Radio.Button value={"2"}>管理员</Radio.Button>
+      </Radio.Group>
     </Form.Item>
     <Form.Item>
       <LongButton loading={isLoading} htmlType={'submit'} type={"primary"}>登录</LongButton>

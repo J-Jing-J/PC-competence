@@ -1,4 +1,5 @@
 import { tokenKey } from './common/constants/storageKey';
+import { AdminLoginForm, UserLoginForm } from './context/auth-context';
 import { User } from './types/user'
 // 使用firebase等auth服务就可以不写这个文件
 
@@ -11,13 +12,23 @@ export const handleUserResponse = ({ user, token }: { user: User, token: string 
   // 当返回的token为undefined时，给一个空字符串
   console.log(token);
   console.log(user)
-
   window.localStorage.setItem(tokenKey, token || '')
   return user
 }
 
-export const login = (data: { idNumber: string, password: string }) => {
-  return fetch(`${apiUrl}/user/login`, {
+export const handleAdminResponse = ({ auth, admin }: { admin: User, auth: string }) => {
+  // 当返回的token为undefined时，给一个空字符串
+  console.log(auth);
+  console.log(admin)
+  window.localStorage.setItem(tokenKey, auth || '')
+  return admin
+}
+
+
+
+export const login = (data: UserLoginForm | AdminLoginForm, identity: number) => {
+  const loginUrl = +identity === 1 ? '/user/login' : '/sys/admin/login';
+  return fetch(`${apiUrl}${loginUrl}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -29,7 +40,11 @@ export const login = (data: { idNumber: string, password: string }) => {
       // ok，返回user数据
       const res = await response.json();
       console.log(res);
-      return handleUserResponse(res.data)
+      if (+identity === 1) {
+        return handleUserResponse(res.data);
+      } else {
+        return handleAdminResponse(res.data)
+      }
     } else {
       // 报错
       // Promise.reject()效果类似于throw new Errow
@@ -37,6 +52,8 @@ export const login = (data: { idNumber: string, password: string }) => {
     }
   })
 }
+
+
 
 export const register = (data: { idNumber: string, password: string, userName: string }) => {
   console.log(JSON.stringify(data));
