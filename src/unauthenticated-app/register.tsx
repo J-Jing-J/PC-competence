@@ -13,10 +13,6 @@ export const RegisterScreen = ({ onError }: { onError: (error: Error) => void })
 
   // 点击提交按钮
   const handleSubmit = (values: { username: string, password: string, cpassword: string, telephoneNumber: string }) => {
-    // 确认密码单独解构，因为不参与服务端的交互
-    // console.log(Number(values.cpassword));
-    // console.log(Number(values.password));
-
     if (values.cpassword !== values.password) {
       onError(new Error('请确认两次输入的密码相同'))
       return
@@ -28,24 +24,20 @@ export const RegisterScreen = ({ onError }: { onError: (error: Error) => void })
     // const password = (event.currentTarget.elements[1] as HTMLInputElement).value;
 
     const tempPwd = CryptoJs.MD5(values.password).toString();
-
     const tempForm = {
       idNumber: values.telephoneNumber,
       password: tempPwd,
       userName: values.username
     }
-
-    
-
     run(register(tempForm).catch((error) => onError(error)))
   }
 
   return <Form onFinish={handleSubmit}>
     <Form.Item name={'telephoneNumber'} rules={[{ required: true, message: '请输入手机号' }]}>
-      <Input placeholder={'手机号'} type="telephoneNumber" id={'telephoneNumber'} />
+      <Input placeholder={'用户名'} type="telephoneNumber" id={'telephoneNumber'} />
     </Form.Item>
     <Form.Item name={'username'} rules={[{ required: true, message: '请输入用户名' }]}>
-      <Input placeholder={'用户名'} type="text" id={'username'} />
+      <Input placeholder={'昵称'} type="text" id={'username'} />
     </Form.Item>
     <Form.Item name={'password'} rules={[{ required: true, message: '请输入用密码' }]}>
       <Input placeholder={'密码'} type="password" id={'password'} />

@@ -18,7 +18,6 @@ export default () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null)
   useDocumentTitle('请登录或注册以继续', false)
-
   return <Container style={{ display: 'flex', justifyContent: 'center' }}>
     {/* <Helmet><title>请登录或注册以继续</title></Helmet> */}
     <Header />
@@ -37,6 +36,7 @@ export default () => {
     </ShadowCard>
   </Container>
 }
+
 
 // 登录按钮(通用)
 export const LongButton = styled(Button)`

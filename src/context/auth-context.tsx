@@ -36,11 +36,11 @@ const bootstrapUser = async () => {
     // 要判断token是否有效，所以不用useHttp，用http
     console.log('token', token);
     const data = await http('user/getUserInfo', { headers: headers });
+    console.log('data', data);
     user = data.userInfo;
   }
   return user;
 }
-
 
 // React.createContext返回一个context对象
 // export const AuthContext = React.createContext<{
@@ -107,5 +107,6 @@ export const useAuth = () => {
   if (!context) {
     throw new Error('useAuth必须在AuthProvider中使用')
   }
+  console.log('user', context);
   return context;
 }

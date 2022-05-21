@@ -12,7 +12,11 @@ export const handleUserResponse = ({ user, token }: { user: User, token: string 
   // 当返回的token为undefined时，给一个空字符串
   console.log(token);
   console.log(user)
-  window.localStorage.setItem(tokenKey, token || '')
+  window.localStorage.setItem(tokenKey, token || '');
+  window.localStorage.setItem('user', JSON.stringify(user) || '');
+  if (user) {
+    window.location.pathname = '/home'
+  }
   return user
 }
 
@@ -20,8 +24,12 @@ export const handleAdminResponse = ({ auth, admin }: { admin: User, auth: string
   // 当返回的token为undefined时，给一个空字符串
   console.log(auth);
   console.log(admin)
-  window.localStorage.setItem(tokenKey, auth || '')
-  return admin
+  window.localStorage.setItem(tokenKey, auth || '');
+  window.localStorage.setItem('admin', JSON.stringify(admin) || '');
+  if (admin) {
+    window.location.pathname = '/admin'
+  }
+  return admin;
 }
 
 
@@ -39,7 +47,7 @@ export const login = (data: UserLoginForm | AdminLoginForm, identity: number) =>
     if (response.ok) {
       // ok，返回user数据
       const res = await response.json();
-      console.log(res);
+      console.log('res', res);
       if (+identity === 1) {
         return handleUserResponse(res.data);
       } else {
@@ -80,5 +88,7 @@ export const register = (data: { idNumber: string, password: string, userName: s
 // 加async才可以返回promise
 export const logout = async () => {
   window.localStorage.removeItem(tokenKey);
+  window.localStorage.removeItem('admin');
+  window.localStorage.removeItem('user');
   window.location.pathname = '/login'
 }

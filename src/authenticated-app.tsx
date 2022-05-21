@@ -19,7 +19,7 @@ import { AdminScreen } from "./screens/admin"
 
 //eslint-disable-next-line
 export default () => {
-  const { user } = useAuth()
+  const { user } = useAuth();
   return <Container>
     <Router>
       <PageHeader />
@@ -27,11 +27,28 @@ export default () => {
         {/* <QuestionnaireListScreen /> */}
         {/* BrowserRouter用于组件间共享信息，可以用reacthook获取 */}
         {/* react-router6里，所有的router都要被包裹在Routes里面 */}
-        {
+        <Routes>
+          <Route path={'/home'} element={<Home />}></Route>
+          <Route path={'/questionnaires'} element={<QuestionnaireListScreen />}></Route>
+          <Route path={'/questionnaires/:questionnaireId/*'} element={<QuestionaireScreen />}></Route>
+          <Route path={'/account/*'} element={<AccountScreen />}></Route>
+          <Route path={'/admin/*'} element={<AdminScreen />}></Route>
+          {
+            // 如果是管理员，直接跳转到管理界面
+            user?.authorityId === 1 || user?.authorityId === 2 ? (
+              <Route path="*" element={<Navigate to="/admin" replace={true} />} />
+            ) : (
+              <Route path="*" element={<Navigate to="/home" replace={true} />} />
+            )
+          }
+        </Routes>
+        {/* {
           user?.authorityId === 1 || user?.authorityId === 2 ? (
             <Routes>
-              <Route path={'/account/*'} element={<AdminScreen />}></Route>
-              <Route path="*" element={<Navigate to="/account" replace={true} />} />
+              <Route path="*" element={<Navigate to="/admin" replace={true} />} />
+              <Route path={'/admin'} element={<AdminScreen />}></Route>
+              <Route path={'/admin/*'} element={<AdminScreen />}></Route>
+              <Route path="*" element={<Navigate to="/admin" replace={true} />} />
             </Routes>
           ) : (
             <Routes>
@@ -42,7 +59,7 @@ export default () => {
               <Route path="*" element={<Navigate to="/home" replace={true} />} />
             </Routes>
           )
-        }
+        } */}
 
       </Main>
       {/* <Aside>aside</Aside> */}
@@ -91,7 +108,8 @@ const PageHeader = () => {
 
 const User = () => {
   const { user, logout } = useAuth();
-  const toAccount = () => window.location.pathname = 'account'
+  // const toUser = () => window.location.pathname = user?.authorityId === 1 || user?.authorityId === 2 ? 'admin' : 'account'
+  const toUser = () => window.location.pathname = 'account'
 
   return <Dropdown
     overlay={
@@ -109,7 +127,7 @@ const User = () => {
         </Menu.Item>
         <Menu.Item key={'user'}>
           {/* <a onClick={logout}>登出</a> 用a标签建议跳转时才使用：href */}
-          <Button type={"link"} onClick={toAccount}>用户中心</Button>
+          <Button type={"link"} onClick={toUser}>用户中心</Button>
         </Menu.Item>
       </Menu>}>
     <Button type={"link"} onClick={e => e.preventDefault()}>Hi,{user?.userName}</Button>

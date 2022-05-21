@@ -14,6 +14,12 @@ import { AllTestRecordScreen } from '../allTestRecord'
 import { UserTaskScreen } from './userTask'
 import { AccountDetailScreen } from './accountDetail'
 import { ResetPasswordScreen } from './resetPassword'
+import { AdminDetailScreen } from '../admin/adminDetail'
+import { UserManageScreen } from '../admin/userManage'
+import { AdminManageScreen } from '../admin/adminManage'
+import { GroupManageScreen } from '../admin/groupManage'
+import { TaskManageScreen } from '../admin/taskManage'
+import { GameManageScreen } from '../admin/gameManage'
 
 
 // 因为Menu不会自动高亮，手动获取url最后的单词，设置selectedKeys
