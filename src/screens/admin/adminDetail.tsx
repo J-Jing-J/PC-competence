@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Button, Card, List } from "antd";
+import { Button, Card, List, Tag } from "antd";
 import { ScreenContainer } from "../../components/lib"
 import { useAuth } from "../../context/auth-context"
 
@@ -7,30 +7,28 @@ export const AdminDetailScreen = () => {
   const { user } = useAuth();
 
   const detailTags = [
+    // adminNo: 20220313185037976
+    // authorityId: 2
     {
       title: '用户名',
-      content: user?.userName
+      content: user?.adminName
     },
     {
       title: '身份',
-      content: user?.authorityId === 1 ? '超级管理员' :
-                user?.authorityId === 2 ? '普通管理员' : '普通用户'
+      content: user?.authorityId === 1 ? <Tag>超级管理员</Tag> :
+        user?.authorityId === 2 ? <Tag>普通管理员</Tag> : <Tag>普通用户</Tag>
     },
     {
-      title: '用户ID',
-      content: user?.userId
+      title: '管理员ID',
+      content: user?.adminId
     },
     {
-      title: '性别',
-      content: user?.gender === 0 ? '男' : '女'
+      title: '管理员状态',
+      content: user?.adminState === 1 ? '正常' : '停用'
     },
     {
       title: '组别',
-      content: user?.groupName
-    },
-    {
-      title: '分组',
-      content: user?.userGroup
+      content: user?.adminGroup === 1 ? '默认分组' : '其他'
     }
   ]
 
