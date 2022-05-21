@@ -70,7 +70,7 @@ export const http = async (
 export const useHttp = () => {
   const { user } = useAuth();
   let token = JSON.parse(auth.getToken());
-  const headers = { token };
+  const headers = { token, auth: token };
   // Parameters<typeof http> ts操作符
   // Parameters是ts中的utility Types之一
   // typeof http静态检查时提取出http的类型（function）

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Button, Card, List } from "antd";
+import { Button, Card, List, Tag } from "antd";
 import { ScreenContainer } from "../../components/lib"
 import { useAuth } from "../../context/auth-context"
 
@@ -13,7 +13,8 @@ export const AccountDetailScreen = () => {
     },
     {
       title: '身份',
-      content: user?.authorityId === 1001 ? '普通用户' : '管理员'
+      content: user?.authorityId === 1 ? <Tag>超级管理员</Tag> :
+        user?.authorityId === 2 ? <Tag>普通管理员</Tag> : <Tag>普通用户</Tag>
     },
     {
       title: '用户ID',
