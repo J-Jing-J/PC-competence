@@ -22,6 +22,8 @@ export const useUserByPage = (pageIndex: number, pageSize: number) => {
   return res;
 }
 
+
+// 接口暂不好用
 export const addUser = (data: { idNumber: string, password: string, userName: string }) => {
   const token = JSON.parse(auth.getToken())
   console.log(JSON.stringify(data));
@@ -43,3 +45,51 @@ export const addUser = (data: { idNumber: string, password: string, userName: st
   })
 }
 
+export const useGroupByPage = (pageIndex: number, pageSize: number) => {
+  const data: Partial<UserByPage> = {
+    pageIndex,
+    pageSize
+  }
+  const client = useHttp();
+  const res = useQuery(
+    [`sys/user/group/findByPage?${qs.stringify(data)}`],
+    () => client(
+      `sys/user/group/findByPage?${qs.stringify(data)}`,
+    )
+  )
+  console.log(res);
+  return res;
+}
+
+export const useAdminByPage = (pageIndex: number, pageSize: number) => {
+  const data: Partial<UserByPage> = {
+    pageIndex,
+    pageSize
+  }
+  const client = useHttp();
+  const res = useQuery(
+    [`sys/admin/findByPage?${qs.stringify(data)}`],
+    () => client(
+      `sys/admin/findByPage?${qs.stringify(data)}`,
+    )
+  )
+  console.log(res);
+  return res;
+}
+
+
+export const useTaskByPage = (pageIndex: number, pageSize: number) => {
+  const data: Partial<UserByPage> = {
+    pageIndex,
+    pageSize
+  }
+  const client = useHttp();
+  const res = useQuery(
+    [`sys/task/findByPage?${qs.stringify(data)}`],
+    () => client(
+      `sys/task/findByPage?${qs.stringify(data)}`,
+    )
+  )
+  console.log(res);
+  return res;
+}

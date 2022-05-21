@@ -17,9 +17,9 @@ export const UserManageScreen = () => {
   const { run } = useAsync(undefined, { throwOnError: true })
 
 
-  const { isLoading, error, data } = useUserByPage(1, 15);
+  const { isLoading, error, data } = useUserByPage(1, 10);
   const [pageIndex, setPageIndex] = useState(() => 1);
-  const [pageSize, setPageSize] = useState(() => 15);
+  const [pageSize, setPageSize] = useState(() => 10);
   const defaultList = data?.list;
   const defaultPager = data?.pager;
   const [list, setList] = useState(defaultList);
@@ -110,6 +110,7 @@ export const UserManageScreen = () => {
   return <ScreenContainer>
     <Button onClick={showModal}>添加用户</Button>
     <Table
+      pagination={false}
       loading={isLoading}
       columns={columns}
       dataSource={pageIndex === 1 ? defaultList : list}
@@ -117,7 +118,7 @@ export const UserManageScreen = () => {
     />
     <Pagination
       defaultCurrent={1}
-      defaultPageSize={15}
+      defaultPageSize={10}
       total={defaultPager?.itemCount}
       onChange={changePage}
     />
