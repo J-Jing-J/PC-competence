@@ -4,7 +4,9 @@ import { ScreenContainer } from "../../components/lib"
 import { useAuth } from "../../context/auth-context"
 
 export const AdminDetailScreen = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
+  const user = JSON.parse(window.localStorage.getItem('admin') || '');
+
 
   const detailTags = [
     // adminNo: 20220313185037976

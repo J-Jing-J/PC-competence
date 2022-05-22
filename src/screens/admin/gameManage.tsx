@@ -30,10 +30,11 @@ export const GameManageScreen = () => {
     setPageSize(() => pageSize);
     const tempDate = { pageIndex, pageSize }
     const headers = { auth: token };
-    const data = await http(`sys/task/findByPage?${qs.stringify(tempDate)}`, { headers })
-    console.log(data);
-    setList(() => data?.list);
-    setPager(() => data?.pager);
+    // const data = await http(`sys/task/findByPage?${qs.stringify(tempDate)}`, { headers })
+    // console.log(data);
+    // setList(() => data?.list);
+    // setPager(() => data?.pager);
+
   }
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -100,7 +101,7 @@ export const GameManageScreen = () => {
     <Table
       loading={isLoading}
       columns={columns}
-      dataSource={pageIndex === 1 ? defaultList : list}
+      // dataSource={pageIndex === 1 ? defaultList : list}
       size={"small"}
       pagination={false}
     />

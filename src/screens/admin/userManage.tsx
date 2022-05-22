@@ -1,22 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import { ScreenContainer } from '../../components/lib'
-import { Button, Dropdown, Form, Input, message, Modal, Pagination, Space, Table, Tag } from "antd";
-import { addUser, useUserByPage } from '../../utils/admin';
+import { Button, Drawer, Dropdown, Form, Input, message, Modal, Pagination, Popconfirm, Select, Space, Table, Tag, Typography } from "antd";
+import { addUser, getUserDetailById, updateUser, useAllGroup, useUserByPage } from '../../utils/admin';
 import { http, useHttp } from '../../utils/http';
 import CryptoJs from 'crypto-js'
 import qs from 'qs'
 import * as auth from '../../auth-provider'
 import { LongButton } from '../../unauthenticated-app';
 import { useAsync } from '../../utils/use-async';
+import { useForm } from 'antd/es/form/Form';
+
+const { Option } = Select;
 
 
-
+interface Item {
+  userId: number;
+  userName: string;
+  gender: number;
+  idNumber: number;
+  authorityId: number;
+  userGroup: number
+}
+interface GroupItem {
+  id: number;
+  groupName: string;
+}
 
 export const UserManageScreen = () => {
   const client = useHttp();
   const { run } = useAsync(undefined, { throwOnError: true })
 
+  const [updateForm] = useForm();
 
+
+
+  const { data: allGroups } = useAllGroup();
+  // const allGroupOptions: Node[] = [];
+  // allGroups?.map((group: GroupItem) => <Option value={group.id} key={group.id}>{group.groupName}</Option>)
   const { isLoading, error, data } = useUserByPage(1, 10);
   const [pageIndex, setPageIndex] = useState(() => 1);
   const [pageSize, setPageSize] = useState(() => 10);
@@ -37,28 +57,63 @@ export const UserManageScreen = () => {
     setPager(() => data?.pager);
   }
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const showModal = () => {
-    setIsModalVisible(true);
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const showAddModal = () => {
+    setIsAddModalVisible(true);
   };
-  const closeModal = () => {
-    setIsModalVisible(false);
+  const closeAddModal = () => {
+    setIsAddModalVisible(false);
+  };
+  const [isModifyModalVisible, setIsModifyModalVisible] = useState(false);
+  const showModifyModal = () => {
+    setIsModifyModalVisible(true);
+  };
+  const closeModifyModal = () => {
+    setIsModifyModalVisible(false);
   };
 
-  const handleAddClick = (values: { username: string, password: string, cpassword: string, telephoneNumber: string }) => {
+  const handleAddClick = (values: { userId: string, password: string, cpassword: string, idNumber: string }) => {
     if (values.cpassword !== values.password) {
       message.error("请输入两次相同的密码")
       return
     }
     const tempPwd = CryptoJs.MD5(values.password).toString();
     const tempForm = {
-      idNumber: values.telephoneNumber,
+      idNumber: values.idNumber,
       password: tempPwd,
-      userName: values.username
+      userName: values.userId
     }
     run(addUser(tempForm).catch((error: Error) => message.error(error)))
-    closeModal();
+    closeAddModal();
   }
+
+  const [userInfo, setUserInfo] = useState<Item>();
+  const [currentGroup, setCurrentGroup] = useState<GroupItem>();
+  const edit = async (userId: number) => {
+    const currentUser = await getUserDetailById(userId);
+    const user = currentUser.data;
+    if (user.gender === 0) {
+      user.gender = '男'
+    } else {
+      user.gender = '女'
+    }
+    setUserInfo(() => user);
+
+    updateForm.setFieldsValue(currentUser.data)
+    showModifyModal();
+  }
+
+  const handleUpdateClick = (values: { userId: string, gender: number, userGroup: number }) => {
+    const tempForm = {
+      userId: values.userId,
+      gender: values.gender,
+      userGroup: values.userGroup
+    }
+    run(updateUser(tempForm).catch((error: Error) => message.error(error)))
+    closeModifyModal();
+    window.location.reload();
+  }
+
 
   const columns = [
     {
@@ -71,7 +126,7 @@ export const UserManageScreen = () => {
       title: '用户名',
       dataIndex: 'userName',
       key: 'userName',
-      render: (userName: number) => <span>{userName}</span>,
+      render: (userName: string) => <span>{userName}</span>,
     },
     {
       title: '性别',
@@ -96,19 +151,36 @@ export const UserManageScreen = () => {
       title: '组别',
       dataIndex: 'userGroup',
       key: 'userGroup',
-      render: (userGroup: number) => <span>{userGroup}</span>,
+      render: (userGroup: number) => {
+        let showGroup;
+        allGroups?.forEach((group: GroupItem) => {
+          if (+group.id === +userGroup) {
+            setCurrentGroup(() => group);
+            showGroup = <Tag color={'green'}>{group.groupName}</Tag>
+          } else {
+            <Tag color={'green'}>默认分组</Tag>
+          }
+        })
+        return showGroup
+      }
     },
     {
       title: '操作',
-      dataIndex: 'action',
       key: 'action',
-      render: () => <Button>编辑</Button>,
+      render: (_: any, record: Item) => {
+        return (
+          <Typography.Link onClick={() => edit(record.userId)}>
+            编辑
+          </Typography.Link>
+        );
+      },
     },
   ];
 
 
+
   return <ScreenContainer>
-    <Button onClick={showModal}>添加用户</Button>
+    <Button type='primary' onClick={showAddModal}>添加用户</Button>
     <Table
       pagination={false}
       loading={isLoading}
@@ -122,10 +194,15 @@ export const UserManageScreen = () => {
       total={defaultPager?.itemCount}
       onChange={changePage}
     />
-    <Modal title="添加用户" visible={isModalVisible}>
+
+    <Drawer
+      title="添加用户"
+      visible={isAddModalVisible}
+      onClose={closeAddModal}
+    >
       <Form onFinish={handleAddClick}>
-        <Form.Item name={'telephoneNumber'} rules={[{ required: true, message: '请输入手机号' }]}>
-          <Input placeholder={'手机号'} type="telephoneNumber" id={'telephoneNumber'} />
+        <Form.Item name={'idNumber'} rules={[{ required: true, message: '请输入账号' }]}>
+          <Input placeholder={'账号'} type="text" id={'idNumber'} />
         </Form.Item>
         <Form.Item name={'username'} rules={[{ required: true, message: '请输入用户名' }]}>
           <Input placeholder={'用户名'} type="text" id={'username'} />
@@ -136,13 +213,51 @@ export const UserManageScreen = () => {
         <Form.Item name={'cpassword'} rules={[{ required: true, message: '请确认密码' }]}>
           <Input placeholder={'确认密码'} type="password" id={'cpassword'} />
         </Form.Item>
-        {/* <Form.Item name={'email'} >
-      <Input placeholder={'邮箱（选填）'} type="email" id={'email'} />
-    </Form.Item> */}
         <Form.Item>
-          <LongButton loading={isLoading} htmlType={'submit'} type={"primary"}>登录</LongButton>
+          <LongButton loading={isLoading} htmlType={'submit'} type={"primary"}>添加</LongButton>
         </Form.Item>
       </Form>
-    </Modal>
-  </ScreenContainer>
+    </Drawer>
+
+
+    <Drawer
+      title="修改用户信息"
+      visible={isModifyModalVisible}
+      onClose={closeModifyModal}
+    >
+      <Form form={updateForm} onFinish={handleUpdateClick}>
+        <Form.Item label={"用户ID"} name={'userId'}>
+          <Input aria-disabled disabled placeholder={'用户ID'} type="text" id={'userId'} />
+        </Form.Item>
+        <Form.Item
+          initialValue={userInfo?.gender === 0 ? '男' : userInfo?.gender === 1 ? '女' : '未知'}
+          label={"性别"} name={'gender'} rules={[{ required: true, message: '请输入性别' }]}>
+          <Select
+            id={'gender'}
+            style={{ width: 120 }}>
+            <Option value={0}>男</Option>
+            <Option value={1}>女</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label={"测试组别"} name={'userGroup'}>
+          <Select
+            id={'userGroup'}
+            defaultValue={currentGroup?.id}
+            style={{ width: 120 }}>
+            {
+              allGroups?.map((group: GroupItem) => <Option value={group.id}>{group.groupName}</Option>)
+            }
+          </Select>
+        </Form.Item>
+        <Form.Item>
+          <LongButton loading={isLoading} htmlType={'submit'} type={"primary"}>确定</LongButton>
+        </Form.Item>
+
+
+      </Form>
+    </Drawer>
+
+
+  </ScreenContainer >
 }

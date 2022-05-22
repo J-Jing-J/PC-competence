@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ScreenContainer } from '../../components/lib'
-import { Button, Dropdown, Form, Input, message, Modal, Pagination, Space, Table, Tag } from "antd";
+import { Button, Dropdown, Form, Input, message, Modal, Pagination, Space, Table, Tag, Typography } from "antd";
 import { addUser, useGroupByPage, useTaskByPage, useUserByPage } from '../../utils/admin';
 import { http, useHttp } from '../../utils/http';
 import CryptoJs from 'crypto-js'
@@ -96,7 +96,16 @@ export const TaskManageScreen = () => {
     },
     {
       title: '操作',
-      render: () => <Button size='small' type='primary'>编辑</Button>,
+      key: 'action',
+      render: (_: any) => {
+        return (
+          <span>
+            <Typography.Link onClick={() => { }}>
+              修改
+            </Typography.Link>
+          </span>
+        );
+      },
     },
   ];
 

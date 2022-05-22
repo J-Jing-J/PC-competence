@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { ScreenContainer } from '../../components/lib'
-import { Button, Dropdown, Form, Input, message, Modal, Pagination, Space, Table, Tag } from "antd";
-import { addUser, useGroupByPage, useUserByPage } from '../../utils/admin';
+import { Button, Drawer, Dropdown, Form, Input, message, Modal, Pagination, Space, Table, Tag, Typography } from "antd";
+import { addGroup, addUser, deleteGroup, updateGroup, useGroupByPage, useUserByPage } from '../../utils/admin';
 import { http, useHttp } from '../../utils/http';
 import CryptoJs from 'crypto-js'
 import qs from 'qs'
 import * as auth from '../../auth-provider'
 import { LongButton } from '../../unauthenticated-app';
 import { useAsync } from '../../utils/use-async';
+import { useForm } from 'antd/es/form/Form';
 
 
 
@@ -15,6 +16,8 @@ import { useAsync } from '../../utils/use-async';
 export const GroupManageScreen = () => {
   const client = useHttp();
   const { run } = useAsync(undefined, { throwOnError: true })
+  const [updateForm] = useForm();
+
 
   const { isLoading, error, data } = useGroupByPage(1, 10);
   const [pageIndex, setPageIndex] = useState(() => 1);
@@ -36,22 +39,59 @@ export const GroupManageScreen = () => {
     setPager(() => data?.pager);
   }
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const showModal = () => {
-    setIsModalVisible(true);
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const showAddModal = () => {
+    setIsAddModalVisible(true);
   };
-  const closeModal = () => {
-    setIsModalVisible(false);
+  const closeAddModal = () => {
+    setIsAddModalVisible(false);
+  };
+  const [isModifyModalVisible, setIsModifyModalVisible] = useState(false);
+  const showModifyModal = () => {
+    setIsModifyModalVisible(true);
+  };
+  const closeModifyModal = () => {
+    setIsModifyModalVisible(false);
   };
 
-  const handleAddClick = (values: { groupName: string, groupDescription: string }) => {
-    // run(addUser(values).catch((error: Error) => message.error(error)))
-    closeModal();
+  const handleAddClick = (values: { groupName: string }) => {
+    const tempForm = {
+      groupName: values.groupName,
+    }
+    run(addGroup(tempForm).catch((error: Error) => message.error(error)))
+    closeAddModal();
+    window.location.reload();
   }
 
+  const edit = async (id: number, groupName: string) => {
+    console.log(id, groupName);
+    updateForm.setFieldsValue({ id, groupName })
+    showModifyModal();
+  }
+
+  // 需要改！
+  const handleDeleteGroup = (id: number) => {
+    run(deleteGroup(id).catch((error: Error) => message.error(error)));
+    message.error("删除成功");
+    window.location.reload();
+  }
+
+  const handleUpdateClick = (values: { id: number, groupName: string }) => {
+    const tempForm = {
+      id: values.id,
+      groupName: values.groupName
+    }
+    run(updateGroup(tempForm).catch((error: Error) => message.error(error)))
+    closeModifyModal();
+    window.location.reload();
+  }
+
+
+  interface Item {
+    id: number;
+    groupName: string;
+  }
   const columns = [
-
-
     {
       title: '测试组ID',
       dataIndex: 'id',
@@ -65,18 +105,27 @@ export const GroupManageScreen = () => {
       render: (groupName: number) => <span>{groupName}</span>,
     },
     {
-      title: '查看详情',
-      render: () => <Button size='small' type='primary'>编辑</Button>,
-    },
-    {
       title: '操作',
-      render: () => <Button size='small' type='primary'>编辑</Button>,
+      key: 'action',
+      render: (_: any, record: Item) => {
+        return (
+          <span>
+            <Typography.Link onClick={() => edit(record.id, record.groupName)}>
+              编辑
+            </Typography.Link>
+            <span>  </span>
+            <Typography.Link onClick={() => handleDeleteGroup(record.id)}>
+              删除
+            </Typography.Link>
+          </span>
+        );
+      },
     },
   ];
 
 
   return <ScreenContainer>
-    <Button onClick={showModal}>添加测试组</Button>
+    <Button type='primary' onClick={showAddModal}>添加测试组</Button>
     <Table
       loading={isLoading}
       columns={columns}
@@ -90,18 +139,34 @@ export const GroupManageScreen = () => {
       total={defaultPager?.itemCount}
       onChange={changePage}
     />
-    <Modal title="添加用户" visible={isModalVisible}>
+    <Drawer title="添加测试组" visible={isAddModalVisible}>
       <Form onFinish={handleAddClick}>
         <Form.Item name={'groupName'} rules={[{ required: true, message: '测试组名称' }]}>
-          <Input placeholder={'手机号'} id={'groupName'} />
+          <Input placeholder={'测试组名称'} id={'groupName'} />
         </Form.Item>
-        <Form.Item name={'groupDescription'}>
-          <Input placeholder={'用户名'} id={'groupDescription'} />
-        </Form.Item>
-        <Form.Item>s
+        <Form.Item>
           <LongButton loading={isLoading} htmlType={'submit'} type={"primary"}>登录</LongButton>
         </Form.Item>
       </Form>
-    </Modal>
+    </Drawer>
+
+
+    <Drawer
+      title="修改用户信息"
+      visible={isModifyModalVisible}
+      onClose={closeModifyModal}
+    >
+      <Form form={updateForm} onFinish={handleUpdateClick}>
+        <Form.Item label={"测试组ID"} name={'id'}>
+          <Input aria-disabled disabled placeholder={'测试组ID'} type="text" id={'id'} />
+        </Form.Item>
+        <Form.Item label={"小组名称"} name={'groupName'}>
+          <Input placeholder={'小组名称'} type="text" id={'groupName'} />
+        </Form.Item>
+        <Form.Item>
+          <LongButton loading={isLoading} htmlType={'submit'} type={"primary"}>确定</LongButton>
+        </Form.Item>
+      </Form>
+    </Drawer>
   </ScreenContainer>
 }
