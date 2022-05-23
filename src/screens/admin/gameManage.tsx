@@ -119,7 +119,7 @@ export const GameManageScreen = () => {
         <Form.Item name={'groupDescription'}>
           <Input placeholder={'用户名'} id={'groupDescription'} />
         </Form.Item>
-        <Form.Item>s
+        <Form.Item>
           <LongButton loading={isLoading} htmlType={'submit'} type={"primary"}>登录</LongButton>
         </Form.Item>
       </Form>

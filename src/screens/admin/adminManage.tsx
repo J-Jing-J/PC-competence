@@ -1,21 +1,40 @@
 import React, { useEffect, useState } from 'react'
 import { ScreenContainer } from '../../components/lib'
-import { Button, Dropdown, Form, Input, message, Modal, Pagination, Space, Table, Tag } from "antd";
-import { addUser, useAdminByPage, useGroupByPage, useUserByPage } from '../../utils/admin';
+import { Button, Drawer, Dropdown, Form, Input, message, Modal, Pagination, Popconfirm, Select, Space, Table, Tag, Typography } from "antd";
+import { addAdmin, addUser, getUserDetailById, updateUser, useAdminByPage, useAllGroup, useUserByPage } from '../../utils/admin';
 import { http, useHttp } from '../../utils/http';
 import CryptoJs from 'crypto-js'
 import qs from 'qs'
 import * as auth from '../../auth-provider'
 import { LongButton } from '../../unauthenticated-app';
 import { useAsync } from '../../utils/use-async';
+import { useForm } from 'antd/es/form/Form';
+
+const { Option } = Select;
 
 
+interface Item {
+  adminId: number;
+  adminName: string;
+  adminState: number;
+  adminGroup: number;
+  authorityId: number;
+}
 
+interface GroupItem {
+  id: number;
+  groupName: string;
+}
 
 export const AdminManageScreen = () => {
   const client = useHttp();
   const { run } = useAsync(undefined, { throwOnError: true })
 
+  const [updateForm] = useForm();
+
+
+
+  const { data: allGroups } = useAllGroup();
   const { isLoading, error, data } = useAdminByPage(1, 10);
   const [pageIndex, setPageIndex] = useState(() => 1);
   const [pageSize, setPageSize] = useState(() => 10);
@@ -36,17 +55,27 @@ export const AdminManageScreen = () => {
     setPager(() => data?.pager);
   }
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const showModal = () => {
-    setIsModalVisible(true);
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const showAddModal = () => {
+    setIsAddModalVisible(true);
   };
-  const closeModal = () => {
-    setIsModalVisible(false);
+  const closeAddModal = () => {
+    setIsAddModalVisible(false);
   };
 
-  const handleAddClick = (values: { groupName: string, groupDescription: string }) => {
-    // run(addUser(values).catch((error: Error) => message.error(error)))
-    closeModal();
+  const handleAddClick = (values: { adminName: string, password: string, cpassword: string, idNumber: string }) => {
+    if (values.cpassword !== values.password) {
+      message.error("请输入两次相同的密码")
+      return
+    }
+    const tempPwd = CryptoJs.MD5(values.password).toString();
+    const tempForm = {
+      adminName: values.adminName,
+      password: tempPwd
+    }
+    run(addAdmin(tempForm).catch((error: Error) => message.error(error)))
+    closeAddModal();
+    window.location.reload();
   }
 
   const columns = [
@@ -81,23 +110,18 @@ export const AdminManageScreen = () => {
       render: (authorityId: number) => (authorityId === 1 ? <Tag>超级管理员</Tag> :
         authorityId === 2 ? <Tag>普通管理员</Tag> : <Tag>普通用户</Tag>)
     },
-    {
-      title: '操作',
-      dataIndex: 'action',
-      key: 'action',
-      render: () => <Button size='small' type='primary'>编辑</Button>,
-    },
   ];
 
 
+
   return <ScreenContainer>
-    <Button onClick={showModal}>添加管理员</Button>
+    <Button type='primary' onClick={showAddModal}>添加管理员</Button>
     <Table
+      pagination={false}
       loading={isLoading}
       columns={columns}
       dataSource={pageIndex === 1 ? defaultList : list}
       size={"small"}
-      pagination={false}
     />
     <Pagination
       defaultCurrent={1}
@@ -105,18 +129,26 @@ export const AdminManageScreen = () => {
       total={defaultPager?.itemCount}
       onChange={changePage}
     />
-    <Modal title="添加用户" visible={isModalVisible}>
+
+    <Drawer
+      title="添加用户"
+      visible={isAddModalVisible}
+      onClose={closeAddModal}
+    >
       <Form onFinish={handleAddClick}>
-        <Form.Item name={'groupName'} rules={[{ required: true, message: '测试组名称' }]}>
-          <Input placeholder={'手机号'} id={'groupName'} />
+        <Form.Item name={'adminName'} rules={[{ required: true, message: '请输入管理员账号' }]}>
+          <Input placeholder={'账号'} type="text" id={'adminName'} />
         </Form.Item>
-        <Form.Item name={'groupDescription'}>
-          <Input placeholder={'用户名'} id={'groupDescription'} />
+        <Form.Item name={'password'} rules={[{ required: true, message: '请输入用密码' }]}>
+          <Input placeholder={'密码'} type="password" id={'password'} />
+        </Form.Item>
+        <Form.Item name={'cpassword'} rules={[{ required: true, message: '请确认密码' }]}>
+          <Input placeholder={'确认密码'} type="password" id={'cpassword'} />
         </Form.Item>
         <Form.Item>
-          <LongButton loading={isLoading} htmlType={'submit'} type={"primary"}>登录</LongButton>
+          <LongButton loading={isLoading} htmlType={'submit'} type={"primary"}>添加</LongButton>
         </Form.Item>
       </Form>
-    </Modal>
-  </ScreenContainer>
+    </Drawer>
+  </ScreenContainer >
 }

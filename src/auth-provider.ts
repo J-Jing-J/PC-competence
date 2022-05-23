@@ -17,7 +17,7 @@ export const handleUserResponse = ({ user, token }: { user: User, token: string 
   if (user) {
     window.location.pathname = '/home'
   }
-  return user
+  return user;
 }
 
 export const handleAdminResponse = ({ auth, admin }: { admin: User, auth: string }) => {

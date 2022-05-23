@@ -11,13 +11,15 @@ const UnauthenticatedApp = React.lazy(() => import('./unauthenticated-app'))
 function App() {
   // const { user } = useAuth();
   const admin = window.localStorage.getItem('admin') ? window.localStorage.getItem('admin') : ''
+  const user = window.localStorage.getItem('user') ? window.localStorage.getItem('user') : ''
+
   return (
     <div className="App">
       <ErrorBoundary fallbackRender={FullPageErrorFallBack}>
         {/* <QuestionnaireListScreen /> */}
         {/* 懒加载先后渲染时，中间等待时渲染的内容 */}
         <React.Suspense fallback={<FullPageLoading />}>
-          {admin ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+          {admin || user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
         </React.Suspense>
       </ErrorBoundary>
     </div>

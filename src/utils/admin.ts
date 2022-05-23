@@ -211,3 +211,25 @@ export const deleteGroup = (id: number) => {
   })
 }
 
+
+export const addAdmin = (data: { adminName: string, password: string }) => {
+  const token = JSON.parse(auth.getToken())
+  console.log(JSON.stringify(data));
+  return fetch(`${apiUrl}/sys/admin/addAdmin`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'auth': token
+    },
+    body: JSON.stringify(data)
+  }).then(async response => {
+    if (response.ok) {
+      return await response.json();
+    } else {
+      // 报错
+      // Promise.reject()效果类似于throw new Errow
+      return Promise.reject(await response.json())
+    }
+  })
+}
+
