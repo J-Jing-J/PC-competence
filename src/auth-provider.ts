@@ -14,6 +14,7 @@ export const handleUserResponse = ({ user, token }: { user: User, token: string 
   console.log(user)
   window.localStorage.setItem(tokenKey, token || '');
   window.localStorage.setItem('user', JSON.stringify(user) || '');
+  window.localStorage.removeItem('admin');
   if (user) {
     window.location.pathname = '/home'
   }
@@ -26,6 +27,7 @@ export const handleAdminResponse = ({ auth, admin }: { admin: User, auth: string
   console.log(admin)
   window.localStorage.setItem(tokenKey, auth || '');
   window.localStorage.setItem('admin', JSON.stringify(admin) || '');
+  window.localStorage.removeItem('user');
   if (admin) {
     window.location.pathname = '/admin'
   }
@@ -82,8 +84,6 @@ export const register = (data: { idNumber: string, password: string, userName: s
     }
   })
 }
-
-
 
 // 加async才可以返回promise
 export const logout = async () => {
