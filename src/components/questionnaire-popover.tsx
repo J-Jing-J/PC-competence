@@ -33,7 +33,7 @@ export const QuestionnairePopover = () => {
       } */}
     </List>
 
-    {
+    {/* {
       user?.authorityId === 1 || user?.authorityId === 2 ? (
         <>
           <Divider />
@@ -43,7 +43,7 @@ export const QuestionnairePopover = () => {
             创建量表
           </ButtonNoPadding>
         </>) : null
-    }
+    } */}
   </ContentContainer>
 
   return <Popover

@@ -17,11 +17,13 @@ import { QuestionnairePopover } from "./components/questionnaire-popover"
 import { AccountScreen } from "./screens/user"
 import { AdminScreen } from "./screens/admin"
 
+const admin = window.localStorage.getItem('admin') ? window.localStorage.getItem('admin') : ''
+const user = window.localStorage.getItem('user') ? window.localStorage.getItem('user') : ''
+
 //eslint-disable-next-line
 export default () => {
   // const { user } = useAuth();
-  const admin = window.localStorage.getItem('admin') ? window.localStorage.getItem('admin') : ''
-  const user = window.localStorage.getItem('user') ? window.localStorage.getItem('user') : ''
+
   return <Container>
     <Router>
       <PageHeader />
@@ -84,7 +86,7 @@ const PageHeader = () => {
         {/* <img src={LoginLogo} /> */}
       </ButtonNoPadding>
       {
-        user?.authorityId === 1 || user?.authorityId === 2 ? (
+        admin ? (
           <h3 style={{ fontWeight: 'bold' }} onClick={resetRoute}>胜任力系统管理员端</h3>
         ) : (
           <>
@@ -116,13 +118,6 @@ const User = () => {
   return <Dropdown
     overlay={
       <Menu>
-        {
-          user?.authorityId === 1 ? (
-            <Tag color={'gold'}>超级管理员</Tag>
-          ) : user?.authorityId === 2 ? (
-            <Tag color={'geekblue'}>普通管理员</Tag>
-          ) : (<Tag color={'green'}>普通用户</Tag>)
-        }
         <Menu.Item key={'logout'}>
           {/* <a onClick={logout}>登出</a> 用a标签建议跳转时才使用：href */}
           <Button type={"link"} onClick={logout}>登出</Button>
