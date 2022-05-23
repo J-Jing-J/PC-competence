@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Button, Spin, Typography, BackTop } from "antd";
+import { logout } from "../auth-provider";
 
 export const Row = styled.div<{
   gap?: number | boolean;
@@ -62,10 +63,8 @@ export const ErrorBox = ({ error }: { error?: unknown }) => {
 // 提示系统维护显示错误信息
 export const FullPageErrorFallBack = ({ error }: { error: Error | null }) =>
   <FullPage>
-    <ErrorBox error={error} />
+    <Button onClick={logout} type={"primary"}>登录过期，点击重新登录</Button>
   </FullPage>
-
-
 
 export const ScreenContainer = styled.div`
   padding: 0 3rem 0 3rem;

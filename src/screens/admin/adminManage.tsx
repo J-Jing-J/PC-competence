@@ -107,8 +107,8 @@ export const AdminManageScreen = () => {
       title: '身份',
       dataIndex: 'authorityId',
       key: 'authorityId',
-      render: (authorityId: number) => (authorityId === 1 ? <Tag>超级管理员</Tag> :
-        authorityId === 2 ? <Tag>普通管理员</Tag> : <Tag>普通用户</Tag>)
+      render: (authorityId: number) => (authorityId === 1 ? <Tag color={'gold'}>超级管理员</Tag> :
+        authorityId === 2 ? <Tag color={'geekblue'}>普通管理员</Tag> : <Tag color={'green'}>普通用户</Tag>)
     },
   ];
 

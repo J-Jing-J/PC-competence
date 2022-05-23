@@ -149,6 +149,18 @@ export const useAllGroup = () => {
   return res;
 }
 
+export const useAllTest = () => {
+  const client = useHttp();
+  const res = useQuery(
+    [`/sys/test/info/findAll`],
+    () => client(
+      `/sys/test/info/findAll`,
+    )
+  )
+  console.log(res.data);
+  return res;
+}
+
 export const updateGroup = (data: { id: number, groupName: string }) => {
   const token = JSON.parse(auth.getToken())
   console.log(JSON.stringify(data));
@@ -233,3 +245,65 @@ export const addAdmin = (data: { adminName: string, password: string }) => {
   })
 }
 
+
+export const addTask = (data: { groupId: number, questionnaireIds: [], status: number, taskName: string, startTime: string, endTime: string }) => {
+  const token = JSON.parse(auth.getToken())
+  console.log(JSON.stringify(data));
+  return fetch(`${apiUrl}/sys/task/add`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'auth': token
+    },
+    body: JSON.stringify(data)
+  }).then(async response => {
+    if (response.ok) {
+      return await response.json();
+    } else {
+      // 报错
+      // Promise.reject()效果类似于throw new Errow
+      return Promise.reject(await response.json())
+    }
+  })
+}
+
+export const getTaskDetailById = (taskId: number) => {
+  const token = JSON.parse(auth.getToken())
+  const data: any = { id: taskId }
+  return fetch(`${apiUrl}/sys/task/findOneById?${qs.stringify(data)}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'auth': token
+    },
+  }).then(async response => {
+    if (response.ok) {
+      return await response.json();
+    } else {
+      // 报错
+      // Promise.reject()效果类似于throw new Errow
+      return Promise.reject(await response.json())
+    }
+  })
+}
+
+
+export const updateTask = (data: { groupId: number, questionnaireIds: [], status: number, taskName: string, startTime: string, endTime: string }) => {
+  const token = JSON.parse(auth.getToken())
+  console.log(JSON.stringify(data));
+  return fetch(`${apiUrl}/sys/task/update`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'auth': token
+    },
+    body: JSON.stringify(data)
+  }).then(async response => {
+    if (response.ok) {
+      return await response.json();
+    } else {
+      // 报错
+      // Promise.reject()效果类似于throw new Errow
+      return Promise.reject(await response.json())
+    }
+  })
+}

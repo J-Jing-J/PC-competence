@@ -98,7 +98,6 @@ export const UserManageScreen = () => {
       user.gender = '女'
     }
     setUserInfo(() => user);
-
     updateForm.setFieldsValue(currentUser.data)
     showModifyModal();
   }
@@ -144,8 +143,8 @@ export const UserManageScreen = () => {
       title: '身份',
       dataIndex: 'authorityId',
       key: 'authorityId',
-      render: (authorityId: number) => (authorityId === 1 ? <Tag>超级管理员</Tag> :
-        authorityId === 2 ? <Tag>普通管理员</Tag> : <Tag>普通用户</Tag>)
+      render: (authorityId: number) => (authorityId === 1 ? <Tag color={"gold"}>超级管理员</Tag> :
+        authorityId === 2 ? <Tag color={"geekblue"}>普通管理员</Tag> : <Tag color={"green"}>普通用户</Tag>)
     },
     {
       title: '组别',
@@ -157,11 +156,9 @@ export const UserManageScreen = () => {
           if (+group.id === +userGroup) {
             setCurrentGroup(() => group);
             showGroup = <Tag color={'green'}>{group.groupName}</Tag>
-          } else {
-            <Tag color={'green'}>默认分组</Tag>
           }
         })
-        return showGroup
+        return showGroup || <Tag>未知分组</Tag>
       }
     },
     {
@@ -253,8 +250,6 @@ export const UserManageScreen = () => {
         <Form.Item>
           <LongButton loading={isLoading} htmlType={'submit'} type={"primary"}>确定</LongButton>
         </Form.Item>
-
-
       </Form>
     </Drawer>
 

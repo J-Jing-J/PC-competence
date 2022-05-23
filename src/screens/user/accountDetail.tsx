@@ -13,8 +13,8 @@ export const AccountDetailScreen = () => {
     },
     {
       title: '身份',
-      content: user?.authorityId === 1 ? <Tag>超级管理员</Tag> :
-        user?.authorityId === 2 ? <Tag>普通管理员</Tag> : <Tag>普通用户</Tag>
+      content: user?.authorityId === 1 ? <Tag color={"gold"}>超级管理员</Tag> :
+        user?.authorityId === 2 ? <Tag color={"geekblue"}>普通管理员</Tag> : <Tag color={"green"}>普通用户</Tag>
     },
     {
       title: '用户ID',
