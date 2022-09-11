@@ -15,7 +15,7 @@ const { Option } = Select;
 
 interface Item {
   adminId: number;
-  adminName: string;
+  userName: string;
   adminState: number;
   adminGroup: number;
   authorityId: number;
@@ -63,14 +63,15 @@ export const AdminManageScreen = () => {
     setIsAddModalVisible(false);
   };
 
-  const handleAddClick = (values: { adminName: string, password: string, cpassword: string, idNumber: string }) => {
+  const handleAddClick = (values: { userName: string, password: string, cpassword: string}) => {
     if (values.cpassword !== values.password) {
       message.error("请输入两次相同的密码")
       return
     }
     const tempPwd = CryptoJs.MD5(values.password).toString();
     const tempForm = {
-      adminName: values.adminName,
+      // userName: values.userName,
+      adminName: values.userName,
       password: tempPwd
     }
     run(addAdmin(tempForm).catch((error: Error) => message.error(error)))
@@ -87,9 +88,9 @@ export const AdminManageScreen = () => {
     },
     {
       title: '用户名',
-      dataIndex: 'adminName',
-      key: 'adminName',
-      render: (adminName: number) => <span>{adminName}</span>,
+      dataIndex: 'userName',
+      key: 'userName',
+      render: (userName: string) => <span>{userName}</span>,
     },
     {
       title: '状态',
@@ -136,8 +137,8 @@ export const AdminManageScreen = () => {
       onClose={closeAddModal}
     >
       <Form onFinish={handleAddClick}>
-        <Form.Item name={'adminName'} rules={[{ required: true, message: '请输入管理员账号' }]}>
-          <Input placeholder={'账号'} type="text" id={'adminName'} />
+        <Form.Item name={'userName'} rules={[{ required: true, message: '请输入管理员账号' }]}>
+          <Input placeholder={'账号'} type="text" id={'userName'} />
         </Form.Item>
         <Form.Item name={'password'} rules={[{ required: true, message: '请输入用密码' }]}>
           <Input placeholder={'密码'} type="password" id={'password'} />

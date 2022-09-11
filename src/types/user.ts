@@ -17,7 +17,6 @@ export interface User {
   userName: string
   gender: number
   groupName: string
-  idNumber: string
   sex: sex
   userGroup: number
 

@@ -17,7 +17,6 @@ interface Item {
   userId: number;
   userName: string;
   gender: number;
-  idNumber: number;
   authorityId: number;
   userGroup: number
 }
@@ -72,16 +71,15 @@ export const UserManageScreen = () => {
     setIsModifyModalVisible(false);
   };
 
-  const handleAddClick = (values: { userId: string, password: string, cpassword: string, idNumber: string }) => {
+  const handleAddClick = (values: { userName: string, password: string, cpassword: string }) => {
     if (values.cpassword !== values.password) {
       message.error("请输入两次相同的密码")
       return
     }
     const tempPwd = CryptoJs.MD5(values.password).toString();
     const tempForm = {
-      idNumber: values.idNumber,
+      userName: values.userName,
       password: tempPwd,
-      userName: values.userId
     }
     run(addUser(tempForm).catch((error: Error) => message.error(error)))
     closeAddModal();
@@ -135,9 +133,9 @@ export const UserManageScreen = () => {
     },
     {
       title: '账号',
-      dataIndex: 'idNumber',
-      key: 'idNumber',
-      render: (idNumber: number) => <span>{idNumber}</span>,
+      dataIndex: 'userName',
+      key: 'userName',
+      render: (userName: number) => <span>{userName}</span>,
     },
     {
       title: '身份',
@@ -198,11 +196,8 @@ export const UserManageScreen = () => {
       onClose={closeAddModal}
     >
       <Form onFinish={handleAddClick}>
-        <Form.Item name={'idNumber'} rules={[{ required: true, message: '请输入账号' }]}>
-          <Input placeholder={'账号'} type="text" id={'idNumber'} />
-        </Form.Item>
-        <Form.Item name={'username'} rules={[{ required: true, message: '请输入用户名' }]}>
-          <Input placeholder={'用户名'} type="text" id={'username'} />
+        <Form.Item name={'userName'} rules={[{ required: true, message: '请输入账号' }]}>
+          <Input placeholder={'账号'} type="text" id={'userName'} />
         </Form.Item>
         <Form.Item name={'password'} rules={[{ required: true, message: '请输入用密码' }]}>
           <Input placeholder={'密码'} type="password" id={'password'} />

@@ -1,7 +1,6 @@
 export interface UserByPage {
   userId: number;
   userNo: number
-  idNumber: string
   userName: string
   password: string
   userGroup: number

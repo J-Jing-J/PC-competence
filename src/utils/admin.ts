@@ -24,7 +24,7 @@ export const useUserByPage = (pageIndex: number, pageSize: number) => {
 
 
 // 接口暂不好用
-export const addUser = (data: { idNumber: string, password: string, userName: string }) => {
+export const addUser = (data: { userName: string, password: string }) => {
   const token = JSON.parse(auth.getToken())
   console.log(JSON.stringify(data));
   return fetch(`${apiUrl}/sys/user/add`, {

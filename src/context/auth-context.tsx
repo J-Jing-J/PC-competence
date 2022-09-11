@@ -9,7 +9,7 @@ import { useAsync } from '../utils/use-async';
 import { tokenKey } from '../common/constants/storageKey';
 
 export interface UserLoginForm {
-  idNumber: string;
+  userName: string;
   password: string;
 }
 
@@ -19,9 +19,9 @@ export interface AdminLoginForm {
 }
 
 interface RegisterForm {
-  idNumber: string;
-  password: string;
+  idNumber: string,
   userName: string;
+  password: string;
 }
 
 // 每次刷新页面都要判断token是否过期

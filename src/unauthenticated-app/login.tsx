@@ -21,13 +21,13 @@ export const LoginScreen = ({ onError }: { onError: (error: Error) => void }) =>
     // 类型antd根据Form.Item的name推断
     values: { username: string, password: string, identity: number }
   ) => {
-    const tempPwd = CryptoJs.MD5(values.password).toString();
+    // const tempPwd = CryptoJs.MD5(values.password).toString();
     const tempForm = +values.identity === 1 ? ({
-      idNumber: values.username,
-      password: tempPwd
+      userName: values.username,
+      password: values.password,
     }) : ({
       adminName: values.username,
-      password: tempPwd
+      password: CryptoJs.MD5(values.password).toString(),
     })
 
     // event.preventDefault()

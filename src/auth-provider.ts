@@ -37,6 +37,7 @@ export const handleAdminResponse = ({ auth, admin }: { admin: User, auth: string
 
 
 export const login = (data: UserLoginForm | AdminLoginForm, identity: number) => {
+  console.log(identity);
   const loginUrl = +identity === 1 ? '/user/login' : '/sys/admin/login';
   return fetch(`${apiUrl}${loginUrl}`, {
     method: 'POST',
@@ -65,8 +66,7 @@ export const login = (data: UserLoginForm | AdminLoginForm, identity: number) =>
 
 
 
-export const register = (data: { idNumber: string, password: string, userName: string }) => {
-  console.log(JSON.stringify(data));
+export const register = (data: { userName: string, password: string, idNumber: string}) => {
   return fetch(`${apiUrl}/user/reg`, {
     method: 'POST',
     headers: {
